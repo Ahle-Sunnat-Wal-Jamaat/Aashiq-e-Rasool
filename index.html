@@ -282,6 +282,8 @@
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
+                
+                <!-- Anti-Cache Direct Intercept Form Setup -->
                 <form onsubmit="sendWhatsApp(event)">
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
                     <textarea id="ask-query" class="input-field" rows="5" placeholder="Your Question / Aapka Sawal" required></textarea>
@@ -470,7 +472,7 @@
         { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
         { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
         { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
-        { id: 25, start: 1, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
+        { id: 25, start: 1, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعرآء" },
         { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
         { id: 29, en: "Al-'Ankabut", ar: "العنكبوت" }, { id: 30, en: "Ar-Rum", ar: "الروم" },
         { id: 31, en: "Luqman", ar: "لقمان" }, { id: 32, en: "As-Sajdah", ar: "السجدة" },
@@ -580,18 +582,17 @@
     function sendWhatsApp(e) {
         e.preventDefault();
         
-        // Explicitly hardcoded targeted variables to prevent fallback errors
+        // Anti-cache explicit value loading
         let targetPhone = "919398696996";
         let name = document.getElementById('ask-name').value.trim();
         let query = document.getElementById('ask-query').value.trim();
         
         let formattedMessage = `📩 *New Deeni Sawal*\n\n👤 *From:* ${name}\n📝 *Sawal:* ${query}`;
         
-        // Troubleshooting Fix: Alternative direct API layout configuration to bypass popup security layers
-        let whatsappUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(formattedMessage)}`;
+        // Force routing using full string evaluation to prevent execution of old stored references
+        let outUrl = "https://api.whatsapp.com/send?phone=" + targetPhone + "&text=" + encodeURIComponent(formattedMessage);
         
-        // Troubleshooting Fix: Immediate frame location swap instead of opening new tabs to counter mobile popup blockers
-        window.location.href = whatsappUrl;
+        window.location.href = outUrl;
     }
 
     if (window.DeviceOrientationEvent) {
