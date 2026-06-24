@@ -37,17 +37,19 @@
         }
         .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; }
         
-        .quran-menu { display: flex; flex-direction: column; gap: 8px; }
-        .surah-btn {
-            background: var(--bg); border: 1px solid #d1fae5; padding: 12px;
+        /* Complete Quran Directory Layout */
+        .quran-directory { display: flex; flex-direction: column; gap: 6px; max-height: 70vh; overflow-y: auto; padding-right: 4px; }
+        .surah-row {
+            background: var(--bg); border: 1px solid #d1fae5; padding: 10px 14px;
             border-radius: 8px; font-weight: 600; color: var(--primary);
-            text-align: left; cursor: pointer; display: flex; justify-content: space-between;
-            width: 100%; box-sizing: border-box;
+            text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
-        .offline-reader { display: none; background: #fafafa; border-radius: 8px; padding: 12px; margin-top: 10px; }
-        .back-btn { background: var(--primary); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-bottom: 10px; font-size: 12px; }
-        .quran-text { text-align: right; font-size: 22px; line-height: 2; color: #000; margin-bottom: 10px; direction: rtl; }
-        .translation-text { text-align: left; font-size: 14px; color: #374151; line-height: 1.5; margin-bottom: 15px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px; }
+        .surah-row:hover { background: #e6fbf0; }
+        .surah-arabic-title { font-size: 18px; font-weight: normal; color: #0f766e; }
+
+        .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
+        .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-size: 13px; font-weight: bold; }
+        .quran-display-frame { width: 100%; height: 65vh; border: none; border-radius: 6px; background: white; }
 
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
@@ -78,11 +80,10 @@
     <header><h1>Aashiq e Rasool</h1></header>
 
     <div class="main-content">
-        <!-- TAB 1: HOME -->
         <div id="tab-home" class="tab-content active">
             <div class="card">
                 <h2 class="card-title">🕌 Welcome to Your Portal</h2>
-                <p style="font-size: 13px;">Your app is customized to display Islamic resources seamlessly.</p>
+                <p style="font-size: 13px;">Your application setup is successfully active and ready for your community.</p>
             </div>
             
             <div class="card" style="border: 2px dashed var(--accent); background: #fafafa;">
@@ -90,35 +91,27 @@
                 <input type="text" id="add-title" class="input-field" placeholder="Video Title">
                 <input type="text" id="add-id" class="input-field" placeholder="YouTube Video ID">
                 <button class="submit-btn" style="background:var(--accent);" onclick="generateVideoCode()">Create Video Block</button>
-                <textarea id="output-code" class="input-field" rows="3" readonly placeholder="Copy the generated code snippet from here..."></textarea>
+                <textarea id="output-code" class="input-field" rows="3" readonly placeholder="Your custom code code will show up here..."></textarea>
             </div>
         </div>
 
-        <!-- TAB 2: QURAN -->
         <div id="tab-quran" class="tab-content">
-            <div class="card">
-                <h2 class="card-title">📖 Built-In Quran Reader (Offline Mode)</h2>
+            <div class="card" style="padding: 10px;">
+                <h2 class="card-title" style="margin-left: 5px;">📖 Al-Quran Al-Kareem</h2>
                 
-                <div id="quran-menu-view" class="quran-menu">
-                    <button class="surah-btn" onclick="openOfflineSurah('fatiha')"><span>1. Surah Al-Fatiha</span> ➔</button>
-                    <button class="surah-btn" onclick="openOfflineSurah('ikhlas')"><span>112. Surah Al-Ikhlas</span> ➔</button>
-                    <button class="surah-btn" onclick="openOfflineSurah('falaq')"><span>113. Surah Al-Falaq</span> ➔</button>
-                    <button class="surah-btn" onclick="openOfflineSurah('nas')"><span>114. Surah Al-Nas</span> ➔</button>
-                </div>
+                <div id="quran-directory-view" class="quran-directory">
+                    </div>
 
-                <div id="quran-reader-view" class="offline-reader">
-                    <button class="back-btn" onclick="closeOfflineSurah()">⬅ Back to List</button>
-                    <h3 id="surah-title-display" style="color: var(--primary); margin-top:0;"></h3>
-                    <div id="surah-verses-container"></div>
+                <div id="quran-reader-panel" class="quran-reader-panel">
+                    <button class="back-btn" onclick="closeSurahReader()">⬅ Back to Index</button>
+                    <iframe id="quran-frame" class="quran-display-frame" src=""></iframe>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: VIDEOS -->
         <div id="tab-videos" class="tab-content">
             <div class="card">
                 <h2 class="card-title">🎥 Video Library</h2>
-                <input type="text" class="search-box" id="video-search" onkeyup="filterVideos()" placeholder="Search videos...">
                 <div id="video-archive">
                     <div class="video-card" data-title="madani guldasta new bayan">
                         <div class="video-title">Madani Guldasta New Bayan</div>
@@ -128,7 +121,6 @@
             </div>
         </div>
 
-        <!-- TAB 4: HADEES -->
         <div id="tab-hadees" class="tab-content">
             <div class="card">
                 <h2 class="card-title">📜 Sacred Hadees</h2>
@@ -138,7 +130,6 @@
             </div>
         </div>
 
-        <!-- TAB 5: QIBLA -->
         <div id="tab-qibla" class="tab-content">
             <div class="card" style="text-align: center;">
                 <h2 class="card-title">🧭 Qibla Direction</h2>
@@ -150,7 +141,6 @@
             </div>
         </div>
 
-        <!-- TAB 6: ASK -->
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
@@ -174,64 +164,92 @@
 </div>
 
 <script>
-    const offlineQuranData = {
-        fatiha: {
-            title: "Surah Al-Fatiha",
-            verses: [
-                { ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", tr: "In the name of Allah, the Most Gracious, the Most Merciful." },
-                { ar: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", tr: "All praise belongs to Allah, Lord of all the worlds." },
-                { ar: "الرَّحْمَٰنِ الرَّحِيمِ", tr: "The Most Gracious, the Most Merciful." }
-            ]
-        },
-        ikhlas: {
-            title: "Surah Al-Ikhlas",
-            verses: [
-                { ar: "قُلْ هُوَ اللَّهُ أَحَدٌ", tr: "Say, 'He is Allah, [who is] One.'" },
-                { ar: "اللَّهُ الصَّمَدُ", tr: "Allah, the Eternal Refuge." },
-                { ar: "لَمْ يَلِدْ وَلَمْ يُولَدْ", tr: "He neither begets nor is born." },
-                { ar: "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ", tr: "And there is none co-equal to Him." }
-            ]
-        },
-        falaq: {
-            title: "Surah Al-Freeze",
-            verses: [
-                { ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ", tr: "Say, 'I seek refuge in the Lord of daybreak'" },
-                { ar: "مِن شَرِّ مَا خَلَقَ", tr: "From the evil of whatever He created'" }
-            ]
-        },
-        nas: {
-            title: "Surah Al-Nas",
-            verses: [
-                { ar: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ", tr: "Say, 'I seek refuge in the Lord of mankind'" },
-                { ar: "مَلِكِ النَّاسِ", tr: "The Sovereign of mankind." }
-            ]
-        }
-    };
+    // Full 114 Surah Metadata Index
+    const surahList = [
+        { id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
+        { id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
+        { id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
+        { id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
+        { id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "يونس" },
+        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "يوسف" },
+        { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
+        { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
+        { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
+        { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
+        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
+        { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
+        { id: 25, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
+        { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
+        { id: 29, en: "Al-'Ankabut", ar: "العنكبوت" }, { id: 30, en: "Ar-Rum", ar: "الروم" },
+        { id: 31, en: "Luqman", ar: "لقمان" }, { id: 32, en: "As-Sajdah", ar: "السجدة" },
+        { id: 33, en: "Al-Ahzab", ar: "الأحزاب" }, { id: 34, en: "Saba", ar: "سبأ" },
+        { id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
+        { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
+        { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
+        { id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
+        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
+        { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
+        { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
+        { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
+        { id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
+        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القمر" },
+        { id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
+        { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
+        { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
+        { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
+        { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغابن" },
+        { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
+        { id: 67, en: "Al-Mulk", ar: "الملك" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
+        { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
+        { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
+        { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
+        { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
+        { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
+        { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
+        { id: 81, en: "At-Takwir", ar: "التكوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
+        { id: 83, en: "Al-Mutaffifin", ar: "المطففين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
+        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
+        { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
+        { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
+        { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
+        { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
+        { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
+        { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
+        { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" },
+        { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" },
+        { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
+        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" },
+        { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الكوثر" },
+        { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
+        { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
+        { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" ]
+    ];
 
-    function openOfflineSurah(key) {
-        const data = offlineQuranData[key];
-        document.getElementById('surah-title-display').innerText = data.title;
-        
-        let container = document.getElementById('surah-verses-container');
-        container.innerHTML = '';
-        
-        data.verses.forEach((v, index) => {
-            container.innerHTML += '<div class="quran-text">' + v.ar + ' ﴿' + (index+1) + '〗</div>' +
-                                   '<div class="translation-text">' + v.tr + '</div>';
-        });
-        
-        document.getElementById('quran-menu-view').style.display = 'none';
-        document.getElementById('quran-reader-view').style.display = 'block';
+    // Build the directory grid automatically
+    const directory = document.getElementById('quran-directory-view');
+    surahList.forEach(surah => {
+        directory.innerHTML += `
+            <div class="surah-row" onclick="loadSurahTarget(${surah.id})">
+                <span>${surah.id}. ${surah.en}</span>
+                <span class="surah-arabic-title">${surah.ar}</span>
+            </div>`;
+    });
+
+    function loadSurahTarget(id) {
+        document.getElementById('quran-frame').src = `https://quran.com/${id}`;
+        document.getElementById('quran-directory-view').style.display = 'none';
+        document.getElementById('quran-reader-panel').style.display = 'block';
     }
 
-    function closeOfflineSurah() {
-        document.getElementById('quran-reader-view').style.display = 'none';
-        document.getElementById('quran-menu-view').style.display = 'flex';
+    function closeSurahReader() {
+        document.getElementById('quran-reader-panel').style.display = 'none';
+        document.getElementById('quran-directory-view').style.display = 'flex';
+        document.getElementById('quran-frame').src = "";
     }
 
     function switchTab(tabId, element) {
-        document.querySelectorAll('.tab-content').forEach(function(item) { item.classList.remove('active'); });
-        document.querySelectorAll('.nav-bar .nav-item').forEach(function(item) { item.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(item => item.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
         document.getElementById('tab-' + tabId).classList.add('active');
         element.classList.add('active');
     }
@@ -240,35 +258,22 @@
         let title = document.getElementById('add-title').value;
         let id = document.getElementById('add-id').value;
         if(!title || !id) { alert('Fill both fields!'); return; }
-        
-        let codeSnippet = '<div class="video-card" data-title="' + title.toLowerCase() + '">\n' +
-                          '    <div class="video-title">' + title + '</div>\n' +
-                          '    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + id + '" allowfullscreen></iframe></div>\n' +
-                          '</div>';
+        let codeSnippet = `<div class="video-card" data-title="${title.toLowerCase()}">\n    <div class="video-title">${title}</div>\n    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe></div>\n</div>`;
         document.getElementById('output-code').value = codeSnippet;
-    }
-
-    function filterVideos() {
-        let input = document.getElementById('video-search').value.toLowerCase();
-        let cards = document.getElementsByClassName('video-card');
-        for (let i = 0; i < cards.length; i++) {
-            let title = cards[i].getAttribute('data-title') || '';
-            cards[i].style.display = title.indexOf(input) > -1 ? "block" : "none";
-        }
     }
 
     function sendWhatsApp(e) {
         e.preventDefault();
         let name = encodeURIComponent(document.getElementById('ask-name').value);
         let query = encodeURIComponent(document.getElementById('ask-query').value);
-        window.open('https://wa.me/919000000000?text=*Question*%0A*Name:* ' + name + '%0A*Query:* ' + query, '_blank');
+        window.open(`https://wa.me/919000000000?text=*Question*%0A*Name:* ${name}%0A*Query:* ${query}`, '_blank');
     }
 
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', function(e) {
             let heading = e.webkitCompassHeading || e.alpha;
             if(heading !== undefined) {
-                document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
+                document.getElementById('needle').style.transform = `rotate(${292 - heading}deg)`;
             }
         }, true);
     }
