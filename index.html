@@ -38,24 +38,31 @@
         }
         .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; }
         
-        /* Fixed Scrollable Quran Directory */
-        .quran-directory { display: flex; flex-direction: column; gap: 8px; max-height: 60vh; overflow-y: auto; padding: 5px; }
-        .surah-row {
+        /* Mode Selector Buttons (Surah / Para) */
+        .mode-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+        .mode-btn { flex: 1; background: #e5e7eb; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text); }
+        .mode-btn.active { background: var(--primary); color: white; }
+
+        /* Grid Lists */
+        .list-container { display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; padding: 5px; }
+        .grid-row {
             background: var(--bg); border: 1px solid #d1fae5; padding: 12px;
             border-radius: 8px; font-weight: 600; color: var(--primary);
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
-        .surah-row:hover { background: #e6fbf0; }
-        .surah-arabic-title { font-size: 18px; font-weight: normal; color: #0f766e; }
+        .grid-row:hover { background: #e6fbf0; }
+        .arabic-title { font-size: 18px; font-weight: normal; color: #0f766e; font-family: 'Amiri', serif; }
         
-        /* Fixed Reader View */
+        /* Reader Panel */
         .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
         .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
         .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 10px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
-        .quran-text { text-align: right; font-size: 24px; line-height: 2.2; color: #000; margin-bottom: 15px; direction: rtl; font-family: 'Amiri', serif; }
-        .translation-text { text-align: left; font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 25px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 15px; }
+        
+        /* Verse styling: Arabic Top, Kanzul Iman Bottom */
+        .quran-text { text-align: right; font-size: 25px; line-height: 2.3; color: #000; margin-bottom: 8px; direction: rtl; font-family: 'Amiri', serif; }
+        .urdu-text { text-align: right; font-size: 16px; color: #064e3b; line-height: 1.8; margin-bottom: 25px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 15px; direction: rtl; font-family: 'Urdu Typesetting', 'Nafees', sans-serif; }
 
-        /* Other Utilities */
+        /* Other Panels */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; }
@@ -66,7 +73,6 @@
         .input-field { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #c9deb3; border-radius: 6px; box-sizing: border-box; }
         .submit-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
-        /* Fixed Footer Navbar */
         .nav-bar {
             position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
             border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
@@ -97,21 +103,30 @@
             </div>
         </div>
 
-        <!-- TAB 2: QURAN -->
+        <!-- TAB 2: QURAN (With Surah & Para Filters + Kanzul Iman Urdu) -->
         <div id="tab-quran" class="tab-content">
-            <div class="card" style="padding: 10px;">
+            <div class="card" style="padding: 10px;" id="quran-menu-panel">
                 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
                 
-                <!-- Complete 114 Surah Grid -->
-                <div id="quran-directory-view" class="quran-directory"></div>
+                <!-- Toggle between Surah and Para views -->
+                <div class="mode-selector">
+                    <button id="btn-mode-surah" class="mode-btn active" onclick="toggleQuranMode('surah')">Surah Wise</button>
+                    <button id="btn-mode-para" class="mode-btn" onclick="toggleQuranMode('para')">Para / Juz Wise</button>
+                </div>
 
-                <!-- Live Dynamic Text Reader Panel -->
-                <div id="quran-reader-panel" class="quran-reader-panel">
-                    <button class="back-btn" onclick="closeSurahReader()">⬅ Back to Index</button>
-                    <h3 id="reader-surah-title" style="color: var(--primary); margin: 5px 0 15px 0;"></h3>
-                    <div id="verses-container" class="verses-scroll">
-                        <p style="text-align:center; color:#6b7280;">Loading verses...</p>
-                    </div>
+                <!-- Surah List View -->
+                <div id="surah-directory-view" class="list-container"></div>
+
+                <!-- Para List View -->
+                <div id="para-directory-view" class="list-container" style="display: none;"></div>
+            </div>
+
+            <!-- Dynamic Text Reader Frame -->
+            <div class="card" style="padding: 10px; display: none;" id="quran-reader-panel">
+                <button class="back-btn" onclick="closeQuranReader()">⬅ Back to Menu</button>
+                <h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 15px 0; font-size: 16px;"></h3>
+                <div id="verses-container" class="verses-scroll">
+                    <p style="text-align:center; color:#6b7280;">Loading text...</p>
                 </div>
             </div>
         </div>
@@ -164,7 +179,7 @@
         </div>
     </div>
 
-    <!-- Navigation Menu Bar Buttons -->
+    <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
@@ -176,7 +191,7 @@
 </div>
 
 <script>
-    // Tab Navigation
+    // Tab Switching Navigation
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
         for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
@@ -186,7 +201,23 @@
         element.classList.add('active');
     }
 
-    // Comprehensive 114 Surah Metadata Index
+    // Toggle Menu Layout between Surah View and Para View
+    function toggleQuranMode(mode) {
+        document.getElementById('btn-mode-surah').classList.remove('active');
+        document.getElementById('btn-mode-para').classList.remove('active');
+        
+        if(mode === 'surah') {
+            document.getElementById('btn-mode-surah').classList.add('active');
+            document.getElementById('surah-directory-view').style.display = 'flex';
+            document.getElementById('para-directory-view').style.display = 'none';
+        } else {
+            document.getElementById('btn-mode-para').classList.add('active');
+            document.getElementById('surah-directory-view').style.display = 'none';
+            document.getElementById('para-directory-view').style.display = 'flex';
+        }
+    }
+
+    // Comprehensive 114 Surah Metadata mapping
     const surahList = [
         { id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
         { id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
@@ -198,7 +229,7 @@
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
         { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
         { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
-        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
+        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, sm: "Al-Hajj", ar: "الحج" },
         { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
         { id: 25, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
         { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
@@ -214,7 +245,7 @@
         { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
         { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
         { id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
-        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "المرسل" },
+        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القمر" },
         { id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
         { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
         { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
@@ -237,59 +268,86 @@
         { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
         { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
         { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
-        { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, 
-        { id: 102, en: "At-Takathur", ar: "التكاثر" }, { id: 103, en: "Al-'Asr", ar: "العصر" }, 
-        { id: 104, en: "Al-Humazah", ar: "الهمزة" }, { id: 105, en: "Al-Fil", ar: "الفيل" }, 
-        { id: 106, en: "Quraysh", ar: "قريش" }, { id: 107, en: "Al-Ma'un", ar: "الماعون" }, 
-        { id: 108, en: "Al-Kawthar", ar: "الكوثر" }, { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, 
-        { id: 110, en: "An-Nasr", ar: "النصر" }, { id: 111, en: "Al-Masad", ar: "المسد" }, 
-        { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, { id: 113, en: "Al-Falaq", ar: "الفلق" }, 
-        { id: 114, en: "An-Nas", ar: "الناس" }
+        { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
+        { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" }, 
+        { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
+        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" }, 
+        { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الكوثر" }, 
+        { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
+        { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
+        { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
     ];
 
-    // Build the 114 Directory List Menu
-    const directory = document.getElementById('quran-directory-view');
+    // Render Surah Selector List
+    const surahContainer = document.getElementById('surah-directory-view');
     surahList.forEach(function(surah) {
-        directory.innerHTML += '<div class="surah-row" onclick="fetchSurahData(' + surah.id + ', \'' + surah.en + '\')">' +
-                               '<span>' + surah.id + '. ' + surah.en + '</span>' +
-                               '<span class="surah-arabic-title">' + surah.ar + '</span>' +
-                               '</div>';
+        surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
+                                    '<span>' + surah.id + '. ' + surah.en + '</span>' +
+                                    '<span class="arabic-title">' + surah.ar + '</span>' +
+                                    '</div>';
     });
 
-    // Fetch live Arabic and English Translation verses safely without iFrame blocks
-    function fetchSurahData(id, name) {
-        document.getElementById('quran-directory-view').style.display = 'none';
-        document.getElementById('quran-reader-panel').style.display = 'block';
-        document.getElementById('reader-surah-title').innerText = id + ". " + name;
-        
-        const container = document.getElementById('verses-container');
-        container.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading verses from API...</p>';
+    // Render Para Selector List (1 to 30)
+    const paraContainer = document.getElementById('para-directory-view');
+    for (let p = 1; p <= 30; p++) {
+        paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'para\', ' + p + ', \'Para ' + p + '\')">' +
+                                   '<span>Para ' + p + '</span>' +
+                                   '<span style="font-size:13px; font-weight:normal; color:#6b7280;">Juz ' + p + '</span>' +
+                                   '</div>';
+    }
 
-        // Call open API for text
+    // Load Core Arabic + Kanzul Iman Urdu text directly via API endpoints
+    // Translation Edition Key identifier: ur.kanzuliman
+    function loadQuranContent(type, numericId, displayName) {
+        document.getElementById('quran-menu-panel').style.display = 'none';
+        document.getElementById('quran-reader-panel').style.display = 'block';
+        document.getElementById('reader-display-title').innerText = displayName + " (Arabic & Kanzul Iman Urdu)";
+        
+        const displayBox = document.getElementById('verses-container');
+        displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Tilawat & Kanzul Iman translation...</p>';
+
+        let arabicApiUrl = '';
+        let urduApiUrl = '';
+
+        if(type === 'surah') {
+            arabicApiUrl = 'https://api.alquran.cloud/v1/surah/' + numericId;
+            urduApiUrl = 'https://api.alquran.cloud/v1/surah/' + numericId + '/ur.kanzuliman';
+        } else {
+            arabicApiUrl = 'https://api.alquran.cloud/v1/juz/' + numericId;
+            urduApiUrl = 'https://api.alquran.cloud/v1/juz/' + numericId + '/ur.kanzuliman';
+        }
+
         Promise.all([
-            fetch('https://api.alquran.cloud/v1/surah/' + id),
-            fetch('https://api.alquran.cloud/v1/surah/' + id + '/en.asad')
+            fetch(arabicApiUrl),
+            fetch(urduApiUrl)
         ])
-        .then(responses => Promise.all(responses.map(r => r.json())))
-        .then(data => {
-            const arabicVerses = data[0].data.ayahs;
-            const englishVerses = data[1].data.ayahs;
+        .then(responses => Promise.all(responses.map(res => res.json())))
+        .then(dataset => {
+            let arabicAyahs = type === 'surah' ? dataset[0].data.ayahs : dataset[0].data.juzByAyah;
+            let urduAyahs = type === 'surah' ? dataset[1].data.ayahs : dataset[1].data.juzByAyah;
             
-            container.innerHTML = '';
-            arabicVerses.forEach((ayah, index) => {
-                container.innerHTML += '<div class="quran-text">' + ayah.text + ' ﴿' + ayah.numberInSurah + '〗</div>' +
-                                       '<div class="translation-text">' + englishVerses[index].text + '</div>';
+            // Handle edge case variations in JSON structures from the Juz endpoint arrays
+            if(type === 'para') {
+                arabicAyahs = dataset[0].data.ayahs;
+                urduAyahs = dataset[1].data.ayahs;
+            }
+
+            displayBox.innerHTML = '';
+            arabicAyahs.forEach((ayah, index) => {
+                let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : (index + 1);
+                displayBox.innerHTML += '<div class="quran-text">' + ayah.text + ' ﴿' + verseIdentifier + '〗</div>' +
+                                        '<div class="urdu-text">' + urduAyahs[index].text + '</div>';
             });
-            container.scrollTop = 0;
+            displayBox.scrollTop = 0;
         })
         .catch(err => {
-            container.innerHTML = '<p style="text-align:center; color:red;">Failed to load verses. Please check your internet connection.</p>';
+            displayBox.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">Failed to fetch data. Please re-check connection.</p>';
         });
     }
 
-    function closeSurahReader() {
+    function closeQuranReader() {
         document.getElementById('quran-reader-panel').style.display = 'none';
-        document.getElementById('quran-directory-view').style.display = 'flex';
+        document.getElementById('quran-menu-panel').style.display = 'block';
         document.getElementById('verses-container').innerHTML = '';
     }
 
