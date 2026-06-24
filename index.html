@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aashiq e Rasool App</title>
     
-    <!-- Importing Clear, Beautiful Indo-Pak Style Arabic Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -31,11 +30,11 @@
         header {
             background: var(--primary); color: white; text-align: center; padding: 18px 15px;
             border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+            cursor: pointer; user-select: none;
         }
         header h1 { margin: 0; font-size: 22px; }
         .main-content { padding: 15px; flex: 1; margin-bottom: 90px; }
         
-        /* Fixed Tab View System Visibility */
         .tab-content { display: none !important; }
         .tab-content.active { display: block !important; }
         
@@ -97,8 +96,8 @@
             padding: 10px; margin-bottom: 12px; border-radius: 6px; font-size: 13px;
         }
 
-        /* Interactive Hadees Tab Styling */
-        .hadees-container-scroll { max-height: 48vh; overflow-y: auto; padding: 2px; }
+        /* Hadees Layout Styling */
+        .hadees-container-scroll { max-height: 58vh; overflow-y: auto; padding: 2px; }
         .hadees-card {
             background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
             padding: 14px; margin-bottom: 12px; border-left: 4px solid var(--primary);
@@ -110,6 +109,9 @@
         .action-btn-row { display: flex; gap: 8px; }
         .action-card-btn { flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
         .action-card-btn:hover { background: #f3f4f6; }
+
+        /* Hidden Protected Dashboard Styling */
+        #secret-admin-gate { display: none; background: #fffbeb; border: 2px solid #f59e0b; }
 
         /* Miscellaneous UI */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
@@ -133,36 +135,42 @@
 <body>
 
 <div class="app-container">
-    <header><h1>Aashiq e Rasool</h1></header>
+    <header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
 
     <div class="main-content">
-        <!-- TAB 1: HOME -->
+        
+        <div id="secret-admin-gate" class="card">
+            <h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
+            <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate the code lines below to instantly expand your master repository list on GitHub.</p>
+            
+            <label style="font-size: 11px; font-weight: bold;">Step 1: Write Hadees Details</label>
+            <textarea id="adm-hadees-text" class="input-field" rows="3" placeholder="Paste Hinglish Hadees content text..."></textarea>
+            <input type="text" id="adm-hadees-ref" class="input-field" placeholder="Book / Page Reference Hawala">
+            
+            <button class="submit-btn" style="background:#d97706; margin-bottom:12px;" onclick="generateHadeesRepositoryCode()">⚡ Step 2: Generate GitHub Code Line</button>
+            
+            <label style="font-size: 11px; font-weight: bold;">Step 3: Copy this result and paste into your GitHub code list:</label>
+            <textarea id="adm-output-code" class="input-field" rows="4" readonly placeholder="Resulting raw script block will generate here..."></textarea>
+            
+            <hr style="border:0; border-top:1px solid #f59e0b; margin:15px 0;">
+            <button class="action-card-btn" style="background:#fff; color:red;" onclick="lockAdminTerminal()">🔒 Lock Admin Panel</button>
+        </div>
+
         <div id="tab-home" class="tab-content active">
             <div class="card">
                 <h2 class="card-title">👑 Welcome to Your Portal</h2>
-                <p style="font-size: 13px;">Your application navigation is stable. Switch tabs below smoothly.</p>
+                <p style="font-size: 13px;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
             </div>
             
-            <div class="card" style="border: 2px dashed var(--accent); background: #fafafa;">
-                <h2 class="card-title">🛠️ Admin Tools</h2>
-                <label style="font-size: 12px; font-weight: bold;">Generate Video Code Layout:</label>
-                <input type="text" id="add-title" class="input-field" placeholder="Video Title">
-                <input type="text" id="add-id" class="input-field" placeholder="YouTube Video ID">
-                <button class="submit-btn" style="background:var(--accent); margin-bottom:15px;" onclick="generateVideoCode()">Create Video Block</button>
-                <textarea id="output-code" class="input-field" rows="2" readonly placeholder="Your video code snippet..."></textarea>
-                
-                <hr style="border:0; border-top:1px solid #e5e7eb; margin:15px 0;">
-                
-                <label style="font-size: 12px; font-weight: bold;">Hadees Database Storage Operations:</label>
-                <div style="display:flex; gap:8px; margin-top:5px;">
-                    <button class="action-card-btn" onclick="exportHadeesBackup()">📥 Backup File</button>
-                    <button class="action-card-btn" onclick="document.getElementById('importFileTrigger').click()">📤 Import File</button>
-                    <input type="file" id="importFileTrigger" style="display:none;" accept=".json" onchange="importHadeesBackup(event)">
+            <div class="card">
+                <h2 class="card-title">🎥 Featured Bayan</h2>
+                <div class="video-card" style="margin:0;">
+                    <div class="video-title">Madani Guldasta New Bayan</div>
+                    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: QURAN (UNTOUCHED / LOCKED) -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
                 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
@@ -181,46 +189,31 @@
                 <h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 5px 0; font-size: 16px;"></h3>
                 <div id="quran-info-header" class="info-header-box"></div>
                 
-                <div id="verses-container" class="verses-scroll">
-                    <p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>
-                </div>
+                <div id="verses-container" class="verses-scroll"></div>
             </div>
         </div>
 
-        <!-- TAB 3: VIDEOS -->
         <div id="tab-videos" class="tab-content">
             <div class="card">
                 <h2 class="card-title">🎥 Video Library</h2>
                 <div id="video-archive">
                     <div class="video-card">
-                        <div class="video-title">Madani Guldasta New Bayan</div>
+                        <div class="video-title">Ramzan Special Bayan</div>
                         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 4: INTERACTIVE HADEES -->
         <div id="tab-hadees" class="tab-content">
-            <!-- Search & Filter Bar -->
             <div class="card" style="padding: 12px; margin-bottom: 10px;">
                 <h2 class="card-title" style="margin-bottom:8px;">📜 Sacred Hadees Library</h2>
                 <input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
             </div>
 
-            <!-- List Space -->
             <div id="hadees-render-space" class="hadees-container-scroll"></div>
-
-            <!-- Post New Entry Section -->
-            <div class="card" style="background: #f0fdf4; border: 1px dashed var(--accent); margin-top:10px; padding:12px;">
-                <h3 style="margin: 0 0 8px 0; font-size:14px; color:var(--primary);">✍️ Post New Hadees (Hinglish)</h3>
-                <textarea id="input-hadees-text" class="input-field" rows="3" style="font-size:13px;" placeholder="Write Hadees message text here..."></textarea>
-                <input type="text" id="input-hadees-ref" class="input-field" style="font-size:13px;" placeholder="Reference (e.g., Sahih Bukhari, pp. 24)">
-                <button class="submit-btn" style="padding:8px; font-size:13px;" onclick="addNewHadeesEntry()">➕ Add To App Database</button>
-            </div>
         </div>
 
-        <!-- TAB 5: QIBLA -->
         <div id="tab-qibla" class="tab-content">
             <div class="card" style="text-align: center;">
                 <h2 class="card-title">🧭 Qibla Direction</h2>
@@ -232,7 +225,6 @@
             </div>
         </div>
 
-        <!-- TAB 6: ASK -->
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
@@ -245,7 +237,6 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
@@ -258,8 +249,10 @@
 
 <script>
     let clickCounters = {};
+    let adminTapCount = 0;
+    let adminTapTimer = null;
 
-    // Baked-in Hinglish Core Dataset
+    // MASTER REPOSITORY DATALIST (Paste newly generated Hadees lines inside here 👇)
     const baseHadeesData = [
         {
             text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
@@ -279,25 +272,131 @@
         }
     ];
 
-    let customHadeesList = JSON.parse(localStorage.getItem('user_hadees_db')) || [];
-
-    // Upgraded Core Tab Switcher Logic
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
-        for (var i = 0; i < tabs.length; i++) { 
-            tabs[i].classList.remove('active'); 
-        }
+        for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
         var items = document.getElementsByClassName('nav-item');
-        for (var j = 0; j < items.length; j++) { 
-            items[j].classList.remove('active'); 
-        }
+        for (var j = 0; j < items.length; j++) { items[j].classList.remove('active'); }
         
         document.getElementById('tab-' + tabId).classList.add('active');
-        if(element) {
-            element.classList.add('active');
-        }
-        
+        if(element) element.classList.add('active');
         if(tabId === 'hadees') { renderHadeesList(); }
+    }
+
+    /* ---------------- SECURITY: HIDDEN GESTURE LOGIN ENGINE ---------------- */
+    function handleAdminSecretTap() {
+        adminTapCount++;
+        clearTimeout(adminTapTimer);
+        
+        adminTapTimer = setTimeout(function() {
+            adminTapCount = 0;
+        }, 3000);
+
+        if(adminTapCount === 5) {
+            adminTapCount = 0;
+            let secretAttempt = prompt("Enter Master Security PIN:");
+            if(secretAttempt === "3786") {
+                document.getElementById('secret-admin-gate').style.display = "block";
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                alert("Owner Dashboard Unlocked successfully.");
+            } else {
+                alert("Unauthorized Entry Attempt.");
+            }
+        }
+    }
+
+    function lockAdminTerminal() {
+        document.getElementById('secret-admin-gate').style.display = "none";
+        document.getElementById('adm-hadees-text').value = '';
+        document.getElementById('adm-hadees-ref').value = '';
+        document.getElementById('adm-output-code').value = '';
+    }
+
+    function generateHadeesRepositoryCode() {
+        let txt = document.getElementById('adm-hadees-text').value.trim();
+        let rf = document.getElementById('adm-hadees-ref').value.trim() || "Al-Hadees";
+        
+        if(!txt) { alert("Please input content text first."); return; }
+        
+        // Formats content beautifully into valid JavaScript object notation string
+        let formattedText = txt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+        let formattedRef = rf.replace(/"/g, '\\"');
+        
+        let outputCode = `{\n    text: "${formattedText}",\n    ref: "${formattedRef}"\n},`;
+        document.getElementById('adm-output-code').value = outputCode;
+    }
+
+    /* ---------------- RENDERING ARCHIVE LIST (COPY & SHARE MODIFIED) ---------------- */
+    function renderHadeesList() {
+        const renderBox = document.getElementById('hadees-render-space');
+        const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
+        
+        renderBox.innerHTML = '';
+        let filteredCount = 0;
+
+        baseHadeesData.forEach((item, index) => {
+            let serialNum = index + 1;
+            let textMatch = item.text.toLowerCase();
+            let refMatch = item.ref.toLowerCase();
+            
+            if(searchVal === '' || textMatch.includes(searchVal) || refMatch.includes(searchVal) || String(serialNum) === searchVal) {
+                filteredCount++;
+                let card = document.createElement('div');
+                card.className = 'hadees-card';
+                card.innerHTML = `
+                    <div class="hadees-header">
+                        <span>S.No: ${serialNum}</span>
+                        <span>Aashiq e Rasool App</span>
+                    </div>
+                    <div class="hadees-body-text">${item.text}</div>
+                    <div class="hadees-reference">Hawala: ${item.ref}</div>
+                    <div class="action-btn-row">
+                        <button class="action-card-btn" onclick="copyHadeesOnly(${index})">📋 Copy Text</button>
+                        <button class="action-card-btn" style="color:#15803d; border-color:#bbf7d0;" onclick="shareHadeesWhatsApp(${index})">🟢 WhatsApp Share</button>
+                    </div>
+                `;
+                renderBox.appendChild(card);
+            }
+        });
+
+        if(filteredCount === 0) {
+            renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found.</p>';
+        }
+    }
+
+    // Copies ONLY the text content (No S.No, No Header, No Link)
+    function copyHadeesOnly(index) {
+        let entry = baseHadeesData[index];
+        if(!entry) return;
+        
+        let plainText = entry.text + "\n\nHawala: " + entry.ref;
+        
+        navigator.clipboard.writeText(plainText).then(() => {
+            alert('Hadees content copied cleanly!');
+        }).catch(() => {
+            let dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = plainText;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert('Hadees text copied.');
+        });
+    }
+
+    // Shares the Hadees Text along with your specific requested promo line and site link
+    function shareHadeesWhatsApp(index) {
+        let entry = baseHadeesData[index];
+        if(!entry) return;
+        
+        let cleanAppUrl = window.location.href.split('?')[0];
+        
+        let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\n`;
+        shareTemplate += `CLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n`;
+        shareTemplate += `👉 ${cleanAppUrl}`;
+        
+        let encodedMessage = encodeURIComponent(shareTemplate);
+        window.open('https://wa.me/?text=' + encodedMessage, '_blank');
     }
 
     /* ---------------- QURAN ENGINE SYSTEM (LOCKED) ---------------- */
@@ -321,7 +420,7 @@
         { id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
         { id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
         { id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "يونس" },
-        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "يوسف" },
+        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
         { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
         { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
@@ -358,7 +457,7 @@
         { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
         { id: 81, en: "At-Takwir", ar: "التكوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
         { id: 83, en: "Al-Mutaffifin", ar: "المطففين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
-        { id: 85, border: "none", en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
+        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
         { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
         { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
         { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
@@ -460,168 +559,7 @@
         document.getElementById('verses-container').innerHTML = '';
     }
 
-
-    /* ---------------- SEARCHABLE INTERACTIVE HADEES ENGINE ---------------- */
-    function getCombinedHadeesDataset() {
-        return baseHadeesData.concat(customHadeesList);
-    }
-
-    function renderHadeesList() {
-        const renderBox = document.getElementById('hadees-render-space');
-        const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
-        const absoluteDataset = getCombinedHadeesDataset();
-        
-        renderBox.innerHTML = '';
-        
-        if(absoluteDataset.length === 0) {
-            renderBox.innerHTML = '<p style="text-align:center; color:#6b7280; font-size:13px;">No entries saved yet.</p>';
-            return;
-        }
-
-        let filteredCount = 0;
-
-        absoluteDataset.forEach((item, index) => {
-            let serialNum = index + 1;
-            let textMatch = item.text.toLowerCase();
-            let refMatch = item.ref.toLowerCase();
-            
-            if(searchVal === '' || textMatch.includes(searchVal) || refMatch.includes(searchVal) || String(serialNum) === searchVal) {
-                filteredCount++;
-                
-                let card = document.createElement('div');
-                card.className = 'hadees-card';
-                
-                card.innerHTML = `
-                    <div class="hadees-header">
-                        <span>S.No: ${serialNum}</span>
-                        <span>Aashiq e Rasool App</span>
-                    </div>
-                    <div class="hadees-body-text">${item.text}</div>
-                    <div class="hadees-reference">Hawala: ${item.ref}</div>
-                    <div class="action-btn-row">
-                        <button class="action-card-btn" onclick="copyHadeesSingle(${serialNum})">📋 Copy Text</button>
-                        <button class="action-card-btn" style="color:#15803d; border-color:#bbf7d0;" onclick="shareHadeesWhatsApp(${serialNum})">🟢 WhatsApp Share</button>
-                    </div>
-                `;
-                renderBox.appendChild(card);
-            }
-        });
-
-        if(filteredCount === 0) {
-            renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found for your search term.</p>';
-        }
-    }
-
-    function addNewHadeesEntry() {
-        const txtField = document.getElementById('input-hadees-text');
-        const refField = document.getElementById('input-hadees-ref');
-        
-        let textVal = txtField.value.trim();
-        let refVal = refField.value.trim() || "Al-Hadees";
-
-        if(!textVal) {
-            alert('Hadees content body text cannot be blank!');
-            return;
-        }
-
-        customHadeesList.push({ text: textVal, ref: refVal });
-        localStorage.setItem('user_hadees_db', JSON.stringify(customHadeesList));
-        
-        txtField.value = '';
-        refField.value = '';
-        
-        alert('Hadees added successfully as S.No ' + getCombinedHadeesDataset().length);
-        renderHadeesList();
-    }
-
-    function getFormattedShareString(serialNum) {
-        const dataset = getCombinedHadeesDataset();
-        const entry = dataset[serialNum - 1];
-        if(!entry) return '';
-
-        let cleanAppUrl = window.location.href.split('?')[0];
-
-        let msgString = `📜 *Aashiq e Rasool App*\n`;
-        msgString += `----------------------------------------\n`;
-        msgString += `*S.No:* ${serialNum}\n\n`;
-        msgString += `${entry.text}\n\n`;
-        msgString += `*Hawala:* ${entry.ref}\n`;
-        msgString += `----------------------------------------\n`;
-        msgString += `📲 _Aise mazeed Hinglish Hadees aur Quran padhne ke liye niche diye link se hamari App download karein:_\n`;
-        msgString += `👉 ${cleanAppUrl}`;
-        return msgString;
-    }
-
-    function copyHadeesSingle(serialNum) {
-        let textToCopy = getFormattedShareString(serialNum);
-        if(!textToCopy) return;
-
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            alert('S.No ' + serialNum + ' text copied cleanly with app link details!');
-        }).catch(() => {
-            let dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = textToCopy;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert('S.No ' + serialNum + ' copied.');
-        });
-    }
-
-    function shareHadeesWhatsApp(serialNum) {
-        let finalMessage = getFormattedShareString(serialNum);
-        if(!finalMessage) return;
-        
-        let encodedMessage = encodeURIComponent(finalMessage);
-        window.open('https://wa.me/?text=' + encodedMessage, '_blank');
-    }
-
-    function exportHadeesBackup() {
-        if(customHadeesList.length === 0) {
-            alert("No added Hadees data entries to backup yet.");
-            return;
-        }
-        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customHadeesList));
-        let downloadAnchor = document.createElement('a');
-        downloadAnchor.setAttribute("href", dataStr);
-        downloadAnchor.setAttribute("download", "AashiqERasool_Hadees_Backup.json");
-        document.body.appendChild(downloadAnchor);
-        downloadAnchor.click();
-        downloadAnchor.remove();
-    }
-
-    function importHadeesBackup(event) {
-        let input = event.target;
-        let reader = new FileReader();
-        reader.onload = function() {
-            try {
-                let parsedObj = JSON.parse(reader.result);
-                if(Array.isArray(parsedObj)) {
-                    customHadeesList = parsedObj;
-                    localStorage.setItem('user_hadees_db', JSON.stringify(customHadeesList));
-                    alert("Backup file loaded successfully! Added items restored.");
-                    renderHadeesList();
-                } else {
-                    alert("Invalid backup file format structure.");
-                }
-            } catch(e) {
-                alert("Error parsing selection.");
-            }
-        };
-        reader.readAsText(input.files[0]);
-    }
-
-
-    /* ---------------- OTHER UTILITIES ---------------- */
-    function generateVideoCode() {
-        let title = document.getElementById('add-title').value;
-        let id = document.getElementById('add-id').value;
-        if(!title || !id) { alert('Fill both fields!'); return; }
-        let codeSnippet = '<div class="video-card">\n    <div class="video-title">' + title + '</div>\n    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + id + '" allowfullscreen></iframe></div>\n</div>';
-        document.getElementById('output-code').value = codeSnippet;
-    }
-
+    /* ---------------- UTILITIES ---------------- */
     function sendWhatsApp(e) {
         e.preventDefault();
         let name = encodeURIComponent(document.getElementById('ask-name').value);
@@ -638,10 +576,8 @@
         }, true);
     }
 
-    // Force default landing tab rendering explicitly 
     window.onload = function() {
         switchTab('home', document.querySelector(".nav-item"));
-        renderHadeesList();
     };
 </script>
 </body>
