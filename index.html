@@ -75,8 +75,32 @@
             background: white; border-radius: 12px; padding: 15px;
             margin-bottom: 15px; border: 1px solid #e5e7eb;
         }
-        .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; }
+        .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; margin-bottom: 10px; }
         
+        /* Social Buttons Layout */
+        .social-link-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            width: 100%; padding: 13px; margin-bottom: 10px; border-radius: 8px;
+            border: none; font-weight: bold; font-size: 14px; cursor: pointer;
+            text-decoration: none; box-sizing: border-box; transition: transform 0.1s ease;
+        }
+        .social-link-btn:active { transform: scale(0.98); }
+        .btn-whatsapp { background-color: #25D366; color: white; }
+        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+
+        /* Tasbeeh Interface Layout */
+        .tasbeeh-display { font-size: 48px; font-weight: bold; color: var(--primary); text-align: center; margin: 10px 0; font-family: monospace; letter-spacing: 2px; }
+        .tasbeeh-tap-zone { background: #f0fdf4; border: 3px dashed var(--accent); border-radius: 50%; width: 140px; height: 140px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: var(--primary); cursor: pointer; user-select: none; transition: background 0.1s; }
+        .tasbeeh-tap-zone:active { background: #d1fae5; }
+        .tasbeeh-actions { display: flex; gap: 10px; }
+        .tasbeeh-btn { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-weight: bold; cursor: pointer; background: #f9fafb; color: #4b5563; }
+        .tasbeeh-btn-stop { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
+
+        /* Reading History Box Elements */
+        .history-item-row { display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; cursor: pointer; }
+        .history-item-row:hover { background: #dbeafe; }
+        .history-title-tag { font-weight: bold; color: #1e40af; }
+
         /* Mode Selector Buttons (Surah / Para) */
         .mode-selector { display: flex; gap: 10px; margin-bottom: 15px; }
         .mode-btn { flex: 1; background: #e5e7eb; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text); }
@@ -202,9 +226,42 @@
 
         <!-- TAB 1: HOME -->
         <div id="tab-home" class="tab-content active">
-            <div class="card">
+            <div class="card" style="margin-bottom: 12px;">
                 <h2 class="card-title">👑 Welcome to Your Portal</h2>
-                <p style="font-size: 13px;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
+                <p style="font-size: 13px; margin: 0;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
+            </div>
+
+            <!-- SMART INTERACTIVE DIGITAL TASBEEH COUNTER -->
+            <div class="card" style="margin-bottom: 12px;">
+                <h2 class="card-title" style="text-align: center;">📿 Digital Tasbeeh Counter</h2>
+                <div class="tasbeeh-display" id="tasbeeh-val-box">0000</div>
+                <div class="tasbeeh-tap-zone" onclick="incrementTasbeehCount()">TAP HERE</div>
+                <div class="tasbeeh-actions">
+                    <button class="tasbeeh-btn tasbeeh-btn-stop" onclick="stopAndFreezeTasbeeh()">⏸ Pause</button>
+                    <button class="tasbeeh-btn" onclick="resetTasbeehCountWithPrompt()">🔄 Reset</button>
+                </div>
+            </div>
+
+            <!-- RESUME STUDY DYNAMIC HISTORY HUB -->
+            <div class="card" style="margin-bottom: 12px;">
+                <h2 class="card-title">⏱️ Resume Where You Left Off</h2>
+                <div id="history-render-box">
+                    <p style="font-size: 12px; color: #6b7280; margin: 0;">No reading logs recorded yet. Explore the library to build your tracking history!</p>
+                </div>
+            </div>
+
+            <!-- COMMUNITY PLATFORMS PANEL -->
+            <div class="card" style="margin-bottom: 5px;">
+                <h2 class="card-title">📢 Connect With Us</h2>
+                <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
+                
+                <a href="https://chat.whatsapp.com/LxrBMsjKTn87CySGG9hg0z?s=cl&p=a&ilr=0" target="_blank" class="social-link-btn btn-whatsapp">
+                    🟢 Join Our WhatsApp Group
+                </a>
+                
+                <a href="https://www.instagram.com/aashiq_e_rasool_0786?igsh=MWtpbDVmNjVpYWZ2ag==" target="_blank" class="social-link-btn btn-instagram">
+                    📸 Follow Us on Instagram
+                </a>
             </div>
         </div>
 
@@ -268,7 +325,7 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar (Cleanly balanced grid options) -->
+    <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
@@ -282,6 +339,7 @@
     let clickCounters = {};
     let adminTapCount = 0;
     let adminTapTimer = null;
+    let currentTasbeehCount = 0;
 
     const baseHadeesData = [
         {
@@ -303,14 +361,93 @@
     ];
 
     window.addEventListener('DOMContentLoaded', function() {
+        // Initialize Tasbeeh Counter Value from long-term memory
+        if(localStorage.getItem('saved_tasbeeh_total')) {
+            currentTasbeehCount = parseInt(localStorage.getItem('saved_tasbeeh_total'), 10) || 0;
+        }
+        updateTasbeehCounterDisplay();
+        renderBookmarkHistoryLog();
+
         setTimeout(function() {
             const splash = document.getElementById('splash-screen');
             splash.style.opacity = '0';
             setTimeout(function() {
                 splash.style.visibility = 'hidden';
+                // Always force open Home Screen upon active landing
+                switchTab('home', document.querySelector(".nav-item"));
             }, 500);
         }, 3000);
     });
+
+    // Persistent Tasbeeh Functional Engines
+    function updateTasbeehCounterDisplay() {
+        let padString = String(currentTasbeehCount).padStart(4, '0');
+        document.getElementById('tasbeeh-val-box').innerText = padString;
+    }
+
+    function incrementTasbeehCount() {
+        currentTasbeehCount++;
+        localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
+        updateTasbeehCounterDisplay();
+    }
+
+    function stopAndFreezeTasbeeh() {
+        localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
+        alert("Count tracking suspended and safely saved at: " + currentTasbeehCount);
+    }
+
+    function resetTasbeehCountWithPrompt() {
+        let verify = confirm("Are you sure you want to completely clear your current Zikr count value?");
+        if(verify) {
+            currentTasbeehCount = 0;
+            localStorage.setItem('saved_tasbeeh_total', 0);
+            updateTasbeehCounterDisplay();
+        }
+    }
+
+    // Dynamic History Tracker Engine
+    function logStudyProgressMarker(moduleType, entryId, legibleTitle) {
+        localStorage.setItem('last_viewed_module', moduleType);
+        localStorage.setItem('last_viewed_id', entryId);
+        localStorage.setItem('last_viewed_title', legibleTitle);
+        renderBookmarkHistoryLog();
+    }
+
+    function renderBookmarkHistoryLog() {
+        const historyContainer = document.getElementById('history-render-box');
+        let savedMod = localStorage.getItem('last_viewed_module');
+        let savedTitle = localStorage.getItem('last_viewed_title');
+        let savedId = localStorage.getItem('last_viewed_id');
+
+        if(savedMod && savedTitle && savedId) {
+            let iconElement = savedMod === 'quran_surah' || savedMod === 'quran_para' ? '📖' : '📜';
+            historyContainer.innerHTML = `
+                <div class="history-item-row" onclick="resumeSavedHistoryJump('${savedMod}', ${savedId}, '${savedTitle}')">
+                    <div>
+                        <span>${iconElement} Read Progress:</span>
+                        <span class="history-title-tag">${savedTitle}</span>
+                    </div>
+                    <span style="color:var(--accent); font-weight:bold;">Tap to Resume ➔</span>
+                </div>
+            `;
+        }
+    }
+
+    function resumeSavedHistoryJump(module, id, title) {
+        if(module === 'quran_surah') {
+            switchTab('quran', document.querySelectorAll(".nav-item")[1]);
+            toggleQuranMode('surah');
+            loadQuranContent('surah', id, title);
+        } else if(module === 'quran_para') {
+            switchTab('quran', document.querySelectorAll(".nav-item")[1]);
+            toggleQuranMode('para');
+            loadQuranContent('para', id, title);
+        } else if(module === 'hadees_view') {
+            switchTab('hadees', document.querySelectorAll(".nav-item")[2]);
+            document.getElementById('hadees-search-input').value = id;
+            renderHadeesList();
+        }
+    }
 
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
@@ -407,6 +544,7 @@
     function copyHadeesOnly(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
+        logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
         let plainText = entry.text + "\n\nHawala: " + entry.ref;
         navigator.clipboard.writeText(plainText).then(() => { alert('Hadees content copied cleanly!'); });
     }
@@ -414,6 +552,7 @@
     function shareHadeesWhatsApp(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
+        logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
         let cleanAppUrl = window.location.href.split('?')[0];
         let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n👉 ${cleanAppUrl}`;
         window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
@@ -479,7 +618,7 @@
         { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" }, 
         { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" }, 
         { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" }, 
-        { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" }, 
+        { id: 91, en: "Ash-Shu'ams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" }, 
         { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" }, 
         { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" }, 
         { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" }, 
@@ -510,6 +649,9 @@
     }
 
     function loadQuranContent(type, numericId, displayName) {
+        // Track the user reading step instantly
+        logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
+
         document.getElementById('quran-menu-panel').style.display = 'none';
         document.getElementById('quran-reader-panel').style.display = 'block';
         document.getElementById('reader-display-title').innerText = displayName;
@@ -536,7 +678,7 @@
                 if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
                 if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
                 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرََّحِيمِ", "").trim();
+                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
                     paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
                 }
                 paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
@@ -568,8 +710,6 @@
             if(heading !== undefined) document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
         }, true);
     }
-
-    window.onload = function() { switchTab('home', document.querySelector(".nav-item")); };
 </script>
 </body>
 </html>
