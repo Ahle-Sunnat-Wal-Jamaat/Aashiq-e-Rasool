@@ -35,8 +35,9 @@
         header h1 { margin: 0; font-size: 22px; }
         .main-content { padding: 15px; flex: 1; margin-bottom: 90px; }
         
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        /* Fixed Tab View System Visibility */
+        .tab-content { display: none !important; }
+        .tab-content.active { display: block !important; }
         
         .card {
             background: white; border-radius: 12px; padding: 15px;
@@ -107,7 +108,7 @@
         .hadees-body-text { font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; margin-bottom: 10px; font-weight: 500; }
         .hadees-reference { font-size: 12px; font-style: italic; color: #6b7280; display: block; margin-bottom: 10px; }
         .action-btn-row { display: flex; gap: 8px; }
-        .action-card-btn { flex: 1; padding: 6px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
+        .action-card-btn { flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
         .action-card-btn:hover { background: #f3f4f6; }
 
         /* Miscellaneous UI */
@@ -125,7 +126,7 @@
             position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
             border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
         }
-        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; }
         .nav-item.active { color: var(--primary); font-weight: bold; }
     </style>
 </head>
@@ -138,7 +139,7 @@
         <!-- TAB 1: HOME -->
         <div id="tab-home" class="tab-content active">
             <div class="card">
-                <h2 class="card-title">🕌 Welcome to Your Portal</h2>
+                <h2 class="card-title">👑 Welcome to Your Portal</h2>
                 <p style="font-size: 13px;">Your application navigation is stable. Switch tabs below smoothly.</p>
             </div>
             
@@ -199,7 +200,7 @@
             </div>
         </div>
 
-        <!-- TAB 4: INTERACTIVE HADEES (UPGRADED) -->
+        <!-- TAB 4: INTERACTIVE HADEES -->
         <div id="tab-hadees" class="tab-content">
             <!-- Search & Filter Bar -->
             <div class="card" style="padding: 12px; margin-bottom: 10px;">
@@ -210,7 +211,7 @@
             <!-- List Space -->
             <div id="hadees-render-space" class="hadees-container-scroll"></div>
 
-            <!-- Post New Entry Section (Admin Panel inside tab) -->
+            <!-- Post New Entry Section -->
             <div class="card" style="background: #f0fdf4; border: 1px dashed var(--accent); margin-top:10px; padding:12px;">
                 <h3 style="margin: 0 0 8px 0; font-size:14px; color:var(--primary);">✍️ Post New Hadees (Hinglish)</h3>
                 <textarea id="input-hadees-text" class="input-field" rows="3" style="font-size:13px;" placeholder="Write Hadees message text here..."></textarea>
@@ -237,7 +238,7 @@
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <form onsubmit="sendWhatsApp(event)">
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name" required>
-                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question" required></required>
+                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question" required></textarea>
                     <button type="submit" class="submit-btn">Send to WhatsApp</button>
                 </form>
             </div>
@@ -256,10 +257,9 @@
 </div>
 
 <script>
-    // Click counter for Quran elements
     let clickCounters = {};
 
-    // Pre-loaded Hinglish Core Dataset
+    // Baked-in Hinglish Core Dataset
     const baseHadeesData = [
         {
             text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
@@ -279,20 +279,28 @@
         }
     ];
 
-    // Load initial storage elements safely
     let customHadeesList = JSON.parse(localStorage.getItem('user_hadees_db')) || [];
 
+    // Upgraded Core Tab Switcher Logic
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
-        for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
+        for (var i = 0; i < tabs.length; i++) { 
+            tabs[i].classList.remove('active'); 
+        }
         var items = document.getElementsByClassName('nav-item');
-        for (var j = 0; j < items.length; j++) { items[j].classList.remove('active'); }
+        for (var j = 0; j < items.length; j++) { 
+            items[j].classList.remove('active'); 
+        }
+        
         document.getElementById('tab-' + tabId).classList.add('active');
-        element.classList.add('active');
+        if(element) {
+            element.classList.add('active');
+        }
+        
         if(tabId === 'hadees') { renderHadeesList(); }
     }
 
-    /* ---------------- QURAN ENGINE SYSTEM (LOCKED/UNTOUCHED) ---------------- */
+    /* ---------------- QURAN ENGINE SYSTEM (LOCKED) ---------------- */
     function toggleQuranMode(mode) {
         document.getElementById('btn-mode-surah').classList.remove('active');
         document.getElementById('btn-mode-para').classList.remove('active');
@@ -313,7 +321,7 @@
         { id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
         { id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
         { id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "يونس" },
-        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
+        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "يوسف" },
         { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
         { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
@@ -350,7 +358,7 @@
         { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
         { id: 81, en: "At-Takwir", ar: "التكوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
         { id: 83, en: "Al-Mutaffifin", ar: "المطففين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
-        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
+        { id: 85, border: "none", en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
         { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
         { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
         { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
@@ -453,7 +461,7 @@
     }
 
 
-    /* ---------------- NEW SEARCHABLE INTERACTIVE HADEES ENGINE ---------------- */
+    /* ---------------- SEARCHABLE INTERACTIVE HADEES ENGINE ---------------- */
     function getCombinedHadeesDataset() {
         return baseHadeesData.concat(customHadeesList);
     }
@@ -477,7 +485,6 @@
             let textMatch = item.text.toLowerCase();
             let refMatch = item.ref.toLowerCase();
             
-            // Match with index number, text keywords, or book reference keys
             if(searchVal === '' || textMatch.includes(searchVal) || refMatch.includes(searchVal) || String(serialNum) === searchVal) {
                 filteredCount++;
                 
@@ -532,7 +539,6 @@
         const entry = dataset[serialNum - 1];
         if(!entry) return '';
 
-        // Dynamically extract deployment link safely 
         let cleanAppUrl = window.location.href.split('?')[0];
 
         let msgString = `📜 *Aashiq e Rasool App*\n`;
@@ -553,7 +559,6 @@
         navigator.clipboard.writeText(textToCopy).then(() => {
             alert('S.No ' + serialNum + ' text copied cleanly with app link details!');
         }).catch(() => {
-            // Fallback manual approach
             let dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
             dummy.value = textToCopy;
@@ -572,7 +577,6 @@
         window.open('https://wa.me/?text=' + encodedMessage, '_blank');
     }
 
-    /* Backup system implementations to keep inputs safe */
     function exportHadeesBackup() {
         if(customHadeesList.length === 0) {
             alert("No added Hadees data entries to backup yet.");
@@ -634,8 +638,11 @@
         }, true);
     }
 
-    // Run list load when user starts up first time
-    renderHadeesList();
+    // Force default landing tab rendering explicitly 
+    window.onload = function() {
+        switchTab('home', document.querySelector(".nav-item"));
+        renderHadeesList();
+    };
 </script>
 </body>
 </html>
