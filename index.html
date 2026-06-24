@@ -315,12 +315,11 @@
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
                 
-                <form action="https://api.whatsapp.com/send" method="GET" onsubmit="sendWhatsApp(event)">
-                    <input type="hidden" name="phone" value="919398696996">
+                <div>
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
                     <textarea id="ask-query" class="input-field" rows="5" placeholder="Your Question / Aapka Sawal" required></textarea>
-                    <button type="submit" class="submit-btn">🟢 Send to WhatsApp</button>
-                </form>
+                    <button type="button" class="submit-btn" onclick="sendWhatsAppDirectly()">🟢 Send to WhatsApp</button>
+                </div>
             </div>
         </div>
     </div>
@@ -625,7 +624,7 @@
         { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" }, 
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
-        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" }, 
+        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" }, 
         { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" }, 
         { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
         { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
@@ -694,14 +693,19 @@
         document.getElementById('quran-menu-panel').style.display = 'block';
     }
 
-    function sendWhatsApp(e) {
-        e.preventDefault();
-        var cleanTarget = "919398696996";
+    // DIRECTLY FIXED ASK WHATSAPP ROUTING ENGINE
+    function sendWhatsAppDirectly() {
         var userFormName = document.getElementById('ask-name').value.trim();
         var userFormQuery = document.getElementById('ask-query').value.trim();
+        
+        if(!userFormName || !userFormQuery) {
+            alert("Please fill out both Name and Question fields.");
+            return;
+        }
+        
         var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
-        var cleanURL = "https://api.whatsapp.com/send?phone=" + cleanTarget + "&text=" + encodeURIComponent(messageString);
-        window.location.href = cleanURL;
+        var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
+        window.open(cleanURL, '_blank');
     }
 
     if (window.DeviceOrientationEvent) {
