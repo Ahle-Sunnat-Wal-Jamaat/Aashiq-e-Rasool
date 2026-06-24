@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aashiq e Rasool App</title>
     
+    <!-- Importing Clear, Beautiful Indo-Pak Style Arabic Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -135,14 +136,20 @@
 <body>
 
 <div class="app-container">
+    <!-- Secure Header Trigger Zone -->
     <header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
 
     <div class="main-content">
         
+        <!-- SECRET OWNER ACCESS PANEL (100% Invisible to Public Users) -->
         <div id="secret-admin-gate" class="card">
             <h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
-            <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate the code lines below to instantly expand your master repository list on GitHub.</p>
+            <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate code lines quickly and navigate your GitHub setup effortlessly.</p>
             
+            <!-- NEW NAVIGATION SHORTCUT BUTTON HERE -->
+            <button class="submit-btn" style="background:#1e40af; margin-bottom:15px; font-size:13px;" onclick="copySearchPhraseShortcut()">📋 Click First: Copy GitHub Search Phrase</button>
+            <hr style="border:0; border-top:1px dashed #f59e0b; margin:10px 0;">
+
             <label style="font-size: 11px; font-weight: bold;">Step 1: Write Hadees Details</label>
             <textarea id="adm-hadees-text" class="input-field" rows="3" placeholder="Paste Hinglish Hadees content text..."></textarea>
             <input type="text" id="adm-hadees-ref" class="input-field" placeholder="Book / Page Reference Hawala">
@@ -156,6 +163,7 @@
             <button class="action-card-btn" style="background:#fff; color:red;" onclick="lockAdminTerminal()">🔒 Lock Admin Panel</button>
         </div>
 
+        <!-- TAB 1: HOME -->
         <div id="tab-home" class="tab-content active">
             <div class="card">
                 <h2 class="card-title">👑 Welcome to Your Portal</h2>
@@ -171,6 +179,7 @@
             </div>
         </div>
 
+        <!-- TAB 2: QURAN (LOCKED) -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
                 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
@@ -193,6 +202,7 @@
             </div>
         </div>
 
+        <!-- TAB 3: VIDEOS -->
         <div id="tab-videos" class="tab-content">
             <div class="card">
                 <h2 class="card-title">🎥 Video Library</h2>
@@ -205,15 +215,18 @@
             </div>
         </div>
 
+        <!-- TAB 4: INTERACTIVE HADEES -->
         <div id="tab-hadees" class="tab-content">
             <div class="card" style="padding: 12px; margin-bottom: 10px;">
                 <h2 class="card-title" style="margin-bottom:8px;">📜 Sacred Hadees Library</h2>
                 <input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
             </div>
 
+            <!-- Scrollable Archive Container -->
             <div id="hadees-render-space" class="hadees-container-scroll"></div>
         </div>
 
+        <!-- TAB 5: QIBLA -->
         <div id="tab-qibla" class="tab-content">
             <div class="card" style="text-align: center;">
                 <h2 class="card-title">🧭 Qibla Direction</h2>
@@ -225,6 +238,7 @@
             </div>
         </div>
 
+        <!-- TAB 6: ASK -->
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
@@ -237,6 +251,7 @@
         </div>
     </div>
 
+    <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
@@ -257,11 +272,6 @@
         {
             text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
             ref: "(خود کُشی کا علاج، ص 58 تا 59)"
-        },
-        {
-            text: "testing to add new hadessey easily",
-            ref: "tested"
-
         },
         {
             text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
@@ -310,6 +320,20 @@
         }
     }
 
+    function copySearchPhraseShortcut() {
+        navigator.clipboard.writeText("const baseHadeesData").then(() => {
+            alert('Phrase "const baseHadeesData" copied! You can now paste this directly into GitHub Search Box (Ctrl+F).');
+        }).catch(() => {
+            let dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = "const baseHadeesData";
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert('Phrase copied to clipboard.');
+        });
+    }
+
     function lockAdminTerminal() {
         document.getElementById('secret-admin-gate').style.display = "none";
         document.getElementById('adm-hadees-text').value = '';
@@ -323,7 +347,6 @@
         
         if(!txt) { alert("Please input content text first."); return; }
         
-        // Formats content beautifully into valid JavaScript object notation string
         let formattedText = txt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
         let formattedRef = rf.replace(/"/g, '\\"');
         
@@ -369,7 +392,6 @@
         }
     }
 
-    // Copies ONLY the text content (No S.No, No Header, No Link)
     function copyHadeesOnly(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
@@ -389,7 +411,6 @@
         });
     }
 
-    // Shares the Hadees Text along with your specific requested promo line and site link
     function shareHadeesWhatsApp(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
@@ -441,7 +462,7 @@
         { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
         { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
         { id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
-        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
+        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, river: "Ad-Dukhan", ar: "الدخان" },
         { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
         { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
         { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
@@ -472,9 +493,9 @@
         { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" }, 
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
-        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" }, 
+        { id: 105, en: "Al-Fil", ar: "الفیل" }, { id: 106, en: "Quraysh", ar: "قریش" }, 
         { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" }, 
-        { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
+        { id: 109, en: "Al-Kafirun", ar: "الکافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
         { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
         { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
     ];
