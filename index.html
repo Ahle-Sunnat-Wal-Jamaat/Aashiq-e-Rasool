@@ -28,6 +28,8 @@
         }
         header h1 { margin: 0; font-size: 22px; }
         .main-content { padding: 15px; flex: 1; margin-bottom: 80px; }
+        
+        /* Universal Tab Controls */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
@@ -37,40 +39,35 @@
         }
         .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; }
         
-        /* Complete Quran Directory Layout */
-        .quran-directory { display: flex; flex-direction: column; gap: 6px; max-height: 70vh; overflow-y: auto; padding-right: 4px; }
+        /* Quran Directory Styling */
+        .quran-directory { display: flex; flex-direction: column; gap: 6px; max-height: 65vh; overflow-y: auto; }
         .surah-row {
-            background: var(--bg); border: 1px solid #d1fae5; padding: 10px 14px;
+            background: var(--bg); border: 1px solid #d1fae5; padding: 12px;
             border-radius: 8px; font-weight: 600; color: var(--primary);
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
-        .surah-row:hover { background: #e6fbf0; }
         .surah-arabic-title { font-size: 18px; font-weight: normal; color: #0f766e; }
-
         .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
-        .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-size: 13px; font-weight: bold; }
-        .quran-display-frame { width: 100%; height: 65vh; border: none; border-radius: 6px; background: white; }
+        .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
+        .quran-display-frame { width: 100%; height: 60vh; border: none; border-radius: 6px; background: white; }
 
+        /* Other Utilities */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-        .compass-disc {
-            width: 150px; height: 150px; border: 5px solid var(--primary); border-radius: 50%;
-            margin: 15px auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center;
-        }
+        .compass-disc { width: 150px; height: 150px; border: 5px solid var(--primary); border-radius: 50%; margin: 15px auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center; }
         .needle { width: 4px; height: 110px; background: #ef4444; position: absolute; transition: transform 0.2s ease-out; }
         .kaaba-icon { position: absolute; top: 10px; font-size: 18px; color: gold; }
-
         .input-field { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #c9deb3; border-radius: 6px; box-sizing: border-box; }
         .submit-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
 
+        /* Fixed Navigation Bar */
         .nav-bar {
             position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
-            border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 10px 0; z-index: 100;
+            border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
         }
-        .nav-item { background: none; border: none; color: #6b7280; font-size: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; width: 16%; }
+        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .nav-item.active { color: var(--primary); font-weight: bold; }
     </style>
 </head>
@@ -80,10 +77,11 @@
     <header><h1>Aashiq e Rasool</h1></header>
 
     <div class="main-content">
+        <!-- TAB 1: HOME -->
         <div id="tab-home" class="tab-content active">
             <div class="card">
                 <h2 class="card-title">🕌 Welcome to Your Portal</h2>
-                <p style="font-size: 13px;">Your application setup is successfully active and ready for your community.</p>
+                <p style="font-size: 13px;">Your application navigation is fixed and active. Switch tabs below smoothly.</p>
             </div>
             
             <div class="card" style="border: 2px dashed var(--accent); background: #fafafa;">
@@ -91,16 +89,18 @@
                 <input type="text" id="add-title" class="input-field" placeholder="Video Title">
                 <input type="text" id="add-id" class="input-field" placeholder="YouTube Video ID">
                 <button class="submit-btn" style="background:var(--accent);" onclick="generateVideoCode()">Create Video Block</button>
-                <textarea id="output-code" class="input-field" rows="3" readonly placeholder="Your custom code code will show up here..."></textarea>
+                <textarea id="output-code" class="input-field" rows="3" readonly placeholder="Your code will show up here..."></textarea>
             </div>
         </div>
 
+        <!-- TAB 2: QURAN -->
         <div id="tab-quran" class="tab-content">
-            <div class="card" style="padding: 10px;">
-                <h2 class="card-title" style="margin-left: 5px;">📖 Al-Quran Al-Kareem</h2>
+            <div class="card">
+                <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
                 
                 <div id="quran-directory-view" class="quran-directory">
-                    </div>
+                    <!-- Complete 114 Surah index list will load here automatically -->
+                </div>
 
                 <div id="quran-reader-panel" class="quran-reader-panel">
                     <button class="back-btn" onclick="closeSurahReader()">⬅ Back to Index</button>
@@ -109,11 +109,12 @@
             </div>
         </div>
 
+        <!-- TAB 3: VIDEOS -->
         <div id="tab-videos" class="tab-content">
             <div class="card">
                 <h2 class="card-title">🎥 Video Library</h2>
                 <div id="video-archive">
-                    <div class="video-card" data-title="madani guldasta new bayan">
+                    <div class="video-card">
                         <div class="video-title">Madani Guldasta New Bayan</div>
                         <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                     </div>
@@ -121,6 +122,7 @@
             </div>
         </div>
 
+        <!-- TAB 4: HADEES -->
         <div id="tab-hadees" class="tab-content">
             <div class="card">
                 <h2 class="card-title">📜 Sacred Hadees</h2>
@@ -130,6 +132,7 @@
             </div>
         </div>
 
+        <!-- TAB 5: QIBLA -->
         <div id="tab-qibla" class="tab-content">
             <div class="card" style="text-align: center;">
                 <h2 class="card-title">🧭 Qibla Direction</h2>
@@ -137,10 +140,11 @@
                     <div class="kaaba-icon">🕋</div>
                     <div class="needle" id="needle"></div>
                 </div>
-                <p style="font-size: 12px; color: #6b7280;">Rotate your device to orient towards Makkah.</p>
+                <p style="font-size: 12px; color: #6b7280;">Rotate your mobile device to align with Makkah.</p>
             </div>
         </div>
 
+        <!-- TAB 6: ASK -->
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
@@ -153,18 +157,36 @@
         </div>
     </div>
 
+    <!-- Main Navigation Bar Link Buttons -->
     <div class="nav-bar">
-        <button class="nav-item active" onclick="switchTab('home', this)">🏠 Home</button>
-        <button class="nav-item" onclick="switchTab('quran', this)">📖 Quran</button>
-        <button class="nav-item" onclick="switchTab('videos', this)">🎥 Videos</button>
-        <button class="nav-item" onclick="switchTab('hadees', this)">📜 Hadees</button>
-        <button class="nav-item" onclick="switchTab('qibla', this)">🧭 Qibla</button>
-        <button class="nav-item" onclick="switchTab('ask', this)">❓ Ask</button>
+        <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
+        <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
+        <button class="nav-item" onclick="switchTab('videos', this)">🎥<span>Videos</span></button>
+        <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
+        <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
+        <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
     </div>
 </div>
 
 <script>
-    // Full 114 Surah Metadata Index
+    // Unbroken Navigation Switching Function
+    function switchTab(tabId, element) {
+        // Hide all tabs
+        var tabs = document.getElementsByClassName('tab-content');
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].classList.remove('active');
+        }
+        // Remove active highlights from menu items
+        var items = document.getElementsByClassName('nav-item');
+        for (var j = 0; j < items.length; j++) {
+            items[j].classList.remove('active');
+        }
+        // Show current tab and highlight button
+        document.getElementById('tab-' + tabId).classList.add('active');
+        element.classList.add('active');
+    }
+
+    // Complete 114 Surah Array Index Data
     const surahList = [
         { id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
         { id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
@@ -192,7 +214,7 @@
         { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
         { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
         { id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
-        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القمر" },
+        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "العلق" },
         { id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
         { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
         { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
@@ -211,32 +233,31 @@
         { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
         { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
         { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
-        { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
+        { id: 91, en: "Ash-Shums", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
         { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
         { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
         { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
         { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" },
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" },
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
-        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" },
+        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, pre: "Quraysh", en: "Quraysh", ar: "قريش" },
         { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الكوثر" },
         { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
         { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
         { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" ]
     ];
 
-    // Build the directory grid automatically
+    // Build the 114 Directory List cleanly
     const directory = document.getElementById('quran-directory-view');
-    surahList.forEach(surah => {
-        directory.innerHTML += `
-            <div class="surah-row" onclick="loadSurahTarget(${surah.id})">
-                <span>${surah.id}. ${surah.en}</span>
-                <span class="surah-arabic-title">${surah.ar}</span>
-            </div>`;
+    surahList.forEach(function(surah) {
+        directory.innerHTML += '<div class="surah-row" onclick="loadSurahTarget(' + surah.id + ')">' +
+                               '<span>' + surah.id + '. ' + surah.en + '</span>' +
+                               '<span class="surah-arabic-title">' + surah.ar + '</span>' +
+                               '</div>';
     });
 
     function loadSurahTarget(id) {
-        document.getElementById('quran-frame').src = `https://quran.com/${id}`;
+        document.getElementById('quran-frame').src = 'https://quran.com/' + id;
         document.getElementById('quran-directory-view').style.display = 'none';
         document.getElementById('quran-reader-panel').style.display = 'block';
     }
@@ -247,18 +268,11 @@
         document.getElementById('quran-frame').src = "";
     }
 
-    function switchTab(tabId, element) {
-        document.querySelectorAll('.tab-content').forEach(item => item.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        document.getElementById('tab-' + tabId).classList.add('active');
-        element.classList.add('active');
-    }
-
     function generateVideoCode() {
         let title = document.getElementById('add-title').value;
         let id = document.getElementById('add-id').value;
         if(!title || !id) { alert('Fill both fields!'); return; }
-        let codeSnippet = `<div class="video-card" data-title="${title.toLowerCase()}">\n    <div class="video-title">${title}</div>\n    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/${id}" allowfullscreen></iframe></div>\n</div>`;
+        let codeSnippet = '<div class="video-card">\n    <div class="video-title">' + title + '</div>\n    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/' + id + '" allowfullscreen></iframe></div>\n</div>';
         document.getElementById('output-code').value = codeSnippet;
     }
 
@@ -266,14 +280,14 @@
         e.preventDefault();
         let name = encodeURIComponent(document.getElementById('ask-name').value);
         let query = encodeURIComponent(document.getElementById('ask-query').value);
-        window.open(`https://wa.me/919000000000?text=*Question*%0A*Name:* ${name}%0A*Query:* ${query}`, '_blank');
+        window.open('https://wa.me/919000000000?text=*Question*%0A*Name:* ' + name + '%0A*Query:* ' + query, '_blank');
     }
 
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', function(e) {
             let heading = e.webkitCompassHeading || e.alpha;
             if(heading !== undefined) {
-                document.getElementById('needle').style.transform = `rotate(${292 - heading}deg)`;
+                document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
             }
         }, true);
     }
