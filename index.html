@@ -586,9 +586,12 @@
         let query = document.getElementById('ask-query').value.trim();
         
         let formattedMessage = `📩 *New Deeni Sawal*\n\n👤 *From:* ${name}\n📝 *Sawal:* ${query}`;
-        let whatsappUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMessage)}`;
         
-        window.open(whatsappUrl, '_blank');
+        // Troubleshooting Fix: Alternative direct API layout configuration to bypass popup security layers
+        let whatsappUrl = `https://api.whatsapp.com/send?phone=${targetPhone}&text=${encodeURIComponent(formattedMessage)}`;
+        
+        // Troubleshooting Fix: Immediate frame location swap instead of opening new tabs to counter mobile popup blockers
+        window.location.href = whatsappUrl;
     }
 
     if (window.DeviceOrientationEvent) {
