@@ -147,10 +147,6 @@
         #secret-admin-gate { display: none; background: #fffbeb; border: 2px solid #f59e0b; }
 
         /* Miscellaneous UI */
-        .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
-        .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
         .compass-disc { width: 150px; height: 150px; border: 5px solid var(--primary); border-radius: 50%; margin: 15px auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center; }
         .needle { width: 4px; height: 110px; background: #ef4444; position: absolute; transition: transform 0.2s ease-out; }
         .kaaba-icon { position: absolute; top: 10px; font-size: 18px; color: gold; }
@@ -161,13 +157,13 @@
             position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
             border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
         }
-        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; }
+        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; width: 20%; }
         .nav-item.active { color: var(--primary); font-weight: bold; }
     </style>
 </head>
 <body>
 
-<!-- ANIMATED SPLASH SCREEN (Using local logo.jpeg layout) -->
+<!-- ANIMATED SPLASH SCREEN -->
 <div id="splash-screen">
     <div class="splash-logo-container">
         <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
@@ -210,14 +206,6 @@
                 <h2 class="card-title">👑 Welcome to Your Portal</h2>
                 <p style="font-size: 13px;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
             </div>
-            
-            <div class="card">
-                <h2 class="card-title">🎥 Featured Bayan</h2>
-                <div class="video-card" style="margin:0;">
-                    <div class="video-title">Madani Guldasta New Bayan</div>
-                    <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                </div>
-            </div>
         </div>
 
         <!-- TAB 2: QURAN -->
@@ -243,20 +231,7 @@
             </div>
         </div>
 
-        <!-- TAB 3: VIDEOS -->
-        <div id="tab-videos" class="tab-content">
-            <div class="card">
-                <h2 class="card-title">🎥 Video Library</h2>
-                <div id="video-archive">
-                    <div class="video-card">
-                        <div class="video-title">Ramzan Special Bayan</div>
-                        <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 4: INTERACTIVE HADEES -->
+        <!-- TAB 3: INTERACTIVE HADEES -->
         <div id="tab-hadees" class="tab-content">
             <div class="card" style="padding: 12px; margin-bottom: 10px;">
                 <h2 class="card-title" style="margin-bottom:8px;">📜 Sacred Hadees Library</h2>
@@ -265,7 +240,7 @@
             <div id="hadees-render-space" class="hadees-container-scroll"></div>
         </div>
 
-        <!-- TAB 5: QIBLA -->
+        <!-- TAB 4: QIBLA -->
         <div id="tab-qibla" class="tab-content">
             <div class="card" style="text-align: center;">
                 <h2 class="card-title">🧭 Qibla Direction</h2>
@@ -277,13 +252,12 @@
             </div>
         </div>
 
-        <!-- TAB 6: ASK -->
+        <!-- TAB 5: ASK -->
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
                 
-                <!-- Explicit form method that guarantees direct connection to your number -->
                 <form action="https://api.whatsapp.com/send" method="GET" onsubmit="sendWhatsApp(event)">
                     <input type="hidden" name="phone" value="919398696996">
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
@@ -294,11 +268,10 @@
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
+    <!-- Bottom Navigation Bar (Cleanly balanced grid options) -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
-        <button class="nav-item" onclick="switchTab('videos', this)">🎥<span>Videos</span></button>
         <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
         <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
         <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
@@ -579,20 +552,13 @@
         document.getElementById('quran-menu-panel').style.display = 'block';
     }
 
-    /* ---------------- TRANS-FORWARD ENGINE FOR WHATSAPP ---------------- */
     function sendWhatsApp(e) {
         e.preventDefault();
-        
-        // Locked on 919398696996 to make sure cache parameters cannot use old numbers
         var cleanTarget = "919398696996";
         var userFormName = document.getElementById('ask-name').value.trim();
         var userFormQuery = document.getElementById('ask-query').value.trim();
-        
         var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
-        
-        // Forcing exact absolute generation
         var cleanURL = "https://api.whatsapp.com/send?phone=" + cleanTarget + "&text=" + encodeURIComponent(messageString);
-        
         window.location.href = cleanURL;
     }
 
