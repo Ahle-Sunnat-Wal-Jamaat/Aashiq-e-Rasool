@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aashiq e Rasool App</title>
-    <!-- Importing beautiful, authentic Naskh fonts directly from Google Fonts -->
+    <!-- Importing Amiri Quran and Noto Nastaliq/Naskh variants for the thick Indo-Pak look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Noto+Naskh+Arabic:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #064e3b;
             --accent: #10b981;
-            --bg: #f0fdf4;
+            --bg: #f3f4f6;
             --card: #ffffff;
             --text: #1f2937;
         }
@@ -43,15 +43,13 @@
         }
         .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; }
         
-        /* Mode Selector Buttons (Surah / Para) */
         .mode-selector { display: flex; gap: 10px; margin-bottom: 15px; }
         .mode-btn { flex: 1; background: #e5e7eb; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text); }
         .mode-btn.active { background: var(--primary); color: white; }
 
-        /* Grid Lists */
         .list-container { display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; padding: 5px; }
         .grid-row {
-            background: var(--bg); border: 1px solid #d1fae5; padding: 12px;
+            background: #f0fdf4; border: 1px solid #d1fae5; padding: 12px;
             border-radius: 8px; font-weight: 600; color: var(--primary);
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
@@ -61,28 +59,49 @@
         /* Reader Panel */
         .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
         .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
-        .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 15px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
         
-        /* Continuous Arabic Text in Crisp Naskh Style */
+        /* Quran Book Page Container styling matching the attached image paper tint */
+        .verses-scroll { 
+            max-height: 55vh; 
+            overflow-y: auto; 
+            padding: 20px 15px; 
+            background: #ffffff; 
+            border: 2px solid #111111;
+            border-radius: 4px;
+        }
+        
+        /* Continuous Arabic Text matching Indo-Pak Bold Calligraphy Style */
         .quran-continuous-block { 
             text-align: justify; 
-            font-size: 26px; 
-            line-height: 2.4; 
-            color: #111; 
+            font-size: 30px; 
+            line-height: 2.5; 
+            color: #000000; 
             direction: rtl; 
-            font-family: 'Scheherazade New', 'Noto Naskh Arabic', serif;
-            word-spacing: 2px;
+            font-family: 'Amiri Quran', 'Noto Naskh Arabic', serif;
+            font-weight: 700;
+            word-spacing: 4px;
+            letter-spacing: 0.5px;
+            text-shadow: 0.3px 0px 0px #000, -0.3px 0px 0px #000; /* Subtle text-shadow creates extra bold ink appearance */
         }
-        /* Style for the Ayat numbers inside the text block */
+        
+        /* Ayat dynamic marker design modeled after the circles in your image */
         .ayat-marker {
-            color: var(--primary);
-            font-size: 22px;
-            margin: 0 4px;
+            color: #000000;
+            font-size: 20px;
+            margin: 0 6px;
             font-weight: bold;
             font-family: 'Segoe UI', sans-serif;
+            border: 1px solid #111111;
+            border-radius: 50%;
+            padding: 2px 6px;
+            display: inline-block;
+            line-height: 18px;
+            text-align: center;
+            background: #fbfbfb;
+            direction: ltr;
         }
 
-        /* Other Panels */
+        /* Other UI Panels */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
         .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 6px; }
@@ -126,7 +145,7 @@
         <!-- TAB 2: QURAN -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
-                <h2 class="card-title">📖 Al-Quran Al-Kareem (Naskh)</h2>
+                <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
                 
                 <div class="mode-selector">
                     <button id="btn-mode-surah" class="mode-btn active" onclick="toggleQuranMode('surah')">Surah Wise</button>
@@ -164,7 +183,7 @@
         <div id="tab-hadees" class="tab-content">
             <div class="card">
                 <h2 class="card-title">📜 Sacred Hadees</h2>
-                <div class="card" style="background: var(--bg); border-left: 4px solid var(--primary);">
+                <div class="card" style="background: #f0fdf4; border-left: 4px solid var(--primary);">
                     <p style="font-style: italic; font-size: 14px; margin: 0;">"Namaz is the pillar of Islam." (Tirmidhi)</p>
                 </div>
             </div>
@@ -240,7 +259,7 @@
         { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "يوسف" },
         { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
-        { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
+        { id: 17, Fleming: "Al-Isra", en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
         { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
         { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
         { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
@@ -323,21 +342,25 @@
         .then(res => res.json())
         .then(dataset => {
             let arabicAyahs = dataset.data.ayahs;
-            
             displayBox.innerHTML = '';
             
-            // Build a single, unbroken block paragraph wrapper
             let paragraphHTML = '<div class="quran-continuous-block">';
             
             arabicAyahs.forEach((ayah) => {
                 let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
                 
-                // Add the text and wrap the verse end symbol cleanly inside the same string block
-                paragraphHTML += ayah.text + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
+                // Clean the text rendering properties for seamless wrapping
+                let cleanText = ayah.text.trim();
+                
+                // Remove initial Bismillah from verses if it's auto-added by api to match manual book reading flow
+                if (numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+                }
+
+                paragraphHTML += cleanText + ' <span class="ayat-marker">' + verseIdentifier + '</span> ';
             });
             
             paragraphHTML += '</div>';
-            
             displayBox.innerHTML = paragraphHTML;
             displayBox.scrollTop = 0;
         })
