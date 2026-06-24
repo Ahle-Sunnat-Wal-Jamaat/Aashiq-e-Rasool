@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aashiq e Rasool App</title>
+    <!-- Importing beautiful, authentic Naskh fonts directly from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #064e3b;
@@ -51,16 +56,31 @@
             text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
         .grid-row:hover { background: #e6fbf0; }
-        .arabic-title { font-size: 18px; font-weight: normal; color: #0f766e; font-family: 'Amiri', serif; }
+        .arabic-title { font-size: 20px; font-weight: normal; color: #0f766e; font-family: 'Noto Naskh Arabic', serif; }
         
         /* Reader Panel */
         .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
         .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
-        .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 10px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
+        .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 15px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
         
-        /* Verse styling: Arabic Top, Kanzul Iman Bottom */
-        .quran-text { text-align: right; font-size: 25px; line-height: 2.3; color: #000; margin-bottom: 8px; direction: rtl; font-family: 'Amiri', serif; }
-        .urdu-text { text-align: right; font-size: 16px; color: #064e3b; line-height: 1.8; margin-bottom: 25px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 15px; direction: rtl; font-family: 'Urdu Typesetting', 'Nafees', sans-serif; }
+        /* Continuous Arabic Text in Crisp Naskh Style */
+        .quran-continuous-block { 
+            text-align: justify; 
+            font-size: 26px; 
+            line-height: 2.4; 
+            color: #111; 
+            direction: rtl; 
+            font-family: 'Scheherazade New', 'Noto Naskh Arabic', serif;
+            word-spacing: 2px;
+        }
+        /* Style for the Ayat numbers inside the text block */
+        .ayat-marker {
+            color: var(--primary);
+            font-size: 22px;
+            margin: 0 4px;
+            font-weight: bold;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
         /* Other Panels */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
@@ -103,25 +123,21 @@
             </div>
         </div>
 
-        <!-- TAB 2: QURAN (With Surah & Para Filters + Kanzul Iman Urdu) -->
+        <!-- TAB 2: QURAN -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
-                <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
+                <h2 class="card-title">📖 Al-Quran Al-Kareem (Naskh)</h2>
                 
-                <!-- Toggle between Surah and Para views -->
                 <div class="mode-selector">
                     <button id="btn-mode-surah" class="mode-btn active" onclick="toggleQuranMode('surah')">Surah Wise</button>
                     <button id="btn-mode-para" class="mode-btn" onclick="toggleQuranMode('para')">Para / Juz Wise</button>
                 </div>
 
-                <!-- Surah List View -->
                 <div id="surah-directory-view" class="list-container"></div>
-
-                <!-- Para List View -->
                 <div id="para-directory-view" class="list-container" style="display: none;"></div>
             </div>
 
-            <!-- Dynamic Text Reader Frame -->
+            <!-- Continuous Reader Frame -->
             <div class="card" style="padding: 10px; display: none;" id="quran-reader-panel">
                 <button class="back-btn" onclick="closeQuranReader()">⬅ Back to Menu</button>
                 <h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 15px 0; font-size: 16px;"></h3>
@@ -191,7 +207,6 @@
 </div>
 
 <script>
-    // Tab Switching Navigation
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
         for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
@@ -201,7 +216,6 @@
         element.classList.add('active');
     }
 
-    // Toggle Menu Layout between Surah View and Para View
     function toggleQuranMode(mode) {
         document.getElementById('btn-mode-surah').classList.remove('active');
         document.getElementById('btn-mode-para').classList.remove('active');
@@ -217,7 +231,6 @@
         }
     }
 
-    // Comprehensive 114 Surah Metadata mapping
     const surahList = [
         { id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
         { id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
@@ -229,7 +242,7 @@
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
         { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
         { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
-        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, sm: "Al-Hajj", ar: "الحج" },
+        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
         { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
         { id: 25, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
         { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
@@ -272,13 +285,12 @@
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" }, 
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
         { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" }, 
-        { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الكوثر" }, 
+        { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" }, 
         { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
         { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
         { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
     ];
 
-    // Render Surah Selector List
     const surahContainer = document.getElementById('surah-directory-view');
     surahList.forEach(function(surah) {
         surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
@@ -287,7 +299,6 @@
                                     '</div>';
     });
 
-    // Render Para Selector List (1 to 30)
     const paraContainer = document.getElementById('para-directory-view');
     for (let p = 1; p <= 30; p++) {
         paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'para\', ' + p + ', \'Para ' + p + '\')">' +
@@ -296,52 +307,42 @@
                                    '</div>';
     }
 
-    // Load Core Arabic + Kanzul Iman Urdu text directly via API endpoints
-    // Translation Edition Key identifier: ur.kanzuliman
     function loadQuranContent(type, numericId, displayName) {
         document.getElementById('quran-menu-panel').style.display = 'none';
         document.getElementById('quran-reader-panel').style.display = 'block';
-        document.getElementById('reader-display-title').innerText = displayName + " (Arabic & Kanzul Iman Urdu)";
+        document.getElementById('reader-display-title').innerText = displayName;
         
         const displayBox = document.getElementById('verses-container');
-        displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Tilawat & Kanzul Iman translation...</p>';
+        displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Arabic Script...</p>';
 
-        let arabicApiUrl = '';
-        let urduApiUrl = '';
+        let arabicApiUrl = type === 'surah' ? 
+            'https://api.alquran.cloud/v1/surah/' + numericId : 
+            'https://api.alquran.cloud/v1/juz/' + numericId;
 
-        if(type === 'surah') {
-            arabicApiUrl = 'https://api.alquran.cloud/v1/surah/' + numericId;
-            urduApiUrl = 'https://api.alquran.cloud/v1/surah/' + numericId + '/ur.kanzuliman';
-        } else {
-            arabicApiUrl = 'https://api.alquran.cloud/v1/juz/' + numericId;
-            urduApiUrl = 'https://api.alquran.cloud/v1/juz/' + numericId + '/ur.kanzuliman';
-        }
-
-        Promise.all([
-            fetch(arabicApiUrl),
-            fetch(urduApiUrl)
-        ])
-        .then(responses => Promise.all(responses.map(res => res.json())))
+        fetch(arabicApiUrl)
+        .then(res => res.json())
         .then(dataset => {
-            let arabicAyahs = type === 'surah' ? dataset[0].data.ayahs : dataset[0].data.juzByAyah;
-            let urduAyahs = type === 'surah' ? dataset[1].data.ayahs : dataset[1].data.juzByAyah;
+            let arabicAyahs = dataset.data.ayahs;
             
-            // Handle edge case variations in JSON structures from the Juz endpoint arrays
-            if(type === 'para') {
-                arabicAyahs = dataset[0].data.ayahs;
-                urduAyahs = dataset[1].data.ayahs;
-            }
-
             displayBox.innerHTML = '';
-            arabicAyahs.forEach((ayah, index) => {
-                let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : (index + 1);
-                displayBox.innerHTML += '<div class="quran-text">' + ayah.text + ' ﴿' + verseIdentifier + '〗</div>' +
-                                        '<div class="urdu-text">' + urduAyahs[index].text + '</div>';
+            
+            // Build a single, unbroken block paragraph wrapper
+            let paragraphHTML = '<div class="quran-continuous-block">';
+            
+            arabicAyahs.forEach((ayah) => {
+                let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
+                
+                // Add the text and wrap the verse end symbol cleanly inside the same string block
+                paragraphHTML += ayah.text + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
             });
+            
+            paragraphHTML += '</div>';
+            
+            displayBox.innerHTML = paragraphHTML;
             displayBox.scrollTop = 0;
         })
         .catch(err => {
-            displayBox.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">Failed to fetch data. Please re-check connection.</p>';
+            displayBox.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">Failed to fetch script. Please re-check connection.</p>';
         });
     }
 
