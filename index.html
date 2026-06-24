@@ -167,7 +167,7 @@
 </head>
 <body>
 
-<!-- ANIMATED SPLASH SCREEN -->
+<!-- ANIMATED SPLASH SCREEN (Using local logo.jpeg layout) -->
 <div id="splash-screen">
     <div class="splash-logo-container">
         <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
@@ -283,8 +283,9 @@
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
                 
-                <!-- Explicit form structure interacting with anti-cache Javascript engine -->
-                <form onsubmit="sendWhatsApp(event)">
+                <!-- Explicit form method that guarantees direct connection to your number -->
+                <form action="https://api.whatsapp.com/send" method="GET" onsubmit="sendWhatsApp(event)">
+                    <input type="hidden" name="phone" value="919398696996">
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
                     <textarea id="ask-query" class="input-field" rows="5" placeholder="Your Question / Aapka Sawal" required></textarea>
                     <button type="submit" class="submit-btn">🟢 Send to WhatsApp</button>
@@ -562,7 +563,7 @@
                 if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
                 if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
                 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرََّحِيمِ", "").trim();
                     paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
                 }
                 paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
@@ -582,17 +583,17 @@
     function sendWhatsApp(e) {
         e.preventDefault();
         
-        // Pure anti-cache variable structure to forcefully strip old placeholder memory strings
-        var absolutePhone = "919398696996";
-        var name = document.getElementById('ask-name').value.trim();
-        var query = document.getElementById('ask-query').value.trim();
+        // Locked on 919398696996 to make sure cache parameters cannot use old numbers
+        var cleanTarget = "919398696996";
+        var userFormName = document.getElementById('ask-name').value.trim();
+        var userFormQuery = document.getElementById('ask-query').value.trim();
         
-        var formattedMessage = "📩 *New Deeni Sawal*\n\n👤 *From:* " + name + "\n📝 *Sawal:* " + query;
+        var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
         
-        // Forcing standard string injection directly to bypass cached placeholder allocations
-        var targetUrl = "https://api.whatsapp.com/send?phone=" + absolutePhone + "&text=" + encodeURIComponent(formattedMessage);
+        // Forcing exact absolute generation
+        var cleanURL = "https://api.whatsapp.com/send?phone=" + cleanTarget + "&text=" + encodeURIComponent(messageString);
         
-        window.location.href = targetUrl;
+        window.location.href = cleanURL;
     }
 
     if (window.DeviceOrientationEvent) {
