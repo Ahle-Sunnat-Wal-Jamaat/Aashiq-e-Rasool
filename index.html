@@ -96,6 +96,20 @@
             padding: 10px; margin-bottom: 12px; border-radius: 6px; font-size: 13px;
         }
 
+        /* Interactive Hadees Tab Styling */
+        .hadees-container-scroll { max-height: 48vh; overflow-y: auto; padding: 2px; }
+        .hadees-card {
+            background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
+            padding: 14px; margin-bottom: 12px; border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .hadees-header { display: flex; justify-content: space-between; border-bottom: 1px dashed #e5e7eb; padding-bottom: 6px; margin-bottom: 8px; font-size: 12px; font-weight: bold; color: var(--primary); }
+        .hadees-body-text { font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; margin-bottom: 10px; font-weight: 500; }
+        .hadees-reference { font-size: 12px; font-style: italic; color: #6b7280; display: block; margin-bottom: 10px; }
+        .action-btn-row { display: flex; gap: 8px; }
+        .action-card-btn { flex: 1; padding: 6px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
+        .action-card-btn:hover { background: #f3f4f6; }
+
         /* Miscellaneous UI */
         .video-card { background: #f9fafb; border-radius: 8px; padding: 10px; margin-bottom: 15px; border: 1px solid #e5e7eb; }
         .video-title { font-size: 14px; font-weight: bold; margin-bottom: 8px; }
@@ -129,15 +143,25 @@
             </div>
             
             <div class="card" style="border: 2px dashed var(--accent); background: #fafafa;">
-                <h2 class="card-title">🛠️ Admin Tool: Generate Video Code</h2>
+                <h2 class="card-title">🛠️ Admin Tools</h2>
+                <label style="font-size: 12px; font-weight: bold;">Generate Video Code Layout:</label>
                 <input type="text" id="add-title" class="input-field" placeholder="Video Title">
                 <input type="text" id="add-id" class="input-field" placeholder="YouTube Video ID">
-                <button class="submit-btn" style="background:var(--accent);" onclick="generateVideoCode()">Create Video Block</button>
-                <textarea id="output-code" class="input-field" rows="3" readonly placeholder="Your code snippet will generate here..."></textarea>
+                <button class="submit-btn" style="background:var(--accent); margin-bottom:15px;" onclick="generateVideoCode()">Create Video Block</button>
+                <textarea id="output-code" class="input-field" rows="2" readonly placeholder="Your video code snippet..."></textarea>
+                
+                <hr style="border:0; border-top:1px solid #e5e7eb; margin:15px 0;">
+                
+                <label style="font-size: 12px; font-weight: bold;">Hadees Database Storage Operations:</label>
+                <div style="display:flex; gap:8px; margin-top:5px;">
+                    <button class="action-card-btn" onclick="exportHadeesBackup()">📥 Backup File</button>
+                    <button class="action-card-btn" onclick="document.getElementById('importFileTrigger').click()">📤 Import File</button>
+                    <input type="file" id="importFileTrigger" style="display:none;" accept=".json" onchange="importHadeesBackup(event)">
+                </div>
             </div>
         </div>
 
-        <!-- TAB 2: QURAN -->
+        <!-- TAB 2: QURAN (UNTOUCHED / LOCKED) -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
                 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
@@ -151,16 +175,13 @@
                 <div id="para-directory-view" class="list-container" style="display: none;"></div>
             </div>
 
-            <!-- Enhanced Reader Frame -->
             <div class="card" style="padding: 10px; display: none;" id="quran-reader-panel">
                 <button class="back-btn" onclick="closeQuranReader()">⬅ Back to Menu</button>
                 <h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 5px 0; font-size: 16px;"></h3>
-                
-                <!-- Display Counter Box -->
                 <div id="quran-info-header" class="info-header-box"></div>
                 
                 <div id="verses-container" class="verses-scroll">
-                    <p style="text-align:center; color:#6b7280;">Loading text...</p>
+                    <p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>
                 </div>
             </div>
         </div>
@@ -178,13 +199,23 @@
             </div>
         </div>
 
-        <!-- TAB 4: HADEES -->
+        <!-- TAB 4: INTERACTIVE HADEES (UPGRADED) -->
         <div id="tab-hadees" class="tab-content">
-            <div class="card">
-                <h2 class="card-title">📜 Sacred Hadees</h2>
-                <div class="card" style="background: #f0fdf4; border-left: 4px solid var(--primary);">
-                    <p style="font-style: italic; font-size: 14px; margin: 0;">"Namaz is the pillar of Islam." (Tirmidhi)</p>
-                </div>
+            <!-- Search & Filter Bar -->
+            <div class="card" style="padding: 12px; margin-bottom: 10px;">
+                <h2 class="card-title" style="margin-bottom:8px;">📜 Sacred Hadees Library</h2>
+                <input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
+            </div>
+
+            <!-- List Space -->
+            <div id="hadees-render-space" class="hadees-container-scroll"></div>
+
+            <!-- Post New Entry Section (Admin Panel inside tab) -->
+            <div class="card" style="background: #f0fdf4; border: 1px dashed var(--accent); margin-top:10px; padding:12px;">
+                <h3 style="margin: 0 0 8px 0; font-size:14px; color:var(--primary);">✍️ Post New Hadees (Hinglish)</h3>
+                <textarea id="input-hadees-text" class="input-field" rows="3" style="font-size:13px;" placeholder="Write Hadees message text here..."></textarea>
+                <input type="text" id="input-hadees-ref" class="input-field" style="font-size:13px;" placeholder="Reference (e.g., Sahih Bukhari, pp. 24)">
+                <button class="submit-btn" style="padding:8px; font-size:13px;" onclick="addNewHadeesEntry()">➕ Add To App Database</button>
             </div>
         </div>
 
@@ -206,7 +237,7 @@
                 <h2 class="card-title">❓ Ask a Question</h2>
                 <form onsubmit="sendWhatsApp(event)">
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name" required>
-                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question" required></textarea>
+                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question" required></required>
                     <button type="submit" class="submit-btn">Send to WhatsApp</button>
                 </form>
             </div>
@@ -225,8 +256,31 @@
 </div>
 
 <script>
-    // Keep track of how many times any option is clicked
+    // Click counter for Quran elements
     let clickCounters = {};
+
+    // Pre-loaded Hinglish Core Dataset
+    const baseHadeesData = [
+        {
+            text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
+            ref: "(خود کُشی کا علاج، ص 58 تا 59)"
+        },
+        {
+            text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
+            ref: "[Behtar Kaun?, Safha No. 93]"
+        },
+        {
+            text: "*Lambi Umeedo'n Se Door Raha Karo, Kyun Ki Wo Tumhare Pas Maujood Ne'mato'n Ko Haqeer Bana Deti Hai*",
+            ref: "Al-Hadees"
+        },
+        {
+            text: "*Jab Tak Tumhein Tauba Karne Ka Waqt Hasil Hai, Ise Allah Ta'ala ki Ek Ne'mat Samjho Aur Tauba Karte Raho*",
+            ref: "(📖Al-Fath-ul-Rabbani, pp. 29)"
+        }
+    ];
+
+    // Load initial storage elements safely
+    let customHadeesList = JSON.parse(localStorage.getItem('user_hadees_db')) || [];
 
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
@@ -235,8 +289,10 @@
         for (var j = 0; j < items.length; j++) { items[j].classList.remove('active'); }
         document.getElementById('tab-' + tabId).classList.add('active');
         element.classList.add('active');
+        if(tabId === 'hadees') { renderHadeesList(); }
     }
 
+    /* ---------------- QURAN ENGINE SYSTEM (LOCKED/UNTOUCHED) ---------------- */
     function toggleQuranMode(mode) {
         document.getElementById('btn-mode-surah').classList.remove('active');
         document.getElementById('btn-mode-para').classList.remove('active');
@@ -257,7 +313,7 @@
         { id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
         { id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
         { id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "يونس" },
-        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "يوسف" },
+        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
         { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
         { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
         { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
@@ -285,7 +341,7 @@
         { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
         { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغابن" },
         { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
-        { id: 67, en: "Al-Mulk", ar: "الملك" }, { id: 68, en: "Al-Qalam", ar: "القصم" },
+        { id: 67, en: "Al-Mulk", ar: "الملك" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
         { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
         { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
         { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
@@ -332,7 +388,6 @@
         document.getElementById('quran-reader-panel').style.display = 'block';
         document.getElementById('reader-display-title').innerText = displayName;
         
-        // Update Counter tracking logic
         let countKey = type + '_' + numericId;
         clickCounters[countKey] = (clickCounters[countKey] || 0) + 1;
 
@@ -340,7 +395,6 @@
         const displayBox = document.getElementById('verses-container');
         displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
 
-        // Fetch dataset containing all detailed meta data (including ruku data mappings)
         let apiUrl = type === 'surah' ? 
             'https://api.alquran.cloud/v1/surah/' + numericId : 
             'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
@@ -351,41 +405,33 @@
             let arabicAyahs = dataset.data.ayahs;
             let totalVersesCount = arabicAyahs.length;
 
-            // Set layout stats info cleanly
             infoBox.innerHTML = '📋 <b>Total Ayats in selection:</b> ' + totalVersesCount + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
 
             displayBox.innerHTML = '';
             let paragraphHTML = '<div class="quran-continuous-block">';
-            
             let lastSurahName = "";
 
             arabicAyahs.forEach((ayah) => {
                 let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
                 let cleanText = ayah.text.trim();
                 
-                // 1. Detect Para Transition line dynamically if loading multiple sections
                 if (type === 'surah' && ayah.juz && verseIdentifier === 1) {
                     paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
                 }
 
-                // 2. Clear visual label when Surah changes context inside a Juz file loop
                 if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) {
                     lastSurahName = ayah.surah.englishName;
                     paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + ' (' + ayah.surah.name + ')</span>';
                 }
 
-                // Standard Clean for automatic embedded opening statements
                 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
                     cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
                     paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
                 }
 
                 paragraphHTML += cleanText;
-
-                // 3. Render traditional Arabic Ayat Counter Circle
                 paragraphHTML += ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
 
-                // 4. Check for Ruku flags in API payload to render Ruku (ع) break
                 if (ayah.ruku || (type === 'surah' && verseIdentifier % 10 === 0)) { 
                     paragraphHTML += '<span class="ruku-marker">ع</span>';
                 }
@@ -406,6 +452,164 @@
         document.getElementById('verses-container').innerHTML = '';
     }
 
+
+    /* ---------------- NEW SEARCHABLE INTERACTIVE HADEES ENGINE ---------------- */
+    function getCombinedHadeesDataset() {
+        return baseHadeesData.concat(customHadeesList);
+    }
+
+    function renderHadeesList() {
+        const renderBox = document.getElementById('hadees-render-space');
+        const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
+        const absoluteDataset = getCombinedHadeesDataset();
+        
+        renderBox.innerHTML = '';
+        
+        if(absoluteDataset.length === 0) {
+            renderBox.innerHTML = '<p style="text-align:center; color:#6b7280; font-size:13px;">No entries saved yet.</p>';
+            return;
+        }
+
+        let filteredCount = 0;
+
+        absoluteDataset.forEach((item, index) => {
+            let serialNum = index + 1;
+            let textMatch = item.text.toLowerCase();
+            let refMatch = item.ref.toLowerCase();
+            
+            // Match with index number, text keywords, or book reference keys
+            if(searchVal === '' || textMatch.includes(searchVal) || refMatch.includes(searchVal) || String(serialNum) === searchVal) {
+                filteredCount++;
+                
+                let card = document.createElement('div');
+                card.className = 'hadees-card';
+                
+                card.innerHTML = `
+                    <div class="hadees-header">
+                        <span>S.No: ${serialNum}</span>
+                        <span>Aashiq e Rasool App</span>
+                    </div>
+                    <div class="hadees-body-text">${item.text}</div>
+                    <div class="hadees-reference">Hawala: ${item.ref}</div>
+                    <div class="action-btn-row">
+                        <button class="action-card-btn" onclick="copyHadeesSingle(${serialNum})">📋 Copy Text</button>
+                        <button class="action-card-btn" style="color:#15803d; border-color:#bbf7d0;" onclick="shareHadeesWhatsApp(${serialNum})">🟢 WhatsApp Share</button>
+                    </div>
+                `;
+                renderBox.appendChild(card);
+            }
+        });
+
+        if(filteredCount === 0) {
+            renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found for your search term.</p>';
+        }
+    }
+
+    function addNewHadeesEntry() {
+        const txtField = document.getElementById('input-hadees-text');
+        const refField = document.getElementById('input-hadees-ref');
+        
+        let textVal = txtField.value.trim();
+        let refVal = refField.value.trim() || "Al-Hadees";
+
+        if(!textVal) {
+            alert('Hadees content body text cannot be blank!');
+            return;
+        }
+
+        customHadeesList.push({ text: textVal, ref: refVal });
+        localStorage.setItem('user_hadees_db', JSON.stringify(customHadeesList));
+        
+        txtField.value = '';
+        refField.value = '';
+        
+        alert('Hadees added successfully as S.No ' + getCombinedHadeesDataset().length);
+        renderHadeesList();
+    }
+
+    function getFormattedShareString(serialNum) {
+        const dataset = getCombinedHadeesDataset();
+        const entry = dataset[serialNum - 1];
+        if(!entry) return '';
+
+        // Dynamically extract deployment link safely 
+        let cleanAppUrl = window.location.href.split('?')[0];
+
+        let msgString = `📜 *Aashiq e Rasool App*\n`;
+        msgString += `----------------------------------------\n`;
+        msgString += `*S.No:* ${serialNum}\n\n`;
+        msgString += `${entry.text}\n\n`;
+        msgString += `*Hawala:* ${entry.ref}\n`;
+        msgString += `----------------------------------------\n`;
+        msgString += `📲 _Aise mazeed Hinglish Hadees aur Quran padhne ke liye niche diye link se hamari App download karein:_\n`;
+        msgString += `👉 ${cleanAppUrl}`;
+        return msgString;
+    }
+
+    function copyHadeesSingle(serialNum) {
+        let textToCopy = getFormattedShareString(serialNum);
+        if(!textToCopy) return;
+
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            alert('S.No ' + serialNum + ' text copied cleanly with app link details!');
+        }).catch(() => {
+            // Fallback manual approach
+            let dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = textToCopy;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert('S.No ' + serialNum + ' copied.');
+        });
+    }
+
+    function shareHadeesWhatsApp(serialNum) {
+        let finalMessage = getFormattedShareString(serialNum);
+        if(!finalMessage) return;
+        
+        let encodedMessage = encodeURIComponent(finalMessage);
+        window.open('https://wa.me/?text=' + encodedMessage, '_blank');
+    }
+
+    /* Backup system implementations to keep inputs safe */
+    function exportHadeesBackup() {
+        if(customHadeesList.length === 0) {
+            alert("No added Hadees data entries to backup yet.");
+            return;
+        }
+        let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(customHadeesList));
+        let downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", "AashiqERasool_Hadees_Backup.json");
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    function importHadeesBackup(event) {
+        let input = event.target;
+        let reader = new FileReader();
+        reader.onload = function() {
+            try {
+                let parsedObj = JSON.parse(reader.result);
+                if(Array.isArray(parsedObj)) {
+                    customHadeesList = parsedObj;
+                    localStorage.setItem('user_hadees_db', JSON.stringify(customHadeesList));
+                    alert("Backup file loaded successfully! Added items restored.");
+                    renderHadeesList();
+                } else {
+                    alert("Invalid backup file format structure.");
+                }
+            } catch(e) {
+                alert("Error parsing selection.");
+            }
+        };
+        reader.readAsText(input.files[0]);
+    }
+
+
+    /* ---------------- OTHER UTILITIES ---------------- */
     function generateVideoCode() {
         let title = document.getElementById('add-title').value;
         let id = document.getElementById('add-id').value;
@@ -429,6 +633,9 @@
             }
         }, true);
     }
+
+    // Run list load when user starts up first time
+    renderHadeesList();
 </script>
 </body>
 </html>
