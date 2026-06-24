@@ -22,7 +22,39 @@
             font-family: 'Segoe UI', system-ui, sans-serif;
             background-color: var(--bg); color: var(--text);
             margin: 0; padding: 0; display: flex; justify-content: center;
+            overflow-x: hidden;
         }
+        
+        /* SPLASH WELCOME SCREEN STYLING */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
+            z-index: 9999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: white;
+            transition: opacity 0.5s ease-out, visibility 0.5s;
+        }
+        .splash-logo-container {
+            width: 260px; height: 260px; border-radius: 50%;
+            background: white; padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .splash-logo-container img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+        }
+        .splash-title {
+            font-size: 24px; font-weight: bold; letter-spacing: 1px; color: #fef08a; margin: 10px 0 5px 0;
+        }
+        .splash-subtitle {
+            font-size: 14px; color: #a7f3d0; margin: 0; font-style: italic;
+        }
+        .splash-loader {
+            margin-top: 30px; width: 40px; height: 40px;
+            border: 4px solid rgba(255,255,255,0.1); border-left-color: #fef08a;
+            border-radius: 50%; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         .app-container {
             width: 100%; max-width: 480px; background: var(--card); 
             min-height: 100vh; display: flex; flex-direction: column;
@@ -135,18 +167,28 @@
 </head>
 <body>
 
+<!-- ANIMATED SPLASH SCREEN (References image from WhatsApp Image 2026-06-24 at 9.51.13 PM.jpeg) -->
+<div id="splash-screen">
+    <div class="splash-logo-container">
+        <!-- Change 'logo.jpeg' to match whatever your saved image file name is on GitHub -->
+        <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
+    </div>
+    <div class="splash-title">Ahle Sunnat Wa Jama'at</div>
+    <div class="splash-subtitle">Welcome to Aashiq e Rasool App</div>
+    <div class="splash-loader"></div>
+</div>
+
 <div class="app-container">
     <!-- Secure Header Trigger Zone -->
     <header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
 
     <div class="main-content">
         
-        <!-- SECRET OWNER ACCESS PANEL (100% Invisible to Public Users) -->
+        <!-- SECRET OWNER ACCESS PANEL -->
         <div id="secret-admin-gate" class="card">
             <h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
             <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate code lines quickly and navigate your GitHub setup effortlessly.</p>
             
-            <!-- NEW NAVIGATION SHORTCUT BUTTON HERE -->
             <button class="submit-btn" style="background:#1e40af; margin-bottom:15px; font-size:13px;" onclick="copySearchPhraseShortcut()">📋 Click First: Copy GitHub Search Phrase</button>
             <hr style="border:0; border-top:1px dashed #f59e0b; margin:10px 0;">
 
@@ -179,7 +221,7 @@
             </div>
         </div>
 
-        <!-- TAB 2: QURAN (LOCKED) -->
+        <!-- TAB 2: QURAN -->
         <div id="tab-quran" class="tab-content">
             <div class="card" style="padding: 10px;" id="quran-menu-panel">
                 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
@@ -221,8 +263,6 @@
                 <h2 class="card-title" style="margin-bottom:8px;">📜 Sacred Hadees Library</h2>
                 <input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
             </div>
-
-            <!-- Scrollable Archive Container -->
             <div id="hadees-render-space" class="hadees-container-scroll"></div>
         </div>
 
@@ -267,16 +307,12 @@
     let adminTapCount = 0;
     let adminTapTimer = null;
 
-    // MASTER REPOSITORY DATALIST (Paste newly generated Hadees lines inside here 👇)
+    // MASTER REPOSITORY DATALIST
     const baseHadeesData = [
         {
             text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
-            ref: "(خود کُشی کا علاج، ص 58 تا 59)"
+            ref: "(خود کُشی کا علاج، ص 58 ta 59)"
         },
-        {
-    text: "testing kate for new hadees",
-    ref: "tested"
-},
         {
             text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
             ref: "[Behtar Kaun?, Safha No. 93]"
@@ -290,6 +326,17 @@
             ref: "(📖Al-Fath-ul-Rabbani, pp. 29)"
         }
     ];
+
+    // AUTOMATIC SPLASH ENGINE TIMEOUT CONTROL
+    window.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(function() {
+                splash.style.visibility = 'hidden';
+            }, 500);
+        }, 3000); // 3000ms = 3 Seconds welcome window
+    });
 
     function switchTab(tabId, element) {
         var tabs = document.getElementsByClassName('tab-content');
@@ -306,10 +353,7 @@
     function handleAdminSecretTap() {
         adminTapCount++;
         clearTimeout(adminTapTimer);
-        
-        adminTapTimer = setTimeout(function() {
-            adminTapCount = 0;
-        }, 3000);
+        adminTapTimer = setTimeout(function() { adminTapCount = 0; }, 3000);
 
         if(adminTapCount === 5) {
             adminTapCount = 0;
@@ -326,7 +370,7 @@
 
     function copySearchPhraseShortcut() {
         navigator.clipboard.writeText("const baseHadeesData").then(() => {
-            alert('Phrase "const baseHadeesData" copied! You can now paste this directly into GitHub Search Box (Ctrl+F).');
+            alert('Phrase "const baseHadeesData" copied!');
         }).catch(() => {
             let dummy = document.createElement("textarea");
             document.body.appendChild(dummy);
@@ -348,30 +392,23 @@
     function generateHadeesRepositoryCode() {
         let txt = document.getElementById('adm-hadees-text').value.trim();
         let rf = document.getElementById('adm-hadees-ref').value.trim() || "Al-Hadees";
-        
         if(!txt) { alert("Please input content text first."); return; }
-        
         let formattedText = txt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
         let formattedRef = rf.replace(/"/g, '\\"');
-        
         let outputCode = `{\n    text: "${formattedText}",\n    ref: "${formattedRef}"\n},`;
         document.getElementById('adm-output-code').value = outputCode;
     }
 
-    /* ---------------- RENDERING ARCHIVE LIST (COPY & SHARE MODIFIED) ---------------- */
+    /* ---------------- RENDERING ARCHIVE LIST ---------------- */
     function renderHadeesList() {
         const renderBox = document.getElementById('hadees-render-space');
         const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
-        
         renderBox.innerHTML = '';
         let filteredCount = 0;
 
         baseHadeesData.forEach((item, index) => {
             let serialNum = index + 1;
-            let textMatch = item.text.toLowerCase();
-            let refMatch = item.ref.toLowerCase();
-            
-            if(searchVal === '' || textMatch.includes(searchVal) || refMatch.includes(searchVal) || String(serialNum) === searchVal) {
+            if(searchVal === '' || item.text.toLowerCase().includes(searchVal) || item.ref.toLowerCase().includes(searchVal) || String(serialNum) === searchVal) {
                 filteredCount++;
                 let card = document.createElement('div');
                 card.className = 'hadees-card';
@@ -390,7 +427,6 @@
                 renderBox.appendChild(card);
             }
         });
-
         if(filteredCount === 0) {
             renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found.</p>';
         }
@@ -399,37 +435,19 @@
     function copyHadeesOnly(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
-        
         let plainText = entry.text + "\n\nHawala: " + entry.ref;
-        
-        navigator.clipboard.writeText(plainText).then(() => {
-            alert('Hadees content copied cleanly!');
-        }).catch(() => {
-            let dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = plainText;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert('Hadees text copied.');
-        });
+        navigator.clipboard.writeText(plainText).then(() => { alert('Hadees content copied cleanly!'); });
     }
 
     function shareHadeesWhatsApp(index) {
         let entry = baseHadeesData[index];
         if(!entry) return;
-        
         let cleanAppUrl = window.location.href.split('?')[0];
-        
-        let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\n`;
-        shareTemplate += `CLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n`;
-        shareTemplate += `👉 ${cleanAppUrl}`;
-        
-        let encodedMessage = encodeURIComponent(shareTemplate);
-        window.open('https://wa.me/?text=' + encodedMessage, '_blank');
+        let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n👉 ${cleanAppUrl}`;
+        window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
     }
 
-    /* ---------------- QURAN ENGINE SYSTEM (LOCKED) ---------------- */
+    /* ---------------- QURAN ENGINE SYSTEM ---------------- */
     function toggleQuranMode(mode) {
         document.getElementById('btn-mode-surah').classList.remove('active');
         document.getElementById('btn-mode-para').classList.remove('active');
@@ -466,7 +484,7 @@
         { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
         { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
         { id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
-        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, river: "Ad-Dukhan", ar: "الدخان" },
+        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
         { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
         { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
         { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
@@ -497,9 +515,9 @@
         { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" }, 
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
-        { id: 105, en: "Al-Fil", ar: "الفیل" }, { id: 106, en: "Quraysh", ar: "قریش" }, 
+        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قريش" }, 
         { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" }, 
-        { id: 109, en: "Al-Kafirun", ar: "الکافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
+        { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
         { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
         { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
     ];
@@ -532,18 +550,11 @@
         const displayBox = document.getElementById('verses-container');
         displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
 
-        let apiUrl = type === 'surah' ? 
-            'https://api.alquran.cloud/v1/surah/' + numericId : 
-            'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
+        let apiUrl = type === 'surah' ? 'https://api.alquran.cloud/v1/surah/' + numericId : 'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
 
-        fetch(apiUrl)
-        .then(res => res.json())
-        .then(dataset => {
+        fetch(apiUrl).then(res => res.json()).then(dataset => {
             let arabicAyahs = dataset.data.ayahs;
-            let totalVersesCount = arabicAyahs.length;
-
-            infoBox.innerHTML = '📋 <b>Total Ayats in selection:</b> ' + totalVersesCount + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
-
+            infoBox.innerHTML = '📋 <b>Total Ayats:</b> ' + arabicAyahs.length + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
             displayBox.innerHTML = '';
             let paragraphHTML = '<div class="quran-continuous-block">';
             let lastSurahName = "";
@@ -551,45 +562,25 @@
             arabicAyahs.forEach((ayah) => {
                 let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
                 let cleanText = ayah.text.trim();
-                
-                if (type === 'surah' && ayah.juz && verseIdentifier === 1) {
-                    paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
-                }
-
-                if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) {
-                    lastSurahName = ayah.surah.englishName;
-                    paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + ' (' + ayah.surah.name + ')</span>';
-                }
-
+                if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
+                if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
                 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
                     cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
                     paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
                 }
-
-                paragraphHTML += cleanText;
-                paragraphHTML += ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
-
-                if (ayah.ruku || (type === 'surah' && verseIdentifier % 10 === 0)) { 
-                    paragraphHTML += '<span class="ruku-marker">ع</span>';
-                }
+                paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
+                if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
             });
-            
-            paragraphHTML += '</div>';
-            displayBox.innerHTML = paragraphHTML;
+            displayBox.innerHTML = paragraphHTML + '</div>';
             displayBox.scrollTop = 0;
-        })
-        .catch(err => {
-            displayBox.innerHTML = '<p style="text-align:center; color:red; font-weight:bold;">Error fetching data. Check your network lines.</p>';
         });
     }
 
     function closeQuranReader() {
         document.getElementById('quran-reader-panel').style.display = 'none';
         document.getElementById('quran-menu-panel').style.display = 'block';
-        document.getElementById('verses-container').innerHTML = '';
     }
 
-    /* ---------------- UTILITIES ---------------- */
     function sendWhatsApp(e) {
         e.preventDefault();
         let name = encodeURIComponent(document.getElementById('ask-name').value);
@@ -600,15 +591,11 @@
     if (window.DeviceOrientationEvent) {
         window.addEventListener('deviceorientation', function(e) {
             let heading = e.webkitCompassHeading || e.alpha;
-            if(heading !== undefined) {
-                document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
-            }
+            if(heading !== undefined) document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
         }, true);
     }
 
-    window.onload = function() {
-        switchTab('home', document.querySelector(".nav-item"));
-    };
+    window.onload = function() { switchTab('home', document.querySelector(".nav-item")); };
 </script>
 </body>
 </html>
