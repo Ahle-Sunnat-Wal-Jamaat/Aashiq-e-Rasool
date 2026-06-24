@@ -167,10 +167,9 @@
 </head>
 <body>
 
-<!-- ANIMATED SPLASH SCREEN (References image from WhatsApp Image 2026-06-24 at 9.51.13 PM.jpeg) -->
+<!-- ANIMATED SPLASH SCREEN -->
 <div id="splash-screen">
     <div class="splash-logo-container">
-        <!-- Change 'logo.jpeg' to match whatever your saved image file name is on GitHub -->
         <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
     </div>
     <div class="splash-title">Ahle Sunnat Wa Jama'at</div>
@@ -282,10 +281,11 @@
         <div id="tab-ask" class="tab-content">
             <div class="card">
                 <h2 class="card-title">❓ Ask a Question</h2>
+                <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
                 <form onsubmit="sendWhatsApp(event)">
-                    <input type="text" id="ask-name" class="input-field" placeholder="Your Name" required>
-                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question" required></textarea>
-                    <button type="submit" class="submit-btn">Send to WhatsApp</button>
+                    <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
+                    <textarea id="ask-query" class="input-field" rows="5" placeholder="Your Question / Aapka Sawal" required></textarea>
+                    <button type="submit" class="submit-btn">🟢 Send to WhatsApp</button>
                 </form>
             </div>
         </div>
@@ -307,7 +307,6 @@
     let adminTapCount = 0;
     let adminTapTimer = null;
 
-    // MASTER REPOSITORY DATALIST
     const baseHadeesData = [
         {
             text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
@@ -327,7 +326,6 @@
         }
     ];
 
-    // AUTOMATIC SPLASH ENGINE TIMEOUT CONTROL
     window.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             const splash = document.getElementById('splash-screen');
@@ -335,7 +333,7 @@
             setTimeout(function() {
                 splash.style.visibility = 'hidden';
             }, 500);
-        }, 3000); // 3000ms = 3 Seconds welcome window
+        }, 3000);
     });
 
     function switchTab(tabId, element) {
@@ -349,7 +347,6 @@
         if(tabId === 'hadees') { renderHadeesList(); }
     }
 
-    /* ---------------- SECURITY: HIDDEN GESTURE LOGIN ENGINE ---------------- */
     function handleAdminSecretTap() {
         adminTapCount++;
         clearTimeout(adminTapTimer);
@@ -399,7 +396,6 @@
         document.getElementById('adm-output-code').value = outputCode;
     }
 
-    /* ---------------- RENDERING ARCHIVE LIST ---------------- */
     function renderHadeesList() {
         const renderBox = document.getElementById('hadees-render-space');
         const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
@@ -447,7 +443,6 @@
         window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
     }
 
-    /* ---------------- QURAN ENGINE SYSTEM ---------------- */
     function toggleQuranMode(mode) {
         document.getElementById('btn-mode-surah').classList.remove('active');
         document.getElementById('btn-mode-para').classList.remove('active');
@@ -475,7 +470,7 @@
         { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
         { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
         { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
-        { id: 25, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
+        { id: 25, start: 1, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعراء" },
         { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
         { id: 29, en: "Al-'Ankabut", ar: "العنكبوت" }, { id: 30, en: "Ar-Rum", ar: "الروم" },
         { id: 31, en: "Luqman", ar: "لقمان" }, { id: 32, en: "As-Sajdah", ar: "السجدة" },
@@ -489,29 +484,29 @@
         { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
         { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
         { id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
-        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القمر" },
+        { id: 53, en: "An-Najm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القرمر" },
         { id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
         { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
         { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
         { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
-        { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغابن" },
-        { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
-        { id: 67, en: "Al-Mulk", ar: "الملك" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
-        { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
-        { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
-        { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
-        { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
-        { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
-        { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
-        { id: 81, en: "At-Takwir", ar: "التكوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
-        { id: 83, en: "Al-Mutaffifin", ar: "المطففين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
-        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
-        { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
-        { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
-        { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
-        { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
-        { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
-        { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
+        { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, open: 1, en: "At-Taghabun", ar: "التغابن" }, 
+        { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" }, 
+        { id: 67, en: "Al-Mulk", ar: "الملك" }, { id: 68, en: "Al-Qalam", ar: "القلم" }, 
+        { id: 70, en: "Al-Ma'arij", ar: "المعارج" }, { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, 
+        { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" }, 
+        { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" }, 
+        { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" }, 
+        { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" }, 
+        { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" }, 
+        { id: 81, en: "At-Takwir", ar: "التكوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" }, 
+        { id: 83, en: "Al-Mutaffifin", ar: "المطففين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" }, 
+        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" }, 
+        { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" }, 
+        { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" }, 
+        { id: 91, en: "Ash-Shams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" }, 
+        { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" }, 
+        { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" }, 
+        { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" }, 
         { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
         { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التكاثر" }, 
         { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
@@ -581,11 +576,16 @@
         document.getElementById('quran-menu-panel').style.display = 'block';
     }
 
+    /* ---------------- TRANS-FORWARD ENGINE FOR WHATSAPP ---------------- */
     function sendWhatsApp(e) {
         e.preventDefault();
-        let name = encodeURIComponent(document.getElementById('ask-name').value);
-        let query = encodeURIComponent(document.getElementById('ask-query').value);
-        window.open('https://wa.me/919000000000?text=*Question*%0A*Name:* ' + name + '%0A*Query:* ' + query, '_blank');
+        let name = document.getElementById('ask-name').value.trim();
+        let query = document.getElementById('ask-query').value.trim();
+        
+        let formattedMessage = `📩 *New Deeni Sawal*\n\n👤 *From:* ${name}\n📝 *Sawal:* ${query}`;
+        let whatsappUrl = `https://wa.me/919398696996?text=${encodeURIComponent(formattedMessage)}`;
+        
+        window.open(whatsappUrl, '_blank');
     }
 
     if (window.DeviceOrientationEvent) {
