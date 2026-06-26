@@ -306,6 +306,79 @@
                     <div class="needle" id="needle"></div>
                 </div>
                 <p style="font-size: 12px; color: #6b7280;">Rotate your mobile device to align with Makkah.</p>
+                <style>
+    :root { --primary-color: #10b981; --bg-color: #f3f4f6; --card-bg: #ffffff; --text-color: #1f2937; }
+    .compass-container { background: var(--card-bg); padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); text-align: center; max-width: 400px; width: 100%; margin: 20px auto; font-family: sans-serif; }
+    .status-text { font-size: 0.9rem; color: #6b7280; margin-bottom: 25px; min-height: 40px; }
+    .compass-wrapper { position: relative; width: 280px; height: 280px; margin: 0 auto 25px auto; }
+    .compass-dial { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #e5e7eb; position: relative; background: #fafafa; transition: transform 0.2s ease-out; box-sizing: border-box; }
+    .direction { position: absolute; font-weight: bold; font-size: 1.1rem; }
+    .dir-n { top: 10px; left: 50%; transform: translateX(-50%); color: #ef4444; }
+    .dir-e { right: 15px; top: 50%; transform: translateY(-50%); }
+    .dir-s { bottom: 10px; left: 50%; transform: translateX(-50%); }
+    .dir-w { left: 15px; top: 50%; transform: translateY(-50%); }
+    .qibla-pointer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: transform 0.2s ease-out; }
+    .needle { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 45px solid var(--primary-color); }
+    .needle::after { content: '🕋'; position: absolute; top: -35px; left: -10px; font-size: 20px; }
+    .qibla-btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: background 0.2s; width: 100%; }
+    .qibla-btn:hover { background-color: #059669; }
+    .degree-badge { display: inline-block; background: #ecfdf5; color: #065f46; padding: 6px 16px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: none; }
+</style>
+
+<div class="compass-container">
+    <h2>Qibla Finder</h2>
+    <div id="status" class="status-text">We need your location to accurately calculate the direction to the Kaaba.</div>
+    <div class="degree-badge" id="degreeBadge">0°</div>
+    <div class="compass-wrapper">
+        <div class="compass-dial" id="compassDial">
+            <div class="direction dir-n">N</div>
+            <div class="direction dir-e">E</div>
+            <div class="direction dir-s">S</div>
+            <div class="direction dir-w">W</div>
+        </div>
+        <div class="qibla-pointer" id="qiblaPointer"><div class="needle"></div></div>
+    </div>
+    <button class="qibla-btn" id="locateBtn" onclick="initQiblaFinder()">Find Qibla Direction</button>
+</div>
+
+<script>
+    const KAABA_LAT = 21.4225241; const KAABA_LNG = 39.8261818;
+    let qiblaBaring = 0; let currentHeading = 0;
+    const statusEl = document.getElementById('status'); const degreeBadge = document.getElementById('degreeBadge');
+    const compassDial = document.getElementById('compassDial'); const qiblaPointer = document.getElementById('qiblaPointer'); const locateBtn = document.getElementById('locateBtn');
+    function initQiblaFinder() {
+        statusEl.innerText = "Requesting location access...";
+        if (!navigator.geolocation) { statusEl.innerText = "Geolocation not supported."; return; }
+        navigator.geolocation.getCurrentPosition((position) => {
+            qiblaBaring = calculateQiblaBearing(position.coords.latitude, position.coords.longitude);
+            degreeBadge.style.display = 'inline-block'; degreeBadge.innerText = `Qibla: ${Math.round(qiblaBaring)}° N`;
+            statusEl.innerText = "Location found! Align your phone with North (Green arrow indicates Qibla)";
+            qiblaPointer.style.transform = `rotate(${qiblaBaring}deg)`; locateBtn.style.display = 'none';
+            startOrientationTracking();
+        }, (error) => { statusEl.innerText = "Location access denied. Please check permissions."; }, { enableHighAccuracy: true });
+    }
+    function calculateQiblaBearing(lat1, lng1) {
+        const phi1 = lat1 * Math.PI / 180; const phi2 = KAABA_LAT * Math.PI / 180; const deltaLambda = (KAABA_LNG - lng1) * Math.PI / 180;
+        const y = Math.sin(deltaLambda) * Math.cos(phi2); const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+        return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+    }
+    function startOrientationTracking() {
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+            DeviceOrientationEvent.requestPermission().then(state => {
+                if (state === 'granted') { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
+            }).catch(console.error);
+        } else { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
+    }
+    function handleOrientation(event) {
+        let heading = event.webkitCompassHeading || event.alpha;
+        if (heading !== null && heading !== undefined) {
+            if(!event.webkitCompassHeading) { heading = 360 - heading; }
+            currentHeading = heading; compassDial.style.transform = `rotate(${-currentHeading}deg)`;
+            qiblaPointer.style.transform = `rotate(${qiblaBaring - currentHeading}deg)`;
+            statusEl.innerText = "Align the cube with the top of your device!";
+        }
+    }
+</script>
             </div>
         </div>
 
