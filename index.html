@@ -376,20 +376,19 @@
         </div>
 
         <!-- TAB 5: ASK -->
-        <div id="tab-ask" class="tab-content">
-            <div class="card">
-                <h2 class="card-title">❓ Ask a Question</h2>
+     <div id="tab-ask" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px);">
+            <div class="card" style="margin-top: 5px;">
+                <h2 class="card-title" style="margin-top: 0; padding-top: 5px;">❓ Ask a Question</h2>
                 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
                 <div>
                     <input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
-                    <textarea id="ask-query" class="input-field" rows="5" placeholder="Your Question / Aapka Sawal" required></textarea>
+                    <textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question / Aapka Sawal" required></textarea>
                     <button type="button" class="submit-btn" onclick="sendWhatsAppDirectly()">🟢 Send to WhatsApp</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
         <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
