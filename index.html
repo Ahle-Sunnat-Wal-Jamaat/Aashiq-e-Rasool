@@ -1433,10 +1433,120 @@ if(heading !== undefined) document.getElementById('needle').style.transform = 'r
 }, true);
 }
 
-/* ------------------------------------------------------------
-PLACEHOLDER FOR NEW PROMPT INSTRUCTIONS / MASTER FUNCTIONS
-You can paste any additional rules, keys, or dynamic engine scripts right here.
------------------------------------------------------------- */
+<div id="tab-ilme-farz" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: 15px;">
+        
+        <div class="card" style="padding: 10px;" id="farz-menu-panel">
+            <h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
+            <p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
+            <div id="farz-topics-directory" class="list-container">
+                </div>
+        </div>
+
+        <div class="card" style="padding: 12px; display: none;" id="farz-reader-panel">
+            <button class="back-btn" onclick="closeFarzReader()">⬅ Back to Topics</button>
+            <h3 id="farz-reader-title" style="color: var(--primary); margin: 5px 0 10px 0; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;"></h3>
+            <div id="farz-content-container" style="font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; min-height: 30vh;">
+                </div>
+        </div>
+    </div>
+
+</div> <div class="nav-bar">
+    <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
+    <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
+    <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
+    <button class="nav-item" onclick="switchTab('ilme-farz', this)">📚<span>Ilm-e-Farz</span></button>
+    <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
+    <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
+</div>
+
+<script>
+    // DATA MATRIX FOR ILM-E-FARZ
+    const farzTopicsData = [
+        {
+            id: "taharat",
+            title: "✨ Taharath (Pakeezgi)",
+            content: "Taharath imaan ka aadha hissa hai.\n\n• Roohani aur jismani pakizgi har ibadat ke liye shart hai.\n• Libas, badan aur jagah ka pak hona namaz ke liye zaroori hai.\n• Hadath-e-Asghar (wazu tootna) aur Hadath-e-Akbar (ghusl farz hona) se pak hona isme shamil hai."
+        },
+        {
+            id: "wazu",
+            title: "💧 Wazu ke Ahkaam",
+            content: "Wazu mein 4 Farz hain, jinke bina wazu nahi hota:\n\n1. Chahra dhona (peshani ke baal se thodi ke niche tak aur ek kaan ki lau se doosre tak).\n2. Dono haath kohniyon samet dhona.\n3. Chauthai (1/4) sar ka masah karna.\n4. Dono paaon takhno samet dhona."
+        },
+        {
+            id: "ghusl",
+            title: "🚿 Ghusl ke Faraiz",
+            content: "Ghusl (Nhaane) mein 3 Farz hain:\n\n1. Kulli karna (is tarah ki gale ke gharghara tak paani pahunche, agar roza na ho).\n2. Naak mein narm haddi tak paani daalna.\n3. Poore badan par is tarah paani bahana ki ek baal barabar jagah bhi khushk na rahe."
+        },
+        {
+            id: "namaz",
+            title: "🧎 Namaz (Salah)",
+            content: "Namaz deen ka sutoon (pillar) hai.\n\n• Din mein 5 waqt ki namaz har aqil aur baligh musalman par farz hai.\n• Namaz ke andar aur bahar ke faraiz (sharaait o arkaan) ko sahi tareeqe se ada karna zaroori hai.\n• Namaz qiyamat ke din sabse pehla hisab-kitab ka zariya hogi."
+        },
+        {
+            id: "roza",
+            title: "🌙 Roza (Sawm)",
+            content: "Ramadan ke roze har baligh par farz hain.\n\n• Subah sadiq se lekar maghrib tak khane, peene aur na-farmaani se ruke rehne ka naam roza hai.\n• Roza sirff pet ka nahi, balki aankh, zubaan aur kaan ka bhi hota hai taaki taqwa haasil ho."
+        },
+        {
+            id: "zakat",
+            title: "💰 Zakat ke Ahkaam",
+            content: "Zakat islam ka chautha rukun hai.\n\n• Har saal sahib-e-nisab (wo shakhs jiske paas 7.5 tola sona ya 52.5 tola chandi ya uske barabar maal ho) par 2.5% zakat nikalna farz hai.\n• Yeh maal ko pak karti hai aur gareebon ki madad ka zariya banti hai."
+        },
+        {
+            id: "haj",
+            title: "🕋 Haj-e-Baytullah",
+            content: "Haj zindagi mein ek martaba farz hai.\n\n• Yeh sirf un logon par farz hai jo makka mukarrama tak jaane aur wahan rehne ka kharcha uthane ki jismani aur maali taqat rakhte hon.\n• Haj-e-Mabroor ka badla sirf jannat hai."
+        }
+    ];
+
+    function initFarzTopicsMenu() {
+        const container = document.getElementById('farz-topics-directory');
+        if(!container) return;
+        container.innerHTML = '';
+        farzTopicsData.forEach((topic) => {
+            container.innerHTML += `
+                <div class="grid-row" onclick="loadFarzContent('${topic.id}')">
+                    <span>${topic.title}</span>
+                    <span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span>
+                </div>
+            `;
+        });
+    }
+
+    function loadFarzContent(topicId) {
+        const topic = farzTopicsData.find(t => t.id === topicId);
+        if(!topic) return;
+        document.getElementById('farz-menu-panel').style.display = 'none';
+        document.getElementById('farz-reader-panel').style.display = 'block';
+        document.getElementById('farz-reader-title').innerText = topic.title;
+        document.getElementById('farz-content-container').innerText = topic.content;
+    }
+
+    function closeFarzReader() {
+        document.getElementById('farz-reader-panel').style.display = 'none';
+        document.getElementById('farz-menu-panel').style.display = 'block';
+    }
+
+    // Dynamic Engine Hijack for switchTab
+    window.addEventListener('DOMContentLoaded', function() {
+        const checkInterval = setInterval(() => {
+            if (typeof switchTab === 'function') {
+                const originalSwitchTab = switchTab;
+                switchTab = function(tabId, element) {
+                    originalSwitchTab(tabId, element);
+                    if(tabId === 'ilme-farz') {
+                        initFarzTopicsMenu();
+                        closeFarzReader();
+                    }
+                };
+                clearInterval(checkInterval);
+            }
+        }, 100);
+    });
+
+    /* ------------------------------------------------------------
+       PLACEHOLDER FOR NEW PROMPT INSTRUCTIONS / MASTER FUNCTIONS
+       ------------------------------------------------------------ */
 </script>
 </body>
 </html>
