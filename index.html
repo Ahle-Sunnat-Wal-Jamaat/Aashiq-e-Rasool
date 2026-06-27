@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aashiq e Rasool App</title>
 
-<!-- Importing Clear, Beautiful Indo-Pak Style Arabic Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
@@ -187,7 +186,6 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </head>
 <body>
 
-<!-- ANIMATED SPLASH SCREEN -->
 <div id="splash-screen">
 <div class="splash-logo-container">
 <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
@@ -198,12 +196,10 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 
 <div class="app-container">
-<!-- Secure Header Trigger Zone -->
 <header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
 
 <div class="main-content">
 
-<!-- SECRET OWNER ACCESS PANEL -->
 <div id="secret-admin-gate" class="card">
 <h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
 <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate code lines quickly and navigate your GitHub setup effortlessly.</p>
@@ -224,14 +220,12 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 <button class="action-card-btn" style="background:#fff; color:red;" onclick="lockAdminTerminal()">🔒 Lock Admin Panel</button>
 </div>
 
-<!-- TAB 1: HOME -->
 <div id="tab-home" class="tab-content active">
 <div class="card" style="margin-bottom: 12px;">
 <h2 class="card-title">👑 Welcome to Our Portal</h2>
 <p style="font-size: 13px; margin: 0;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
 </div>
 
-<!-- SMART INTERACTIVE DIGITAL TASBEEH COUNTER -->
 <div class="card" style="margin-bottom: 12px;">
 <h2 class="card-title" style="text-align: center;">📿 Digital Tasbeeh Counter</h2>
 <div class="tasbeeh-display" id="tasbeeh-val-box">0000</div>
@@ -242,7 +236,6 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 </div>
 
-<!-- RESUME STUDY DYNAMIC HISTORY HUB -->
 <div class="card" style="margin-bottom: 12px;">
 <h2 class="card-title">⏱️ Resume Where You Left Off</h2>
 <div id="history-render-box">
@@ -250,7 +243,6 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 </div>
 
-<!-- COMMUNITY PLATFORMS PANEL -->
 <div class="card" style="margin-bottom: 5px;">
 <h2 class="card-title">📢 Connect With Us</h2>
 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
@@ -265,7 +257,6 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 </div>
 
-<!-- TAB 2: QURAN -->
 <div id="tab-quran" class="tab-content">
 <div class="card" style="padding: 10px;" id="quran-menu-panel">
 <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
@@ -288,7 +279,6 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 </div>
 
-<!-- TAB 3: INTERACTIVE HADEES -->
 <div id="tab-hadees" class="tab-content">
 <div class="card" style="padding: 12px; margin-bottom: 10px;">
 <h2 class="card-title" style="margin-bottom:8px;">📜 Hadees Library</h2>
@@ -297,27 +287,7 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 <div id="hadees-render-space" class="hadees-container-scroll"></div>
 </div>
 
-<!-- TAB 4: QIBLA -->
 <div id="tab-qibla" class="tab-content">
-<style>
-:root { --primary-color: #10b981; --bg-color: #f3f4f6; --card-bg: #ffffff; --text-color: #1f2937; }
-.compass-container { background: var(--card-bg); padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); text-align: center; max-width: 400px; width: 100%; margin: 20px auto; font-family: sans-serif; }
-.status-text { font-size: 0.9rem; color: #6b7280; margin-bottom: 25px; min-height: 40px; }
-.compass-wrapper { position: relative; width: 280px; height: 280px; margin: 0 auto 25px auto; }
-.compass-dial { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #e5e7eb; position: relative; background: #fafafa; transition: transform 0.2s ease-out; box-sizing: border-box; }
-.direction { position: absolute; font-weight: bold; font-size: 1.1rem; }
-.dir-n { top: 10px; left: 50%; transform: translateX(-50%); color: #ef4444; }
-.dir-e { right: 15px; top: 50%; transform: translateY(-50%); }
-.dir-s { bottom: 10px; left: 50%; transform: translateX(-50%); }
-.dir-w { left: 15px; top: 50%; transform: translateY(-50%); }
-.qibla-pointer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: transform 0.2s ease-out; }
-.needle { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 45px solid var(--primary-color); }
-.needle::after { content: '🕋'; position: absolute; top: -35px; left: -10px; font-size: 20px; }
-.qibla-btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: background 0.2s; width: 100%; }
-.qibla-btn:hover { background-color: #059669; }
-.degree-badge { display: inline-block; background: #ecfdf5; color: #065f46; padding: 6px 16px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: none; }
-</style>
-
 <div class="compass-container">
 <h2>Qibla Finder</h2>
 <div id="status" class="status-text">We need your location to accurately calculate the direction to the Kaaba.</div>
@@ -333,49 +303,8 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 <button class="qibla-btn" id="locateBtn" onclick="initQiblaFinder()">Find Qibla Direction</button>
 </div>
-
-<script>
-const KAABA_LAT = 21.4225241; const KAABA_LNG = 39.8261818;
-let qiblaBaring = 0; let currentHeading = 0;
-const statusEl = document.getElementById('status'); const degreeBadge = document.getElementById('degreeBadge');
-const compassDial = document.getElementById('compassDial'); const qiblaPointer = document.getElementById('qiblaPointer'); const locateBtn = document.getElementById('locateBtn');
-function initQiblaFinder() {
-statusEl.innerText = "Requesting location access...";
-if (!navigator.geolocation) { statusEl.innerText = "Geolocation not supported."; return; }
-navigator.geolocation.getCurrentPosition((position) => {
-qiblaBaring = calculateQiblaBearing(position.coords.latitude, position.coords.longitude);
-degreeBadge.style.display = 'inline-block'; degreeBadge.innerText = `Qibla: ${Math.round(qiblaBaring)}° N`;
-statusEl.innerText = "Location found! Align your phone with North (Green arrow indicates Qibla)";
-qiblaPointer.style.transform = `rotate(${qiblaBaring}deg)`; locateBtn.style.display = 'none';
-startOrientationTracking();
-}, (error) => { statusEl.innerText = "Location access denied. Please check permissions."; }, { enableHighAccuracy: true });
-}
-function calculateQiblaBearing(lat1, lng1) {
-const phi1 = lat1 * Math.PI / 180; const phi2 = KAABA_LAT * Math.PI / 180; const deltaLambda = (KAABA_LNG - lng1) * Math.PI / 180;
-const y = Math.sin(deltaLambda) * Math.cos(phi2); const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
-return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
-}
-function startOrientationTracking() {
-if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-DeviceOrientationEvent.requestPermission().then(state => {
-if (state === 'granted') { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
-}).catch(console.error);
-} else { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
-}
-function handleOrientation(event) {
-let heading = event.webkitCompassHeading || event.alpha;
-if (heading !== null && heading !== undefined) {
-if(!event.webkitCompassHeading) { heading = 360 - heading; }
-currentHeading = heading; compassDial.style.transform = `rotate(${-currentHeading}deg)`;
-qiblaPointer.style.transform = `rotate(${qiblaBaring - currentHeading}deg)`;
-statusEl.innerText = "Align the cube with the top of your device!";
-}
-}
-</script>
-</div>
 </div>
 
-<!-- TAB 5: ASK -->
 <div id="tab-ask" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: -20px !important; padding-top: 0 !important;">
 
 <div class="card" style="margin-top: 0px !important; border-top: 4px solid var(--primary); background: #fefcf6; padding-top: 10px;">
@@ -435,16 +364,30 @@ statusEl.innerText = "Align the cube with the top of your device!";
 </div>
 </div>
 </div>
-<div class="nav-bar">
-<button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
-<button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
-<button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
-<button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
-<button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
+
+<div id="tab-ilme-farz" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: 15px;">
+<div class="card" style="padding: 10px;" id="farz-menu-panel">
+<h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
+<p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
+<div id="farz-topics-directory" class="list-container"></div>
+</div>
+
+<div class="card" style="padding: 12px; display: none;" id="farz-reader-panel">
+<button class="back-btn" onclick="closeFarzReader()">⬅ Back to Topics</button>
+<h3 id="farz-reader-title" style="color: var(--primary); margin: 5px 0 10px 0; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;"></h3>
+<div id="farz-content-container" style="font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; min-height: 30vh;"></div>
 </div>
 </div>
 
-<script>
+</div> <div class="nav-bar">
+<button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
+<button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
+<button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
+<button class="nav-item" onclick="switchTab('ilme-farz', this)">📚<span>Ilm-e-Farz</span></button>
+<button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
+<button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
+</div>
+</div> <script>
 let clickCounters = {};
 let adminTapCount = 0;
 let adminTapTimer = null;
@@ -732,7 +675,7 @@ text: "Hazrat Jabir bin Samurah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"K
 ref: "(Sunan At-Tirmidhi 1951)"
 },
 {
-text: "Hazrat Muadh bin Jabal (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne bacchon ko namaz ka hukm do jab wo saat (7) saal ke hon.\"",
+text: "Hazrat Muadh bin Jabal (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne mu khariji bacchon ko namaz ka hukm do jab wo saat (7) saal ke hon.\"",
 ref: "(Sunan Abi Dawud 495)"
 },
 {
@@ -778,6 +721,10 @@ ref: "(Sahih al-Bukhari 6682)"
 {
 text: "Hazrat Juwairiyah (R.Z) se riwayat hai ki Nabi ﷺ ne subah ke waqt unhe zikr karte dekha aur farmaya: \"Maine tumhare baad char kalimat teen baar padhe hain, agar unka wazan un tamaam kalimat se kiya jaye jo tumne padhe, toh unka wazan zyada hoga (Subhanallahi wa bihamdihi...).\"",
 ref: "(Sahih Muslim 2726)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs din mein 100 baar 'Subhanallahi wa bihamdihi' kehta hai, uske gunah mita diye jaate hain chahe wo samundar ke jhaag ke barabar hon.\"",
+ref: "(Sahih al-Bukhari 6405)"
 },
 {
 text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs museebat ke waqt Dua ki qubooliyat chahta hai, use chahiye ki aasaish (khush-haali) ke waqt zyada Dua kiya kare.\"",
@@ -1310,7 +1257,7 @@ const surahList = [
 { id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
 { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
 { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
-{ id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
+{ id: 41, en: "Fussilat", ar: "فصلt" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
 { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
 { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
 { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
@@ -1329,7 +1276,7 @@ const surahList = [
 { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
 { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
 { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
-{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
+{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبs" },
 { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
 { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
 { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
@@ -1366,7 +1313,6 @@ paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'pa
 }
 
 function loadQuranContent(type, numericId, displayName) {
-// Track the user reading step instantly
 logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
 
 document.getElementById('quran-menu-panel').style.display = 'none';
@@ -1394,9 +1340,9 @@ let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
 let cleanText = ayah.text.trim();
 if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
 if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
-if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
-paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
+if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
 }
 paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
 if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
@@ -1411,7 +1357,6 @@ document.getElementById('quran-reader-panel').style.display = 'none';
 document.getElementById('quran-menu-panel').style.display = 'block';
 }
 
-// DIRECTLY FIXED ASK WHATSAPP ROUTING ENGINE
 function sendWhatsAppDirectly() {
 var userFormName = document.getElementById('ask-name').value.trim();
 var userFormQuery = document.getElementById('ask-query').value.trim();
@@ -1433,120 +1378,89 @@ if(heading !== undefined) document.getElementById('needle').style.transform = 'r
 }, true);
 }
 
-<div id="tab-ilme-farz" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: 15px;">
-        
-        <div class="card" style="padding: 10px;" id="farz-menu-panel">
-            <h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
-            <p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
-            <div id="farz-topics-directory" class="list-container">
-                </div>
-        </div>
+// DATA MATRIX FOR ILM-E-FARZ
+const farzTopicsData = [
+{
+id: "taharat",
+title: "✨ Taharath (Pakeezgi)",
+content: "Taharath imaan ka aadha hissa hai.\n\n• Roohani aur jismani pakizgi har ibadat ke liye shart hai.\n• Libas, badan aur jagah ka pak hona namaz ke liye zaroori hai.\n• Hadath-e-Asghar (wazu tootna) aur Hadath-e-Akbar (ghusl farz hona) se pak hona isme shamil hai."
+},
+{
+id: "wazu",
+title: "💧 Wazu ke Ahkaam",
+content: "Wazu mein 4 Farz hain, jinke bina wazu nahi hota:\n\n1. Chahra dhona (peshani ke baal se thodi ke niche tak aur ek kaan ki lau se doosre tak).\n2. Dono haath kohniyon samet dhona.\n3. Chauthai (1/4) sar ka masah karna.\n4. Dono paaon takhno samet dhona."
+},
+{
+id: "ghusl",
+title: "🚿 Ghusl ke Faraiz",
+content: "Ghusl (Nhaane) mein 3 Farz hain:\n\n1. Kulli karna (is tarah ki gale ke gharghara tak paani pahunche, agar roza na ho).\n2. Naak mein narm haddi tak paani daalna.\n3. Poore badan par is tarah paani bahana ki ek baal barabar jagah bhi khushk na rahe."
+},
+{
+id: "namaz",
+title: "🧎 Namaz (Salah)",
+content: "Namaz deen ka sutoon (pillar) hai.\n\n• Din mein 5 waqt ki namaz har aqil aur baligh musalman par farz hai.\n• Namaz ke andar aur bahar ke faraiz (sharaait o arkaan) ko sahi tareeqe se ada karna zaroori hai.\n• Namaz qiyamat ke din sabse pehla hisab-kitab ka zariya hogi."
+},
+{
+id: "roza",
+title: "🌙 Roza (Sawm)",
+content: "Ramadan ke roze har baligh par farz hain.\n\n• Subah sadiq se lekar maghrib tak khane, peene aur na-farmaani se ruke rehne ka naam roza hai.\n• Roza sirff pet ka nahi, balki aankh, zubaan aur kaan ka bhi hota hai taaki taqwa haasil ho."
+},
+{
+id: "zakat",
+title: "💰 Zakat ke Ahkaam",
+content: "Zakat islam ka chautha rukun hai.\n\n• Har saal sahib-e-nisab (wo shakhs jiske paas 7.5 tola sona ya 52.5 tola chandi ya uske barabar maal ho) par 2.5% zakat nikalna farz hai.\n• Yeh maal ko pak karti hai aur gareebon ki madad ka zariya banti hai."
+},
+{
+id: "haj",
+title: "🕋 Haj-e-Baytullah",
+content: "Haj zindagi mein ek martaba farz hai.\n\n• Yeh sirf un logon par farz hai jo makka mukarrama tak jaane aur wahan rehne ka kharcha uthane ki jismani aur maali taqat rakhte hon.\n• Haj-e-Mabroor ka badla sirf jannat hai."
+}
+];
 
-        <div class="card" style="padding: 12px; display: none;" id="farz-reader-panel">
-            <button class="back-btn" onclick="closeFarzReader()">⬅ Back to Topics</button>
-            <h3 id="farz-reader-title" style="color: var(--primary); margin: 5px 0 10px 0; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;"></h3>
-            <div id="farz-content-container" style="font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; min-height: 30vh;">
-                </div>
-        </div>
-    </div>
-
-</div> <div class="nav-bar">
-    <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
-    <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
-    <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
-    <button class="nav-item" onclick="switchTab('ilme-farz', this)">📚<span>Ilm-e-Farz</span></button>
-    <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
-    <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
+function initFarzTopicsMenu() {
+const container = document.getElementById('farz-topics-directory');
+if(!container) return;
+container.innerHTML = '';
+farzTopicsData.forEach((topic) => {
+container.innerHTML += `
+<div class="grid-row" onclick="loadFarzContent('${topic.id}')">
+<span>${topic.title}</span>
+<span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span>
 </div>
+`;
+});
+}
 
-<script>
-    // DATA MATRIX FOR ILM-E-FARZ
-    const farzTopicsData = [
-        {
-            id: "taharat",
-            title: "✨ Taharath (Pakeezgi)",
-            content: "Taharath imaan ka aadha hissa hai.\n\n• Roohani aur jismani pakizgi har ibadat ke liye shart hai.\n• Libas, badan aur jagah ka pak hona namaz ke liye zaroori hai.\n• Hadath-e-Asghar (wazu tootna) aur Hadath-e-Akbar (ghusl farz hona) se pak hona isme shamil hai."
-        },
-        {
-            id: "wazu",
-            title: "💧 Wazu ke Ahkaam",
-            content: "Wazu mein 4 Farz hain, jinke bina wazu nahi hota:\n\n1. Chahra dhona (peshani ke baal se thodi ke niche tak aur ek kaan ki lau se doosre tak).\n2. Dono haath kohniyon samet dhona.\n3. Chauthai (1/4) sar ka masah karna.\n4. Dono paaon takhno samet dhona."
-        },
-        {
-            id: "ghusl",
-            title: "🚿 Ghusl ke Faraiz",
-            content: "Ghusl (Nhaane) mein 3 Farz hain:\n\n1. Kulli karna (is tarah ki gale ke gharghara tak paani pahunche, agar roza na ho).\n2. Naak mein narm haddi tak paani daalna.\n3. Poore badan par is tarah paani bahana ki ek baal barabar jagah bhi khushk na rahe."
-        },
-        {
-            id: "namaz",
-            title: "🧎 Namaz (Salah)",
-            content: "Namaz deen ka sutoon (pillar) hai.\n\n• Din mein 5 waqt ki namaz har aqil aur baligh musalman par farz hai.\n• Namaz ke andar aur bahar ke faraiz (sharaait o arkaan) ko sahi tareeqe se ada karna zaroori hai.\n• Namaz qiyamat ke din sabse pehla hisab-kitab ka zariya hogi."
-        },
-        {
-            id: "roza",
-            title: "🌙 Roza (Sawm)",
-            content: "Ramadan ke roze har baligh par farz hain.\n\n• Subah sadiq se lekar maghrib tak khane, peene aur na-farmaani se ruke rehne ka naam roza hai.\n• Roza sirff pet ka nahi, balki aankh, zubaan aur kaan ka bhi hota hai taaki taqwa haasil ho."
-        },
-        {
-            id: "zakat",
-            title: "💰 Zakat ke Ahkaam",
-            content: "Zakat islam ka chautha rukun hai.\n\n• Har saal sahib-e-nisab (wo shakhs jiske paas 7.5 tola sona ya 52.5 tola chandi ya uske barabar maal ho) par 2.5% zakat nikalna farz hai.\n• Yeh maal ko pak karti hai aur gareebon ki madad ka zariya banti hai."
-        },
-        {
-            id: "haj",
-            title: "🕋 Haj-e-Baytullah",
-            content: "Haj zindagi mein ek martaba farz hai.\n\n• Yeh sirf un logon par farz hai jo makka mukarrama tak jaane aur wahan rehne ka kharcha uthane ki jismani aur maali taqat rakhte hon.\n• Haj-e-Mabroor ka badla sirf jannat hai."
-        }
-    ];
+function loadFarzContent(topicId) {
+const topic = farzTopicsData.find(t => t.id === topicId);
+if(!topic) return;
+document.getElementById('farz-menu-panel').style.display = 'none';
+document.getElementById('farz-reader-panel').style.display = 'block';
+document.getElementById('farz-reader-title').innerText = topic.title;
+document.getElementById('farz-content-container').innerText = topic.content;
+}
 
-    function initFarzTopicsMenu() {
-        const container = document.getElementById('farz-topics-directory');
-        if(!container) return;
-        container.innerHTML = '';
-        farzTopicsData.forEach((topic) => {
-            container.innerHTML += `
-                <div class="grid-row" onclick="loadFarzContent('${topic.id}')">
-                    <span>${topic.title}</span>
-                    <span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span>
-                </div>
-            `;
-        });
-    }
+function closeFarzReader() {
+document.getElementById('farz-reader-panel').style.display = 'none';
+document.getElementById('farz-menu-panel').style.display = 'block';
+}
 
-    function loadFarzContent(topicId) {
-        const topic = farzTopicsData.find(t => t.id === topicId);
-        if(!topic) return;
-        document.getElementById('farz-menu-panel').style.display = 'none';
-        document.getElementById('farz-reader-panel').style.display = 'block';
-        document.getElementById('farz-reader-title').innerText = topic.title;
-        document.getElementById('farz-content-container').innerText = topic.content;
-    }
-
-    function closeFarzReader() {
-        document.getElementById('farz-reader-panel').style.display = 'none';
-        document.getElementById('farz-menu-panel').style.display = 'block';
-    }
-
-    // Dynamic Engine Hijack for switchTab
-    window.addEventListener('DOMContentLoaded', function() {
-        const checkInterval = setInterval(() => {
-            if (typeof switchTab === 'function') {
-                const originalSwitchTab = switchTab;
-                switchTab = function(tabId, element) {
-                    originalSwitchTab(tabId, element);
-                    if(tabId === 'ilme-farz') {
-                        initFarzTopicsMenu();
-                        closeFarzReader();
-                    }
-                };
-                clearInterval(checkInterval);
-            }
-        }, 100);
-    });
-
-    /* ------------------------------------------------------------
-       PLACEHOLDER FOR NEW PROMPT INSTRUCTIONS / MASTER FUNCTIONS
-       ------------------------------------------------------------ */
+// Dynamic Engine Hijack for switchTab
+window.addEventListener('DOMContentLoaded', function() {
+const checkInterval = setInterval(() => {
+if (typeof switchTab === 'function') {
+const originalSwitchTab = switchTab;
+switchTab = function(tabId, element) {
+originalSwitchTab(tabId, element);
+if(tabId === 'ilme-farz') {
+initFarzTopicsMenu();
+closeFarzReader();
+}
+};
+clearInterval(checkInterval);
+}
+}, 100);
+});
 </script>
 </body>
 </html>
