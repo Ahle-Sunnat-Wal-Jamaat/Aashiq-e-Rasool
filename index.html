@@ -973,20 +973,8 @@ text: "Tum mein se sabse behtar wo hai jiske akhlaq sabse acche ho.",
 ref: "Sahih al-Bukhari 6035"
 },
 {
-text: "Aamaal ka daromadar niyat par hai, aur har insaan ko wahi milega jiski usne niyat ki.",
+text: "Har ek aamal ka daromadar niyat par hai.",
 ref: "(Sahih al-Bukhari 1)"
-},
-{
-text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
-ref: "[Behtar Kaun?, Safha No. 93]"
-},
-{
-text: "*Lambi Umeedo'n Se Door Raha Karo, Kyun Ki Wo Tumhare Pas Maujood Ne'mato'n Ko Haqeer Bana Deti Hai*",
-ref: "Al-Hadees"
-},
-{
-text: "*Jab Tak Tumhein Tauba Karne Ka Waqt Hasil Hai, Ise Allah Ta'ala ki Ek Ne'mat Samjho Aur Tauba Karte Raho*",
-ref: "(📖Al-Fath-ul-Rabbani, pp. 29)"
 }
 ];
 
@@ -1186,6 +1174,7 @@ document.getElementById('farz-reader-panel').style.display = 'none';
 document.getElementById('farz-menu-panel').style.display = 'block';
 }
 
+// Fixed core central tab router switcher block
 function switchTab(tabId, element) {
 var tabs = document.getElementsByClassName('tab-content');
 for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
@@ -1224,7 +1213,6 @@ alert('Phrase "const baseHadeesData" copied!');
 });
 }
 
-// Fixed function reference name mapping
 function generateHadeesRepositoryCode() {
 let txt = document.getElementById('adm-hadees-text').value.trim();
 let rf = document.getElementById('adm-hadees-ref').value.trim() || "Al-Hadees";
@@ -1234,6 +1222,10 @@ let formattedRef = rf.replace(/"/g, '\\"');
 let outputCode = `{\n text: "${formattedText}",\n ref: "${formattedRef}"\n},`;
 document.getElementById('adm-output-code').value = outputCode;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Dynamic fallback handler systems check
+});
 
 function lockAdminTerminal() {
 document.getElementById('secret-admin-gate').style.display = "none";
