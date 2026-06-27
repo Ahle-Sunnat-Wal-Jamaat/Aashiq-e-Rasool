@@ -1,1457 +1,1442 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aashiq e Rasool App</title>
-    
-    <!-- Importing Clear, Beautiful Indo-Pak Style Arabic Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary: #064e3b;
-            --accent: #10b981;
-            --bg: #f3f4f6;
-            --card: #ffffff;
-            --text: #1f2937;
-        }
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background-color: var(--bg); color: var(--text);
-            margin: 0; padding: 0; display: flex; justify-content: center;
-            overflow-x: hidden;
-        }
-        
-        /* SPLASH WELCOME SCREEN STYLING */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
-            z-index: 9999; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; color: white;
-            transition: opacity 0.5s ease-out, visibility 0.5s;
-        }
-        .splash-logo-container {
-            width: 260px; height: 260px; border-radius: 50%;
-            background: white; padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 20px;
-        }
-        .splash-logo-container img {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-        }
-        .splash-title {
-            font-size: 24px; font-weight: bold; letter-spacing: 1px; color: #fef08a; margin: 10px 0 5px 0;
-        }
-        .splash-subtitle {
-            font-size: 14px; color: #a7f3d0; margin: 0; font-style: italic;
-        }
-        .splash-loader {
-            margin-top: 30px; width: 40px; height: 40px;
-            border: 4px solid rgba(255,255,255,0.1); border-left-color: #fef08a;
-            border-radius: 50%; animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aashiq e Rasool App</title>
 
-        .app-container {
-            width: 100%; max-width: 480px; background: var(--card); 
-            min-height: 100vh; display: flex; flex-direction: column;
-            position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.05);
-        }
-        header {
-            background: var(--primary); color: white; text-align: center; padding: 18px 15px;
-            border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
-            cursor: pointer; user-select: none;
-        }
-        header h1 { margin: 0; font-size: 22px; }
-        .main-content { padding: 15px; flex: 1; margin-bottom: 90px; }
-        
-        .tab-content { display: none !important; }
-        .tab-content.active { display: block !important; }
-        
-        .card {
-            background: white; border-radius: 12px; padding: 15px;
-            margin-bottom: 15px; border: 1px solid #e5e7eb;
-        }
-        .card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; margin-bottom: 10px; }
-        
-        /* Social Buttons Layout */
-        .social-link-btn {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            width: 100%; padding: 13px; margin-bottom: 10px; border-radius: 8px;
-            border: none; font-weight: bold; font-size: 14px; cursor: pointer;
-            text-decoration: none; box-sizing: border-box; transition: transform 0.1s ease;
-        }
-        .social-link-btn:active { transform: scale(0.98); }
-        .btn-whatsapp { background-color: #25D366; color: white; }
-        .btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
+<!-- Importing Clear, Beautiful Indo-Pak Style Arabic Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
-        /* Tasbeeh Interface Layout */
-        .tasbeeh-display { font-size: 48px; font-weight: bold; color: var(--primary); text-align: center; margin: 10px 0; font-family: monospace; letter-spacing: 2px; }
-        .tasbeeh-tap-zone { background: #f0fdf4; border: 3px dashed var(--accent); border-radius: 50%; width: 140px; height: 140px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: var(--primary); cursor: pointer; user-select: none; transition: background 0.1s; }
-        .tasbeeh-tap-zone:active { background: #d1fae5; }
-        .tasbeeh-actions { display: flex; gap: 10px; }
-        .tasbeeh-btn { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-weight: bold; cursor: pointer; background: #f9fafb; color: #4b5563; }
-        .tasbeeh-btn-stop { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
+<style>
+:root {
+--primary: #064e3b;
+--accent: #10b981;
+--bg: #f3f4f6;
+--card: #ffffff;
+--text: #1f2937;
+}
+body {
+font-family: 'Segoe UI', system-ui, sans-serif;
+background-color: var(--bg); color: var(--text);
+margin: 0; padding: 0; display: flex; justify-content: center;
+overflow-x: hidden;
+}
 
-        /* Reading History Box Elements */
-        .history-item-row { display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; cursor: pointer; }
-        .history-item-row:hover { background: #dbeafe; }
-        .history-title-tag { font-weight: bold; color: #1e40af; }
+/* SPLASH WELCOME SCREEN STYLING */
+#splash-screen {
+position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+background: linear-gradient(135deg, #022c22 0%, #064e3b 100%);
+z-index: 9999; display: flex; flex-direction: column;
+align-items: center; justify-content: center; color: white;
+transition: opacity 0.5s ease-out, visibility 0.5s;
+}
+.splash-logo-container {
+width: 260px; height: 260px; border-radius: 50%;
+background: white; padding: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+display: flex; align-items: center; justify-content: center;
+margin-bottom: 20px;
+}
+.splash-logo-container img {
+width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+}
+.splash-title {
+font-size: 24px; font-weight: bold; letter-spacing: 1px; color: #fef08a; margin: 10px 0 5px 0;
+}
+.splash-subtitle {
+font-size: 14px; color: #a7f3d0; margin: 0; font-style: italic;
+}
+.splash-loader {
+margin-top: 30px; width: 40px; height: 40px;
+border: 4px solid rgba(255,255,255,0.1); border-left-color: #fef08a;
+border-radius: 50%; animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Mode Selector Buttons (Surah / Para) */
-        .mode-selector { display: flex; gap: 10px; margin-bottom: 15px; }
-        .mode-btn { flex: 1; background: #e5e7eb; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text); }
-        .mode-btn.active { background: var(--primary); color: white; }
+.app-container {
+width: 100%; max-width: 480px; background: var(--card);
+min-height: 100vh; display: flex; flex-direction: column;
+position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+header {
+background: var(--primary); color: white; text-align: center; padding: 18px 15px;
+border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;
+cursor: pointer; user-select: none;
+}
+header h1 { margin: 0; font-size: 22px; }
+.main-content { padding: 15px; flex: 1; margin-bottom: 90px; }
 
-        /* Grid Lists */
-        .list-container { display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; padding: 5px; }
-        .grid-row {
-            background: #f0fdf4; border: 1px solid #d1fae5; padding: 12px;
-            border-radius: 8px; font-weight: 600; color: var(--primary);
-            text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-        }
-        .grid-row:hover { background: #e6fbf0; }
-        .arabic-title { font-size: 22px; font-weight: bold; color: #0f766e; font-family: 'Amiri', serif; }
-        
-        /* Reader Panel */
-        .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
-        .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
-        .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 18px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
-        
-        /* Beautiful Bold Indo-Pak Style Text Blocks */
-        .quran-continuous-block { 
-            text-align: justify; 
-            font-size: 28px; 
-            line-height: 2.6; 
-            color: #000000; 
-            direction: rtl; 
-            font-family: 'Amiri', serif;
-            font-weight: 700;
-            word-spacing: 4px;
-        }
-        
-        /* Marker Styles */
-        .section-break-line {
-            display: block; text-align: center; background: #fef3c7; color: #b45309;
-            font-size: 14px; font-weight: bold; padding: 6px; margin: 15px 0;
-            border-radius: 6px; border: 1px dashed #f59e0b; font-family: 'Segoe UI', sans-serif;
-            direction: ltr;
-        }
-        .ruku-marker {
-            color: #dc2626; font-size: 24px; font-weight: bold; margin: 0 8px;
-            background: #ffe4e6; padding: 2px 6px; border-radius: 4px;
-        }
-        .ayat-marker {
-            color: #064e3b; font-size: 22px; margin: 0 4px; font-weight: bold;
-            font-family: 'Segoe UI', sans-serif; background: #e6f4ea; padding: 0 5px; border-radius: 50%;
-        }
-        .info-header-box {
-            background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af;
-            padding: 10px; margin-bottom: 12px; border-radius: 6px; font-size: 13px;
-        }
+.tab-content { display: none !important; }
+.tab-content.active { display: block !important; }
 
-        /* Hadees Layout Styling */
-        .hadees-container-scroll { max-height: 58vh; overflow-y: auto; padding: 2px; }
-        .hadees-card {
-            background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
-            padding: 14px; margin-bottom: 12px; border-left: 4px solid var(--primary);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-        .hadees-header { display: flex; justify-content: space-between; border-bottom: 1px dashed #e5e7eb; padding-bottom: 6px; margin-bottom: 8px; font-size: 12px; font-weight: bold; color: var(--primary); }
-        .hadees-body-text { font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; margin-bottom: 10px; font-weight: 500; }
-        .hadees-reference { font-size: 12px; font-style: italic; color: #6b7280; display: block; margin-bottom: 10px; }
-        .action-btn-row { display: flex; gap: 8px; }
-        .action-card-btn { flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
-        .action-card-btn:hover { background: #f3f4f6; }
+.card {
+background: white; border-radius: 12px; padding: 15px;
+margin-bottom: 15px; border: 1px solid #e5e7eb;
+}
+.card-title { font-size: 16px; font-weight: 600; color: var(--primary); margin-top: 0; margin-bottom: 10px; }
 
-        /* Hidden Protected Dashboard Styling */
-        #secret-admin-gate { display: none; background: #fffbeb; border: 2px solid #f59e0b; }
+/* Social Buttons Layout */
+.social-link-btn {
+display: flex; align-items: center; justify-content: center; gap: 10px;
+width: 100%; padding: 13px; margin-bottom: 10px; border-radius: 8px;
+border: none; font-weight: bold; font-size: 14px; cursor: pointer;
+text-decoration: none; box-sizing: border-box; transition: transform 0.1s ease;
+}
+.social-link-btn:active { transform: scale(0.98); }
+.btn-whatsapp { background-color: #25D366; color: white; }
+.btn-instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; }
 
-        /* Miscellaneous UI */
-        .compass-disc { width: 150px; height: 150px; border: 5px solid var(--primary); border-radius: 50%; margin: 15px auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center; }
-        .needle { width: 4px; height: 110px; background: #ef4444; position: absolute; transition: transform 0.2s ease-out; }
-        .kaaba-icon { position: absolute; top: 10px; font-size: 18px; color: gold; }
-        .input-field { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #c9deb3; border-radius: 6px; box-sizing: border-box; }
-        .submit-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+/* Tasbeeh Interface Layout */
+.tasbeeh-display { font-size: 48px; font-weight: bold; color: var(--primary); text-align: center; margin: 10px 0; font-family: monospace; letter-spacing: 2px; }
+.tasbeeh-tap-zone { background: #f0fdf4; border: 3px dashed var(--accent); border-radius: 50%; width: 140px; height: 140px; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; color: var(--primary); cursor: pointer; user-select: none; transition: background 0.1s; }
+.tasbeeh-tap-zone:active { background: #d1fae5; }
+.tasbeeh-actions { display: flex; gap: 10px; }
+.tasbeeh-btn { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-weight: bold; cursor: pointer; background: #f9fafb; color: #4b5563; }
+.tasbeeh-btn-stop { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
 
-        .nav-bar {
-            position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
-            border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
-        }
-        .nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; width: 16.6%; }
-        .nav-item.active { color: var(--primary); font-weight: bold; }
-    </style>
+/* Reading History Box Elements */
+.history-item-row { display: flex; justify-content: space-between; align-items: center; background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; cursor: pointer; }
+.history-item-row:hover { background: #dbeafe; }
+.history-title-tag { font-weight: bold; color: #1e40af; }
+
+/* Mode Selector Buttons (Surah / Para) */
+.mode-selector { display: flex; gap: 10px; margin-bottom: 15px; }
+.mode-btn { flex: 1; background: #e5e7eb; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; color: var(--text); }
+.mode-btn.active { background: var(--primary); color: white; }
+
+/* Grid Lists */
+.list-container { display: flex; flex-direction: column; gap: 8px; max-height: 55vh; overflow-y: auto; padding: 5px; }
+.grid-row {
+background: #f0fdf4; border: 1px solid #d1fae5; padding: 12px;
+border-radius: 8px; font-weight: 600; color: var(--primary);
+text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+}
+.grid-row:hover { background: #e6fbf0; }
+.arabic-title { font-size: 22px; font-weight: bold; color: #0f766e; font-family: 'Amiri', serif; }
+
+/* Reader Panel */
+.quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
+.back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
+.verses-scroll { max-height: 55vh; overflow-y: auto; padding: 18px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
+
+/* Beautiful Bold Indo-Pak Style Text Blocks */
+.quran-continuous-block {
+text-align: justify;
+font-size: 28px;
+line-height: 2.6;
+color: #000000;
+direction: rtl;
+font-family: 'Amiri', serif;
+font-weight: 700;
+word-spacing: 4px;
+}
+
+/* Marker Styles */
+.section-break-line {
+display: block; text-align: center; background: #fef3c7; color: #b45309;
+font-size: 14px; font-weight: bold; padding: 6px; margin: 15px 0;
+border-radius: 6px; border: 1px dashed #f59e0b; font-family: 'Segoe UI', sans-serif;
+direction: ltr;
+}
+.ruku-marker {
+color: #dc2626; font-size: 24px; font-weight: bold; margin: 0 8px;
+background: #ffe4e6; padding: 2px 6px; border-radius: 4px;
+}
+.ayat-marker {
+color: #064e3b; font-size: 22px; margin: 0 4px; font-weight: bold;
+font-family: 'Segoe UI', sans-serif; background: #e6f4ea; padding: 0 5px; border-radius: 50%;
+}
+.info-header-box {
+background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af;
+padding: 10px; margin-bottom: 12px; border-radius: 6px; font-size: 13px;
+}
+
+/* Hadees Layout Styling */
+.hadees-container-scroll { max-height: 58vh; overflow-y: auto; padding: 2px; }
+.hadees-card {
+background: #ffffff; border: 1px solid #e5e7eb; border-radius: 10px;
+padding: 14px; margin-bottom: 12px; border-left: 4px solid var(--primary);
+box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+.hadees-header { display: flex; justify-content: space-between; border-bottom: 1px dashed #e5e7eb; padding-bottom: 6px; margin-bottom: 8px; font-size: 12px; font-weight: bold; color: var(--primary); }
+.hadees-body-text { font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; margin-bottom: 10px; font-weight: 500; }
+.hadees-reference { font-size: 12px; font-style: italic; color: #6b7280; display: block; margin-bottom: 10px; }
+.action-btn-row { display: flex; gap: 8px; }
+.action-card-btn { flex: 1; padding: 8px; font-size: 11px; font-weight: bold; border-radius: 5px; border: 1px solid #d1d5db; background: #f9fafb; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; color: #4b5563; }
+.action-card-btn:hover { background: #f3f4f6; }
+
+/* Hidden Protected Dashboard Styling */
+#secret-admin-gate { display: none; background: #fffbeb; border: 2px solid #f59e0b; }
+
+/* Miscellaneous UI */
+.compass-disc { width: 150px; height: 150px; border: 5px solid var(--primary); border-radius: 50%; margin: 15px auto; position: relative; background: #fff; display: flex; align-items: center; justify-content: center; }
+.needle { width: 4px; height: 110px; background: #ef4444; position: absolute; transition: transform 0.2s ease-out; }
+.kaaba-icon { position: absolute; top: 10px; font-size: 18px; color: gold; }
+.input-field { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #c9deb3; border-radius: 6px; box-sizing: border-box; }
+.submit-btn { background: var(--primary); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+.nav-bar {
+position: fixed; bottom: 0; width: 100%; max-width: 480px; background: white;
+border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 12px 0; z-index: 1000;
+}
+.nav-item { background: none; border: none; color: #6b7280; font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; width: 16.6%; }
+.nav-item.active { color: var(--primary); font-weight: bold; }
+</style>
 </head>
 <body>
 
 <!-- ANIMATED SPLASH SCREEN -->
 <div id="splash-screen">
-    <div class="splash-logo-container">
-        <img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
-    </div>
-    <div class="splash-title">Ahle Sunnat Wa Jama'at</div>
-    <div class="splash-subtitle">Welcome to Aashiq e Rasool App</div>
-    <div class="splash-loader"></div>
+<div class="splash-logo-container">
+<img src="logo.jpeg" alt="Ahle Sunnat Wa Jama'at Logo" onerror="this.src='https://placehold.co/300x300/064e3b/ffffff?text=Ahle+Sunnat+Wa+Jama%27at'">
+</div>
+<div class="splash-title">Ahle Sunnat Wa Jama'at</div>
+<div class="splash-subtitle">Welcome to Aashiq e Rasool App</div>
+<div class="splash-loader"></div>
 </div>
 
 <div class="app-container">
-    <!-- Secure Header Trigger Zone -->
-    <header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
+<!-- Secure Header Trigger Zone -->
+<header onclick="handleAdminSecretTap()"><h1>Aashiq e Rasool</h1></header>
 
-    <div class="main-content">
-        
-        <!-- SECRET OWNER ACCESS PANEL -->
-        <div id="secret-admin-gate" class="card">
-            <h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
-            <p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate code lines quickly and navigate your GitHub setup effortlessly.</p>
-            
-            <button class="submit-btn" style="background:#1e40af; margin-bottom:15px; font-size:13px;" onclick="copySearchPhraseShortcut()">📋 Click First: Copy GitHub Search Phrase</button>
-            <hr style="border:0; border-top:1px dashed #f59e0b; margin:10px 0;">
+<div class="main-content">
 
-            <label style="font-size: 11px; font-weight: bold;">Step 1: Write Hadees Details</label>
-            <textarea id="adm-hadees-text" class="input-field" rows="3" placeholder="Paste Hinglish Hadees content text..."></textarea>
-            <input type="text" id="adm-hadees-ref" class="input-field" placeholder="Book / Page Reference Hawala">
-            
-            <button class="submit-btn" style="background:#d97706; margin-bottom:12px;" onclick="generateHadeesRepositoryCode()">⚡ Step 2: Generate GitHub Code Line</button>
-            
-            <label style="font-size: 11px; font-weight: bold;">Step 3: Copy this result and paste into your GitHub code list:</label>
-            <textarea id="adm-output-code" class="input-field" rows="4" readonly placeholder="Resulting raw script block will generate here..."></textarea>
-            
-            <hr style="border:0; border-top:1px solid #f59e0b; margin:15px 0;">
-            <button class="action-card-btn" style="background:#fff; color:red;" onclick="lockAdminTerminal()">🔒 Lock Admin Panel</button>
-        </div>
+<!-- SECRET OWNER ACCESS PANEL -->
+<div id="secret-admin-gate" class="card">
+<h2 class="card-title" style="color: #b45309;">🔐 Master Owner Terminal (Authenticated)</h2>
+<p style="font-size:12px; margin:0 0 10px 0; color:#78350f;">Generate code lines quickly and navigate your GitHub setup effortlessly.</p>
 
-        <!-- TAB 1: HOME -->
-        <div id="tab-home" class="tab-content active">
-            <div class="card" style="margin-bottom: 12px;">
-                <h2 class="card-title">👑 Welcome to Our Portal</h2>
-                <p style="font-size: 13px; margin: 0;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
-            </div>
+<button class="submit-btn" style="background:#1e40af; margin-bottom:15px; font-size:13px;" onclick="copySearchPhraseShortcut()">📋 Click First: Copy GitHub Search Phrase</button>
+<hr style="border:0; border-top:1px dashed #f59e0b; margin:10px 0;">
 
-            <!-- SMART INTERACTIVE DIGITAL TASBEEH COUNTER -->
-            <div class="card" style="margin-bottom: 12px;">
-                <h2 class="card-title" style="text-align: center;">📿 Digital Tasbeeh Counter</h2>
-                <div class="tasbeeh-display" id="tasbeeh-val-box">0000</div>
-                <div class="tasbeeh-tap-zone" onclick="incrementTasbeehCount()">TAP HERE</div>
-                <div class="tasbeeh-actions">
-                    <button class="tasbeeh-btn tasbeeh-btn-stop" onclick="stopAndFreezeTasbeeh()">⏸ Pause</button>
-                    <button class="tasbeeh-btn" onclick="resetTasbeehCountWithPrompt()">🔄 Reset</button>
-                </div>
-            </div>
+<label style="font-size: 11px; font-weight: bold;">Step 1: Write Hadees Details</label>
+<textarea id="adm-hadees-text" class="input-field" rows="3" placeholder="Paste Hinglish Hadees content text..."></textarea>
+<input type="text" id="adm-hadees-ref" class="input-field" placeholder="Book / Page Reference Hawala">
 
-            <!-- RESUME STUDY DYNAMIC HISTORY HUB -->
-            <div class="card" style="margin-bottom: 12px;">
-                <h2 class="card-title">⏱️ Resume Where You Left Off</h2>
-                <div id="history-render-box">
-                    <p style="font-size: 12px; color: #6b7280; margin: 0;">No reading logs recorded yet. Explore the library to build your tracking history!</p>
-                </div>
-            </div>
+<button class="submit-btn" style="background:#d97706; margin-bottom:12px;" onclick="generateHadeesRepositoryCode()">⚡ Step 2: Generate GitHub Code Line</button>
 
-            <!-- COMMUNITY PLATFORMS PANEL -->
-            <div class="card" style="margin-bottom: 5px;">
-                <h2 class="card-title">📢 Connect With Us</h2>
-                <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
-                
-                <a href="https://chat.whatsapp.com/LxrBMsjKTn87CySGG9hg0z?s=cl&p=a&ilr=0" target="_blank" class="social-link-btn btn-whatsapp">
-                    🟢 Join Our WhatsApp Group
-                </a>
-                
-                <a href="https://www.instagram.com/aashiq_e_rasool_0786?igsh=MWtpbDVmNjVpYWZ2ag==" target="_blank" class="social-link-btn btn-instagram">
-                    📸 Follow Us on Instagram
-                </a>
-            </div>
-        </div>
+<label style="font-size: 11px; font-weight: bold;">Step 3: Copy this result and paste into your GitHub code list:</label>
+<textarea id="adm-output-code" class="input-field" rows="4" readonly placeholder="Resulting raw script block will generate here..."></textarea>
 
-        <!-- TAB 2: QURAN -->
-        <div id="tab-quran" class="tab-content">
-            <div class="card" style="padding: 10px;" id="quran-menu-panel">
-                <h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
-                
-                <div class="mode-selector">
-                    <button id="btn-mode-surah" class="mode-btn active" onclick="toggleQuranMode('surah')">Surah Wise</button>
-                    <button id="btn-mode-para" class="mode-btn" onclick="toggleQuranMode('para')">Para / Juz Wise</button>
-                </div>
+<hr style="border:0; border-top:1px solid #f59e0b; margin:15px 0;">
+<button class="action-card-btn" style="background:#fff; color:red;" onclick="lockAdminTerminal()">🔒 Lock Admin Panel</button>
+</div>
 
-                <div id="surah-directory-view" class="list-container"></div>
-                <div id="para-directory-view" class="list-container" style="display: none;"></div>
-            </div>
+<!-- TAB 1: HOME -->
+<div id="tab-home" class="tab-content active">
+<div class="card" style="margin-bottom: 12px;">
+<h2 class="card-title">👑 Welcome to Our Portal</h2>
+<p style="font-size: 13px; margin: 0;">Explore Quran translations, verified Hadees collections, and real-time prayer tools effortlessly below.</p>
+</div>
 
-            <div class="card" style="padding: 10px; display: none;" id="quran-reader-panel">
-                <button class="back-btn" onclick="closeQuranReader()">⬅ Back to Menu</button>
-                <h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 5px 0; font-size: 16px;"></h3>
-                <div id="quran-info-header" class="info-header-box"></div>
-                
-                <div id="verses-container" class="verses-scroll"></div>
-            </div>
-        </div>
+<!-- SMART INTERACTIVE DIGITAL TASBEEH COUNTER -->
+<div class="card" style="margin-bottom: 12px;">
+<h2 class="card-title" style="text-align: center;">📿 Digital Tasbeeh Counter</h2>
+<div class="tasbeeh-display" id="tasbeeh-val-box">0000</div>
+<div class="tasbeeh-tap-zone" onclick="incrementTasbeehCount()">TAP HERE</div>
+<div class="tasbeeh-actions">
+<button class="tasbeeh-btn tasbeeh-btn-stop" onclick="stopAndFreezeTasbeeh()">⏸ Pause</button>
+<button class="tasbeeh-btn" onclick="resetTasbeehCountWithPrompt()">🔄 Reset</button>
+</div>
+</div>
 
-        <!-- TAB 3: INTERACTIVE HADEES -->
-        <div id="tab-hadees" class="tab-content">
-            <div class="card" style="padding: 12px; margin-bottom: 10px;">
-                <h2 class="card-title" style="margin-bottom:8px;">📜 Hadees Library</h2>
-                <input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
-            </div>
-            <div id="hadees-render-space" class="hadees-container-scroll"></div>
-        </div>
+<!-- RESUME STUDY DYNAMIC HISTORY HUB -->
+<div class="card" style="margin-bottom: 12px;">
+<h2 class="card-title">⏱️ Resume Where You Left Off</h2>
+<div id="history-render-box">
+<p style="font-size: 12px; color: #6b7280; margin: 0;">No reading logs recorded yet. Explore the library to build your tracking history!</p>
+</div>
+</div>
 
-        <!-- TAB 4: QIBLA -->
-        <div id="tab-qibla" class="tab-content">
-                <style>
-    :root { --primary-color: #10b981; --bg-color: #f3f4f6; --card-bg: #ffffff; --text-color: #1f2937; }
-    .compass-container { background: var(--card-bg); padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); text-align: center; max-width: 400px; width: 100%; margin: 20px auto; font-family: sans-serif; }
-    .status-text { font-size: 0.9rem; color: #6b7280; margin-bottom: 25px; min-height: 40px; }
-    .compass-wrapper { position: relative; width: 280px; height: 280px; margin: 0 auto 25px auto; }
-    .compass-dial { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #e5e7eb; position: relative; background: #fafafa; transition: transform 0.2s ease-out; box-sizing: border-box; }
-    .direction { position: absolute; font-weight: bold; font-size: 1.1rem; }
-    .dir-n { top: 10px; left: 50%; transform: translateX(-50%); color: #ef4444; }
-    .dir-e { right: 15px; top: 50%; transform: translateY(-50%); }
-    .dir-s { bottom: 10px; left: 50%; transform: translateX(-50%); }
-    .dir-w { left: 15px; top: 50%; transform: translateY(-50%); }
-    .qibla-pointer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: transform 0.2s ease-out; }
-    .needle { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 45px solid var(--primary-color); }
-    .needle::after { content: '🕋'; position: absolute; top: -35px; left: -10px; font-size: 20px; }
-    .qibla-btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: background 0.2s; width: 100%; }
-    .qibla-btn:hover { background-color: #059669; }
-    .degree-badge { display: inline-block; background: #ecfdf5; color: #065f46; padding: 6px 16px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: none; }
+<!-- COMMUNITY PLATFORMS PANEL -->
+<div class="card" style="margin-bottom: 5px;">
+<h2 class="card-title">📢 Connect With Us</h2>
+<p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
+
+<a href="https://chat.whatsapp.com/LxrBMsjKTn87CySGG9hg0z?s=cl&p=a&ilr=0" target="_blank" class="social-link-btn btn-whatsapp">
+🟢 Join Our WhatsApp Group
+</a>
+
+<a href="https://www.instagram.com/aashiq_e_rasool_0786?igsh=MWtpbDVmNjVpYWZ2ag==" target="_blank" class="social-link-btn btn-instagram">
+📸 Follow Us on Instagram
+</a>
+</div>
+</div>
+
+<!-- TAB 2: QURAN -->
+<div id="tab-quran" class="tab-content">
+<div class="card" style="padding: 10px;" id="quran-menu-panel">
+<h2 class="card-title">📖 Al-Quran Al-Kareem</h2>
+
+<div class="mode-selector">
+<button id="btn-mode-surah" class="mode-btn active" onclick="toggleQuranMode('surah')">Surah Wise</button>
+<button id="btn-mode-para" class="mode-btn" onclick="toggleQuranMode('para')">Para / Juz Wise</button>
+</div>
+
+<div id="surah-directory-view" class="list-container"></div>
+<div id="para-directory-view" class="list-container" style="display: none;"></div>
+</div>
+
+<div class="card" style="padding: 10px; display: none;" id="quran-reader-panel">
+<button class="back-btn" onclick="closeQuranReader()">⬅ Back to Menu</button>
+<h3 id="reader-display-title" style="color: var(--primary); margin: 5px 0 5px 0; font-size: 16px;"></h3>
+<div id="quran-info-header" class="info-header-box"></div>
+
+<div id="verses-container" class="verses-scroll"></div>
+</div>
+</div>
+
+<!-- TAB 3: INTERACTIVE HADEES -->
+<div id="tab-hadees" class="tab-content">
+<div class="card" style="padding: 12px; margin-bottom: 10px;">
+<h2 class="card-title" style="margin-bottom:8px;">📜 Hadees Library</h2>
+<input type="text" id="hadees-search-input" class="input-field" style="margin:0;" placeholder="🔍 Search word, book, or S.No..." oninput="renderHadeesList()">
+</div>
+<div id="hadees-render-space" class="hadees-container-scroll"></div>
+</div>
+
+<!-- TAB 4: QIBLA -->
+<div id="tab-qibla" class="tab-content">
+<style>
+:root { --primary-color: #10b981; --bg-color: #f3f4f6; --card-bg: #ffffff; --text-color: #1f2937; }
+.compass-container { background: var(--card-bg); padding: 30px; border-radius: 24px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05); text-align: center; max-width: 400px; width: 100%; margin: 20px auto; font-family: sans-serif; }
+.status-text { font-size: 0.9rem; color: #6b7280; margin-bottom: 25px; min-height: 40px; }
+.compass-wrapper { position: relative; width: 280px; height: 280px; margin: 0 auto 25px auto; }
+.compass-dial { width: 100%; height: 100%; border-radius: 50%; border: 8px solid #e5e7eb; position: relative; background: #fafafa; transition: transform 0.2s ease-out; box-sizing: border-box; }
+.direction { position: absolute; font-weight: bold; font-size: 1.1rem; }
+.dir-n { top: 10px; left: 50%; transform: translateX(-50%); color: #ef4444; }
+.dir-e { right: 15px; top: 50%; transform: translateY(-50%); }
+.dir-s { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.dir-w { left: 15px; top: 50%; transform: translateY(-50%); }
+.qibla-pointer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; transition: transform 0.2s ease-out; }
+.needle { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-bottom: 45px solid var(--primary-color); }
+.needle::after { content: '🕋'; position: absolute; top: -35px; left: -10px; font-size: 20px; }
+.qibla-btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 12px; cursor: pointer; transition: background 0.2s; width: 100%; }
+.qibla-btn:hover { background-color: #059669; }
+.degree-badge { display: inline-block; background: #ecfdf5; color: #065f46; padding: 6px 16px; border-radius: 50px; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px; display: none; }
 </style>
 
 <div class="compass-container">
-    <h2>Qibla Finder</h2>
-    <div id="status" class="status-text">We need your location to accurately calculate the direction to the Kaaba.</div>
-    <div class="degree-badge" id="degreeBadge">0°</div>
-    <div class="compass-wrapper">
-        <div class="compass-dial" id="compassDial">
-            <div class="direction dir-n">N</div>
-            <div class="direction dir-e">E</div>
-            <div class="direction dir-s">S</div>
-            <div class="direction dir-w">W</div>
-        </div>
-        <div class="qibla-pointer" id="qiblaPointer"><div class="needle"></div></div>
-    </div>
-    <button class="qibla-btn" id="locateBtn" onclick="initQiblaFinder()">Find Qibla Direction</button>
+<h2>Qibla Finder</h2>
+<div id="status" class="status-text">We need your location to accurately calculate the direction to the Kaaba.</div>
+<div class="degree-badge" id="degreeBadge">0°</div>
+<div class="compass-wrapper">
+<div class="compass-dial" id="compassDial">
+<div class="direction dir-n">N</div>
+<div class="direction dir-e">E</div>
+<div class="direction dir-s">S</div>
+<div class="direction dir-w">W</div>
+</div>
+<div class="qibla-pointer" id="qiblaPointer"><div class="needle"></div></div>
+</div>
+<button class="qibla-btn" id="locateBtn" onclick="initQiblaFinder()">Find Qibla Direction</button>
 </div>
 
 <script>
-    const KAABA_LAT = 21.4225241; const KAABA_LNG = 39.8261818;
-    let qiblaBaring = 0; let currentHeading = 0;
-    const statusEl = document.getElementById('status'); const degreeBadge = document.getElementById('degreeBadge');
-    const compassDial = document.getElementById('compassDial'); const qiblaPointer = document.getElementById('qiblaPointer'); const locateBtn = document.getElementById('locateBtn');
-    function initQiblaFinder() {
-        statusEl.innerText = "Requesting location access...";
-        if (!navigator.geolocation) { statusEl.innerText = "Geolocation not supported."; return; }
-        navigator.geolocation.getCurrentPosition((position) => {
-            qiblaBaring = calculateQiblaBearing(position.coords.latitude, position.coords.longitude);
-            degreeBadge.style.display = 'inline-block'; degreeBadge.innerText = `Qibla: ${Math.round(qiblaBaring)}° N`;
-            statusEl.innerText = "Location found! Align your phone with North (Green arrow indicates Qibla)";
-            qiblaPointer.style.transform = `rotate(${qiblaBaring}deg)`; locateBtn.style.display = 'none';
-            startOrientationTracking();
-        }, (error) => { statusEl.innerText = "Location access denied. Please check permissions."; }, { enableHighAccuracy: true });
-    }
-    function calculateQiblaBearing(lat1, lng1) {
-        const phi1 = lat1 * Math.PI / 180; const phi2 = KAABA_LAT * Math.PI / 180; const deltaLambda = (KAABA_LNG - lng1) * Math.PI / 180;
-        const y = Math.sin(deltaLambda) * Math.cos(phi2); const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
-        return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
-    }
-    function startOrientationTracking() {
-        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-            DeviceOrientationEvent.requestPermission().then(state => {
-                if (state === 'granted') { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
-            }).catch(console.error);
-        } else { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
-    }
-    function handleOrientation(event) {
-        let heading = event.webkitCompassHeading || event.alpha;
-        if (heading !== null && heading !== undefined) {
-            if(!event.webkitCompassHeading) { heading = 360 - heading; }
-            currentHeading = heading; compassDial.style.transform = `rotate(${-currentHeading}deg)`;
-            qiblaPointer.style.transform = `rotate(${qiblaBaring - currentHeading}deg)`;
-            statusEl.innerText = "Align the cube with the top of your device!";
-        }
-    }
+const KAABA_LAT = 21.4225241; const KAABA_LNG = 39.8261818;
+let qiblaBaring = 0; let currentHeading = 0;
+const statusEl = document.getElementById('status'); const degreeBadge = document.getElementById('degreeBadge');
+const compassDial = document.getElementById('compassDial'); const qiblaPointer = document.getElementById('qiblaPointer'); const locateBtn = document.getElementById('locateBtn');
+function initQiblaFinder() {
+statusEl.innerText = "Requesting location access...";
+if (!navigator.geolocation) { statusEl.innerText = "Geolocation not supported."; return; }
+navigator.geolocation.getCurrentPosition((position) => {
+qiblaBaring = calculateQiblaBearing(position.coords.latitude, position.coords.longitude);
+degreeBadge.style.display = 'inline-block'; degreeBadge.innerText = `Qibla: ${Math.round(qiblaBaring)}° N`;
+statusEl.innerText = "Location found! Align your phone with North (Green arrow indicates Qibla)";
+qiblaPointer.style.transform = `rotate(${qiblaBaring}deg)`; locateBtn.style.display = 'none';
+startOrientationTracking();
+}, (error) => { statusEl.innerText = "Location access denied. Please check permissions."; }, { enableHighAccuracy: true });
+}
+function calculateQiblaBearing(lat1, lng1) {
+const phi1 = lat1 * Math.PI / 180; const phi2 = KAABA_LAT * Math.PI / 180; const deltaLambda = (KAABA_LNG - lng1) * Math.PI / 180;
+const y = Math.sin(deltaLambda) * Math.cos(phi2); const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLambda);
+return (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+}
+function startOrientationTracking() {
+if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+DeviceOrientationEvent.requestPermission().then(state => {
+if (state === 'granted') { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
+}).catch(console.error);
+} else { window.addEventListener('deviceorientationabsolute', handleOrientation, true); window.addEventListener('deviceorientation', handleOrientation, true); }
+}
+function handleOrientation(event) {
+let heading = event.webkitCompassHeading || event.alpha;
+if (heading !== null && heading !== undefined) {
+if(!event.webkitCompassHeading) { heading = 360 - heading; }
+currentHeading = heading; compassDial.style.transform = `rotate(${-currentHeading}deg)`;
+qiblaPointer.style.transform = `rotate(${qiblaBaring - currentHeading}deg)`;
+statusEl.innerText = "Align the cube with the top of your device!";
+}
+}
 </script>
-            </div>
-        </div>
+</div>
+</div>
 
-        <!-- TAB 5: ASK -->
-     <div id="tab-ask" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: -20px !important; padding-top: 0 !important;">
-    
-    <div class="card" style="margin-top: 0px !important; border-top: 4px solid var(--primary); background: #fefcf6; padding-top: 10px;">
-        <h2 class="card-title" style="text-align: center; margin-bottom: 5px; font-size: 16px;">👑 KHANKHA-E-MAHBOOB-E-AULIYA</h2>
-        <p style="text-align: center; font-size: 11px; color: #6b7280; margin: 0 0 12px 0; font-weight: bold;">Puranapool Dargah, Hyderabad</p>
-        
-        <div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
-            <span style="font-size: 13px; font-weight: bold; color: var(--primary);">📅 Every Sunday Program</span>
-            <div style="font-size: 12px; color: #4b5563; margin-top: 2px;"><b>Timings:</b> Morning 11:00 AM se Zohr Namaz tak</div>
-            <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
-                <li>Tilawatey Quran aur Farz Uloom sikhaye jayenge</li>
-                <li>Natey Mehfil Rahegi</li>
-                <li>Peer e Tariqat Rahbar e Shariat Hazrat Allama Maulana Irfan Raza Quadri Sahab Ka Khusooshi Bayan Hoga</li>
-                <li>Zikr Hoga aur Fatiha Khwani Hogi</li>
-                <li>Namaz ke baad khaney ka langar rahega</li>
-            </ul>
-        </div>
+<!-- TAB 5: ASK -->
+<div id="tab-ask" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: -20px !important; padding-top: 0 !important;">
 
-        <div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
-            <span style="font-size: 13px; font-weight: bold; color: var(--primary);">🌙 Monthly Program (Har Mahina)</span>
-            <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
-                <li><b>Date:</b> Har chand ki 9th date ko</li>
-                <li><b>Timing:</b> Baad Namaz-e-Maghrib</li>
-                <li>Sarkar ki fatiha hogi, Salam Pesh Kiya Jayega aur khaney ka langar rahega</li>
-            </ul>
-        </div>
+<div class="card" style="margin-top: 0px !important; border-top: 4px solid var(--primary); background: #fefcf6; padding-top: 10px;">
+<h2 class="card-title" style="text-align: center; margin-bottom: 5px; font-size: 16px;">👑 KHANKHA-E-MAHBOOB-E-AULIYA</h2>
+<p style="text-align: center; font-size: 11px; color: #6b7280; margin: 0 0 12px 0; font-weight: bold;">Puranapool Dargah, Hyderabad</p>
 
-        <div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
-            <span style="font-size: 13px; font-weight: bold; color: var(--primary);">✨ Salana Urs Mubarak (Rabi-ul-Awwal)</span>
-            <div style="font-size: 12px; color: #4b5563; margin-top: 2px; font-weight: 500; font-style: italic;">Urs Mubarak badi aqidat ke saath manaya jayega:</div>
-            <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
-                <li><b>8 Rabi-ul-Awwal:</b> Ghusl Shareef Diya Jayega</li>
-                <li><b>9 Rabi-ul-Awwal:</b> Urs Mubarak (sandal pesh kiya jayega)</li>
-                <li><b>10 Rabi-ul-Awwal:</b> Qawali program rahega</li>
-                <li style="list-style-type: '📢 '; margin-top: 4px; color: var(--primary); font-weight: bold;">Sabhi aqeedatmand se shirkat ki guzarish</li>
-            </ul>
-        </div>
+<div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
+<span style="font-size: 13px; font-weight: bold; color: var(--primary);">📅 Every Sunday Program</span>
+<div style="font-size: 12px; color: #4b5563; margin-top: 2px;"><b>Timings:</b> Morning 11:00 AM se Zohr Namaz tak</div>
+<ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
+<li>Tilawatey Quran aur Farz Uloom sikhaye jayenge</li>
+<li>Natey Mehfil Rahegi</li>
+<li>Peer e Tariqat Rahbar e Shariat Hazrat Allama Maulana Irfan Raza Quadri Sahab Ka Khusooshi Bayan Hoga</li>
+<li>Zikr Hoga aur Fatiha Khwani Hogi</li>
+<li>Namaz ke baad khaney ka langar rahega</li>
+</ul>
+</div>
 
-        <div>
-            <span style="font-size: 13px; font-weight: bold; color: var(--primary);">📍 Connect With Us Any Time</span>
-            <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.5;">
-                <li><b>Puranapool Dargah</b></li>
-                <li>Hazrat Syedna Peer Hasan Bin Ahmed Shaheed Yamani (Rahmatullahi Alaih)</li>
-                <li><b>Al Maroof:</b> Hussaini Baba</li>
-                <li><b>Location:</b> Puranapul Dargah, Bahadurpura Road, Hyderabad, Telangana 500064</li>
-            </ul>
-        </div>
-    </div>
+<div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
+<span style="font-size: 13px; font-weight: bold; color: var(--primary);">🌙 Monthly Program (Har Mahina)</span>
+<ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
+<li><b>Date:</b> Har chand ki 9th date ko</li>
+<li><b>Timing:</b> Baad Namaz-e-Maghrib</li>
+<li>Sarkar ki fatiha hogi, Salam Pesh Kiya Jayega aur khaney ka langar rahega</li>
+</ul>
+</div>
 
-    <div id="tab-ilme-farz" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: 15px;">
-            
-            <div class="card" style="padding: 10px;" id="farz-menu-panel">
-                <h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
-                <p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
-                <div id="farz-topics-directory" class="list-container">
-                    </div>
-            </div>
+<div style="margin-bottom: 12px; border-bottom: 1px dashed #e5e7eb; padding-bottom: 10px;">
+<span style="font-size: 13px; font-weight: bold; color: var(--primary);">✨ Salana Urs Mubarak (Rabi-ul-Awwal)</span>
+<div style="font-size: 12px; color: #4b5563; margin-top: 2px; font-weight: 500; font-style: italic;">Urs Mubarak badi aqidat ke saath manaya jayega:</div>
+<ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.6;">
+<li><b>8 Rabi-ul-Awwal:</b> Ghusl Shareef Diya Jayega</li>
+<li><b>9 Rabi-ul-Awwal:</b> Urs Mubarak (sandal pesh kiya jayega)</li>
+<li><b>10 Rabi-ul-Awwal:</b> Qawali program rahega</li>
+<li style="list-style-type: '📢 '; margin-top: 4px; color: var(--primary); font-weight: bold;">Sabhi aqeedatmand se shirkat ki guzarish</li>
+</ul>
+</div>
 
-            <div class="card" style="padding: 12px; display: none;" id="farz-reader-panel">
-                <button class="back-btn" onclick="closeFarzReader()">⬅ Back to Topics</button>
-                <h3 id="farz-reader-title" style="color: var(--primary); margin: 5px 0 10px 0; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;"></h3>
-                <div id="farz-content-container" style="font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; min-height: 30vh;">
-                    </div>
-            </div>
-        </div>
+<div>
+<span style="font-size: 13px; font-weight: bold; color: var(--primary);">📍 Connect With Us Any Time</span>
+<ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 12px; color: #4b5563; line-height: 1.5;">
+<li><b>Puranapool Dargah</b></li>
+<li>Hazrat Syedna Peer Hasan Bin Ahmed Shaheed Yamani (Rahmatullahi Alaih)</li>
+<li><b>Al Maroof:</b> Hussaini Baba</li>
+<li><b>Location:</b> Puranapul Dargah, Bahadurpura Road, Hyderabad, Telangana 500064</li>
+</ul>
+</div>
+</div>
 
-    </div> <div class="nav-bar">
-        <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
-        <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
-        <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
-        <button class="nav-item" onclick="switchTab('ilme-farz', this)">📚<span>Ilm-e-Farz</span></button>
-        <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
-        <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
-    </div>
-    <div class="nav-bar">
-        <button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
-        <button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
-        <button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
-        <button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
-        <button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
-    </div>
+<div class="card" style="margin-top: 10px;">
+<h2 class="card-title" style="margin-top: 0; padding-top: 5px;">❓ Ask a Question</h2>
+<p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 15px;">Apna naam aur sawal niche likhein, yeh seedhe aapke WhatsApp se connect ho jayega.</p>
+<div>
+<input type="text" id="ask-name" class="input-field" placeholder="Your Name / Aapka Naam" required>
+<textarea id="ask-query" class="input-field" rows="4" placeholder="Your Question / Aapka Sawal" required></textarea>
+<button type="button" class="submit-btn" onclick="sendWhatsAppDirectly()">🟢 Send to WhatsApp</button>
+</div>
+</div>
+</div>
+<div class="nav-bar">
+<button class="nav-item active" onclick="switchTab('home', this)">🏠<span>Home</span></button>
+<button class="nav-item" onclick="switchTab('quran', this)">📖<span>Quran</span></button>
+<button class="nav-item" onclick="switchTab('hadees', this)">📜<span>Hadees</span></button>
+<button class="nav-item" onclick="switchTab('qibla', this)">🧭<span>Qibla</span></button>
+<button class="nav-item" onclick="switchTab('ask', this)">❓<span>Ask</span></button>
+</div>
 </div>
 
 <script>
-    let clickCounters = {};
-    let adminTapCount = 0;
-    let adminTapTimer = null;
-    let currentTasbeehCount = 0;
+let clickCounters = {};
+let adminTapCount = 0;
+let adminTapTimer = null;
+let currentTasbeehCount = 0;
 
-    const baseHadeesData = [
-        {
-            text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
-            ref: "(خود کُشی کا علاج، ص 58 ta 59)"
-        }, 
-        {
-    text: "\"Hazrat Abu Mas'ud (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs kisi ko neki ka rasta dikhata hai, use bhi neki karne wale ke barabar hi sawab milta hai.\"",
-    ref: "Sahih Muslim, Hadith: 1893"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Mazaq aur hansi mein bhi jhoot bolna gunah hai, tanaazaa (argument) chhod do chahe tum sacche hi kyu na ho.\"",
-    ref: "Sunan Abu Dawood, Hadith: 4800"
-},
-        {
-    text: "Hazrat Mu'awiyah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Allah jiske sath bhalai ka irada farmata hai, use deen ki samajh ataa kar deta hai.\"",
-    ref: "Sahih Bukhari, Hadith: 71"
-},
-        {
-    text: "\"Hazrat Ibn Umar (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Zulm karne se bacho, kyunki zulm qiyamat ke din andheron ka sabab banega.\"",
-    ref: "Sahih Muslim, Hadith: 2579"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Insaan ke islam ki khoobsurati aur acchai ye hai ke wo fazool aur be-maqsad baaton ko chhod de.\"",
-    ref: "Sunan al-Tirmidhi, Hadith: 2317"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Pehle khud salam kiya karo, isse aapas mein mohabbat badhti hai.\"",
-    ref: "Sahih Muslim, Hadith: 54"
-},
-        {
-    text: "\"Hazrat Hudhaifah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Chugalkhor (backbiter/gossip karne wala) jannat mein dakhil nahi hoga.\"",
-    ref: "Sahih Bukhari, Hadith: 6056"
-},
-        {
-    text: "\"Hazrat Abu Shuraih (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Khuda ki qasam wo momin nahi hoga jiska padosi uski shararat aur takleef se mehfooz na ho.\"",
-    ref: "Sahih Bukhari, Hadith: 6016"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs dhoka de, wo hum mein se nahi hai.\"",
-    ref: "Sahih Muslim, Hadith: 102"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Raste se kisi takleefdeh cheez (jaise kanta, patthar ya kachra) ko hatana bhi sadqa hai.\"",
-    ref: "Sahih Bukhari, Hadith: 2989"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Bad-gumaani (shak karne) se bacho, kyunki bad-gumaani sabse bada jhoot hai.\"",
-    ref: "Sahih Bukhari, Hadith: 5143"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs logon ka shukriya ada nahi karta, wo Allah ka bhi shukr ada nahi karta.\"",
-    ref: "Sunan Abu Dawood, Hadith: 4811"
-},
-        {
-    text: "\"Hazrat Jabir bin Abdullah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Har acchi baat aur bhalai ka kaam sadqa hai.\"",
-    ref: "Sahih Bukhari, Hadith: 6021"
-},
-        {
-    text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Tum ek doosre se hasad (jealousy) mat karo, ek doosre ke aib mat dhoondo, aur ek doosre se nafrat mat karo.\"",
-    ref: "Sahih Muslim, Hadith: 2563"
-},
-        {
-    text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Dua momin ka hathiyar hai, deen ka sutoon (pillar) hai, aur aasman o zameen ki roshni hai.\"",
-    ref: "Mustadrak al-Hakim, Hadith: 1812"
-},
-        {
-    text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs duniya mein kisi musalman ke aib (kamiyon) par parda dalega, Allah qiyamat ke din uske aibo par parda dalega.\"",
-    ref: "Sahih Muslim, Hadith: 2586"
-},
-        {
-    text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo tum par bharosa kare uski amanat us tak pahunchao, aur jo tumhare sath dhoka kare uske sath palat kar dhoka mat karo.\"",
-    ref: "Sunan Abu Dawood, Hadith: 3535"
-},
-        {
-    text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Hamesha sachai ko apnao, kyunki sachai insaan ko neki ki taraf le jati hai aur neki jannat ka rasta dikhati hai.\"",
-    ref: "Sahih Bukhari, Hadith: 6094"
-},
-        {
-    text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Ilm hasil karna har musalman mard aur aurat par farz hai, kyunki ilm andhere mein roshni hai.\"",
-    ref: "Reference: Sunan Ibn Majah, Hadith: 224"
-},
-        {
-    text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Asli bahaduri gusse ke waqt khud par kaabu pana aur sabr ikhtiyar karna hai.\"",
-    ref: "Reference: Sahih Bukhari, Hadith: 6114"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek shakhs raste se ja raha tha usne kaantedar tehni dekhi aur use hata diya, Allah ne uski is baat ko qubool kiya aur uski maghfirat kar di.\"",
-    ref: "(Sahih al-Bukhari 2472)"
-},
-        {
-    text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Har bhalai ka kaam sadqa hai.\"",
-    ref: "(Sahih al-Bukhari 6021)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sadqa karne se maal kam nahi hota.\"",
-    ref: "(Sahih Muslim 2588)"
-},
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo hamare choton par reham nahi karta aur hamare badon ki izzat nahi karta, wo hum mein se nahi hai.\"",
-    ref: "(Sunan At-Tirmidhi 1919)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs kisi bewa (widow) aur miskeen (poor) ki madad ke liye koshish karta hai, wo us shakhs ki tarah hai jo Allah ke raaste mein jihaad karta hai.\"",
-    ref: "(Sahih al-Bukhari 5353)"
+const baseHadeesData = [
+{
+text: "Ghaur Talab Baat Yeh Hai Ke Allah Pak Ne Har Ek Ki Rozi To Apne Zimma-E-Karam Par Li Hai Magar Har Ek Ki Maghfirat Ka Zimmah Nahin Liya.\n\n*Woh Musalman Kis Qadar Nadaan Hai Jo Rizq Ki Kasrat Ke Liye To Mara Mara Phire Magar Maghfirat Ki Hasrat Mein Dil Na Jalaye* !!",
+ref: "(خود کُشی کا علاج، ص 58 ta 59)"
+},
+{
+text: "\"Hazrat Abu Mas'ud (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs kisi ko neki ka rasta dikhata hai, use bhi neki karne wale ke barabar hi sawab milta hai.\"",
+ref: "Sahih Muslim, Hadith: 1893"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Mazaq aur hansi mein bhi jhoot bolna gunah hai, tanaazaa (argument) chhod do chahe tum sacche hi kyu na ho.\"",
+ref: "Sunan Abu Dawood, Hadith: 4800"
+},
+{
+text: "Hazrat Mu'awiyah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Allah jiske sath bhalai ka irada farmata hai, use deen ki samajh ataa kar deta hai.\"",
+ref: "Sahih Bukhari, Hadith: 71"
+},
+{
+text: "\"Hazrat Ibn Umar (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Zulm karne se bacho, kyunki zulm qiyamat ke din andheron ka sabab banega.\"",
+ref: "Sahih Muslim, Hadith: 2579"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Insaan ke islam ki khoobsurati aur acchai ye hai ke wo fazool aur be-maqsad baaton ko chhod de.\"",
+ref: "Sunan al-Tirmidhi, Hadith: 2317"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Pehle khud salam kiya karo, isse aapas mein mohabbat badhti hai.\"",
+ref: "Sahih Muslim, Hadith: 54"
+},
+{
+text: "\"Hazrat Hudhaifah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Chugalkhor (backbiter/gossip karne wala) jannat mein dakhil nahi hoga.\"",
+ref: "Sahih Bukhari, Hadith: 6056"
+},
+{
+text: "\"Hazrat Abu Shuraih (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Khuda ki qasam wo momin nahi hoga jiska padosi uski shararat aur takleef se mehfooz na ho.\"",
+ref: "Sahih Bukhari, Hadith: 6016"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs dhoka de, wo hum mein se nahi hai.\"",
+ref: "Sahih Muslim, Hadith: 102"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Raste se kisi takleefdeh cheez (jaise kanta, patthar ya kachra) ko hatana bhi sadqa hai.\"",
+ref: "Sahih Bukhari, Hadith: 2989"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Bad-gumaani (shak karne) se bacho, kyunki bad-gumaani sabse bada jhoot hai.\"",
+ref: "Sahih Bukhari, Hadith: 5143"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs logon ka shukriya ada nahi karta, wo Allah ka bhi shukr ada nahi karta.\"",
+ref: "Sunan Abu Dawood, Hadith: 4811"
+},
+{
+text: "\"Hazrat Jabir bin Abdullah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Har acchi baat aur bhalai ka kaam sadqa hai.\"",
+ref: "Sahih Bukhari, Hadith: 6021"
+},
+{
+text: "\"Hazrat Abu Hurairah (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Tum ek doosre se hasad (jealousy) mat karo, ek doosre ke aib mat dhoondo, aur ek doosre se nafrat mat karo.\"",
+ref: "Sahih Muslim, Hadith: 2563"
+},
+{
+text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Dua momin ka hathiyar hai, deen ka sutoon (pillar) hai, aur aasman o zameen ki roshni hai.\"",
+ref: "Mustadrak al-Hakim, Hadith: 1812"
+},
+{
+text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo shakhs duniya mein kisi musalman ke aib (kamiyon) par parda dalega, Allah qiyamat ke din uske aibo par parda dalega.\"",
+ref: "Sahih Muslim, Hadith: 2586"
+},
+{
+text: "\"Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Jo tum par bharosa kare uski amanat us tak pahunchao, aur jo tumhare sath dhoka kare uske sath palat kar dhoka mat karo.\"",
+ref: "Sunan Abu Dawood, Hadith: 3535"
+},
+{
+text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Hamesha sachai ko apnao, kyunki sachai insaan ko neki ki taraf le jati hai aur neki jannat ka rasta dikhati hai.\"",
+ref: "Sahih Bukhari, Hadith: 6094"
+},
+{
+text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Ilm hasil karna har musalman mard aur aurat par farz hai, kyunki ilm andhere mein roshni hai.\"",
+ref: "Reference: Sunan Ibn Majah, Hadith: 224"
+},
+{
+text: "Hazrat Ali (R.A.) se riwayat hai ke Nabi-e-Kareem ﷺ ne farmaya: Asli bahaduri gusse ke waqt khud par kaabu pana aur sabr ikhtiyar karna hai.\"",
+ref: "Reference: Sahih Bukhari, Hadith: 6114"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek shakhs raste se ja raha tha usne kaantedar tehni dekhi aur use hata diya, Allah ne uski is baat ko qubool kiya aur uski maghfirat kar di.\"",
+ref: "(Sahih al-Bukhari 2472)"
+},
+{
+text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Har bhalai ka kaam sadqa hai.\"",
+ref: "(Sahih al-Bukhari 6021)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sadqa karne se maal kam nahi hota.\"",
+ref: "(Sahih Muslim 2588)"
+},
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo hamare choton par reham nahi karta aur hamare badon ki izzat nahi karta, wo hum mein se nahi hai.\"",
+ref: "(Sunan At-Tirmidhi 1919)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs kisi bewa (widow) aur miskeen (poor) ki madad ke liye koshish karta hai, wo us shakhs ki tarah hai jo Allah ke raaste mein jihaad karta hai.\"",
+ref: "(Sahih al-Bukhari 5353)"
 },
-        {
-    text: "Hazrat Adi bin Hatim (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Jahannam ki aag se bacho, chahe khajoor ka ek tukda sadqa karke hi kyun na ho.\"",
-    ref: "(Sahih al-Bukhari 1413)"
+{
+text: "Hazrat Adi bin Hatim (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Jahannam ki aag se bacho, chahe khajoor ka ek tukda sadqa karke hi kyun na ho.\"",
+ref: "(Sahih al-Bukhari 1413)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Raste mein baithne se bacho. Sahaba ne kaha hamari majboori hai, toh Aap ﷺ ne farmaya: 'Agar baithna hi hai toh raste ka haq adaa karo: nigaah neeche rakhna, takleef-deh cheez hataana, aur Salam ka jawab dena'.\"",
-    ref: "(Sahih al-Bukhari 6229)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Raste mein baithne se bacho. Sahaba ne kaha hamari majboori hai, toh Aap ﷺ ne farmaya: 'Agar baithna hi hai toh raste ka haq adaa karo: nigaah neeche rakhna, takleef-deh cheez hataana, aur Salam ka jawab dena'.\"",
+ref: "(Sahih al-Bukhari 6229)"
 },
-        {
-    text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Tum mein se jo koi kisi burai ko dekhe, toh use apne haath se badle; agar iski taqat na ho toh zubaan se rokhe; aur agar iski bhi taqat na ho toh dil mein bura samjhe, aur yeh imaan ka sabse kamzor darja hai.\"",
-    ref: "(Sahih Muslim 49)"
+{
+text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Tum mein se jo koi kisi burai ko dekhe, toh use apne haath se badle; agar iski taqat na ho toh zubaan se rokhe; aur agar iski bhi taqat na ho toh dil mein bura samjhe, aur yeh imaan ka sabse kamzor darja hai.\"",
+ref: "(Sahih Muslim 49)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ke doosre Musalman par paanch huqooq hain: Salam ka jawab dena, bimar ki mizaj-porsi karna, janaze ke sath jana, dawat qubool karna, aur cheenk (sneeze) ka jawab 'Yarhamukallah' se dena.\"",
-    ref: "(Sahih al-Bukhari 1240)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ke doosre Musalman par paanch huqooq hain: Salam ka jawab dena, bimar ki mizaj-porsi karna, janaze ke sath jana, dawat qubool karna, aur cheenk (sneeze) ka jawab 'Yarhamukallah' se dena.\"",
+ref: "(Sahih al-Bukhari 1240)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Asli rona ya afsos wo hai jo deen ke nuqsaan par ho, duniya ke nuqsaan par sabr hi behtar hai.\"",
-    ref: "(Al-Mustadrak Al-Hakim)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Asli rona ya afsos wo hai jo deen ke nuqsaan par ho, duniya ke nuqsaan par sabr hi behtar hai.\"",
+ref: "(Al-Mustadrak Al-Hakim)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin mard aur aurat par aazmaish aati rehti hai uski jaan, aulaad aur maal mein, yahan tak ki wo Allah se is haal mein milta hai ki us par koi gunah nahi hota.\"",
-    ref: "(Sunan At-Tirmidhi 2399)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin mard aur aurat par aazmaish aati rehti hai uski jaan, aulaad aur maal mein, yahan tak ki wo Allah se is haal mein milta hai ki us par koi gunah nahi hota.\"",
+ref: "(Sunan At-Tirmidhi 2399)"
 },
-        {
-    text: "Hazrat Khabbab bin Al-Arat (R.Z) se riwayat hai ki unhone Nabi ﷺ se sakhti ki shikayat ki, toh Aap ﷺ ne farmaya: \"Tumse pehle logon ke jismo par aare (saws) chalaye gaye par unhone apna deen nahi chhoda, sabr karo.\"",
-    ref: "(Sahih al-Bukhari 3612)"
+{
+text: "Hazrat Khabbab bin Al-Arat (R.Z) se riwayat hai ki unhone Nabi ﷺ se sakhti ki shikayat ki, toh Aap ﷺ ne farmaya: \"Tumse pehle logon ke jismo par aare (saws) chalaye gaye par unhone apna deen nahi chhoda, sabr karo.\"",
+ref: "(Sahih al-Bukhari 3612)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi shakhs kisi takleef ki wajah se maut ki tamanna na kare.\"",
-    ref: "(Sahih al-Bukhari 5671)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi shakhs kisi takleef ki wajah se maut ki tamanna na kare.\"",
+ref: "(Sahih al-Bukhari 5671)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Duniya momin ke liye qaid-khana (prison) hai aur kafir ke liye jannat hai.\"",
-    ref: "(Sahih Muslim 2956)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Duniya momin ke liye qaid-khana (prison) hai aur kafir ke liye jannat hai.\"",
+ref: "(Sahih Muslim 2956)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Bada badla badi aazmaish ke sath hai, aur Allah jab kisi qaum se mohabbat karta hai toh unhe aazmaish mein daalta hai.\"",
-    ref: "(Sunan At-Tirmidhi 2396)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Bada badla badi aazmaish ke sath hai, aur Allah jab kisi qaum se mohabbat karta hai toh unhe aazmaish mein daalta hai.\"",
+ref: "(Sunan At-Tirmidhi 2396)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah jiske sath bhalai chahta hai, use aazmaish (trials) mein daalta hai.\"",
-    ref: "(Sahih al-Bukhari 5645)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah jiske sath bhalai chahta hai, use aazmaish (trials) mein daalta hai.\"",
+ref: "(Sahih al-Bukhari 5645)"
 },
-        {
-    text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, bimari, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
-    ref: "(Sahih al-Bukhari 5641)"
+{
+text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, bimari, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
+ref: "(Sahih al-Bukhari 5641)"
 },
-        {
-    text: "Hazrat Suhaib (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin ka maamla bhi ajeeb hai, uske har kaam mein kher hai. Agar use khushi milti hai toh shukr karta hai aur agar takleef milti hai toh sabr karta hai.\"",
-    ref: "(Sahih Muslim 2999)"
+{
+text: "Hazrat Suhaib (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin ka maamla bhi ajeeb hai, uske har kaam mein kher hai. Agar use khushi milti hai toh shukr karta hai aur agar takleef milti hai toh sabr karta hai.\"",
+ref: "(Sahih Muslim 2999)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jab tum mein se koi joota pehne toh daayein (right) se shuru kare, aur widget utare toh baayein (left) se shuru kare.\"",
-    ref: "(Sahih al-Bukhari 5855)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jab tum mein se koi joota pehne toh daayein (right) se shuru kare, aur widget utare toh baayein (left) se shuru kare.\"",
+ref: "(Sahih al-Bukhari 5855)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Fitrat ki paanch cheezein hain: Khatna karna, naaf ke neeche ke baal saaf karna, moochen katrana, naakhun tarashna, aur baghal ke baal saaf karna.\"",
-    ref: "(Sahih al-Bukhari 5891)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Fitrat ki paanch cheezein hain: Khatna karna, naaf ke neeche ke baal saaf karna, moochen katrana, naakhun tarashna, aur baghal ke baal saaf karna.\"",
+ref: "(Sahih al-Bukhari 5891)"
 },
-        {
-    text: "Hazrat Umar bin Al-Khattab (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ration (silk) mat pehno, kyunki jo use duniya mein pehnega wo aakhirat mein usse mehroom rahega.\"",
-    ref: "(Sahih al-Bukhari 5824)"
+{
+text: "Hazrat Umar bin Al-Khattab (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ration (silk) mat pehno, kyunki jo use duniya mein pehnega wo aakhirat mein usse mehroom rahega.\"",
+ref: "(Sahih al-Bukhari 5824)"
 },
-        {
-    text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Safed (white) kapde pehna karo, kyunki yeh tumhare behtareen kapdo mein se hain aur isi mein apne murdon ko kafan diya karo.\"",
-    ref: "(Sunan At-Tirmidhi 994)"
+{
+text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Safed (white) kapde pehna karo, kyunki yeh tumhare behtareen kapdo mein se hain aur isi mein apne murdon ko kafan diya karo.\"",
+ref: "(Sunan At-Tirmidhi 994)"
 },
-        {
-    text: "Hazrat Ibn Umar (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs takabbur (pride) ki wajah se apna kapda zameen par ghasit kar chalega, Allah Qayamat ke din uski taraf nahi dekhega.\"",
-    ref: "(Sahih al-Bukhari 5783)"
+{
+text: "Hazrat Ibn Umar (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs takabbur (pride) ki wajah se apna kapda zameen par ghasit kar chalega, Allah Qayamat ke din uski taraf nahi dekhega.\"",
+ref: "(Sahih al-Bukhari 5783)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Takatwar momin, kamzor momin se behtar aur Allah ko zyada mehboob hai, halanki dono mein bhalai hai.\"",
-    ref: "(Sahih Muslim 2664)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Takatwar momin, kamzor momin se behtar aur Allah ko zyada mehboob hai, halanki dono mein bhalai hai.\"",
+ref: "(Sahih Muslim 2664)"
 },
-        {
-    text: "Hazrat Usamah bin Sharik (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ay Allah ke bando! Ilaj kiya karo, kyunki Allah ne budhape ke siwaye har bimari ki dawa banayi hai.\"",
-    ref: "(Sunan At-Tirmidhi 2038)"
+{
+text: "Hazrat Usamah bin Sharik (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ay Allah ke bando! Ilaj kiya karo, kyunki Allah ne budhape ke siwaye har bimari ki dawa banayi hai.\"",
+ref: "(Sunan At-Tirmidhi 2038)"
 },
-        {
-    text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Shifa teen cheezon mein hai: Shahad (honey) peene mein, pachna lagwane (cupping) mein, aur aag se daaghne mein, par main apni ummat ko daaghne se rokta hoon.\"",
-    ref: "(Sahih al-Bukhari 5680)"
+{
+text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Shifa teen cheezon mein hai: Shahad (honey) peene mein, pachna lagwane (cupping) mein, aur aag se daaghne mein, par main apni ummat ko daaghne se rokta hoon.\"",
+ref: "(Sahih al-Bukhari 5680)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah ne aisi koi bimari nahi utari jiski shifa (cure) na utari ho.\"",
-    ref: "(Sahih al-Bukhari 5678)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah ne aisi koi bimari nahi utari jiski shifa (cure) na utari ho.\"",
+ref: "(Sahih al-Bukhari 5678)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah pak hai aur sirf pak (halal) cheez hi qubool karta hai.\"",
-    ref: "(Sahih Muslim 1015)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah pak hai aur sirf pak (halal) cheez hi qubool karta hai.\"",
+ref: "(Sahih Muslim 1015)"
 },
-        {
-    text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ay logon! Allah se daro aur rozi talash karne mein accha tareeqa (halal) ikhtiyar karo.\"",
-    ref: "(Sunan Ibn Majah 2144)"
+{
+text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ay logon! Allah se daro aur rozi talash karne mein accha tareeqa (halal) ikhtiyar karo.\"",
+ref: "(Sunan Ibn Majah 2144)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne sood (usury/interest) khane wale, khilane wale, uske likhne wale aur uske gawahon par laanat farmayi aur farmaya: \"Wo sab barabar hain.\"",
-    ref: "(Sahih Muslim 1598)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne sood (usury/interest) khane wale, khilane wale, uske likhne wale aur uske gawahon par laanat farmayi aur farmaya: \"Wo sab barabar hain.\"",
+ref: "(Sahih Muslim 1598)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne sood (usury/interest) khane wale, khilane wale, uske likhne wale aur uske gawahon par laanat farmayi aur farmaya: \"Wo sab barabar hain.\"",
-    ref: "(Sahih Muslim 1598)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne sood (usury/interest) khane wale, khilane wale, uske likhne wale aur uske gawahon par laanat farmayi aur farmaya: \"Wo sab barabar hain.\"",
+ref: "(Sahih Muslim 1598)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek zamana aayega jab insaan parwah nahi karega ki jo usne haasil kiya wo halal hai ya haram.\"",
-    ref: "(Sahih al-Bukhari 2059)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek zamana aayega jab insaan parwah nahi karega ki jo usne haasil kiya wo halal hai ya haram.\"",
+ref: "(Sahih al-Bukhari 2059)"
 },
-        {
-    text: "Hazrat Hakim bin Hizam (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Khareed-o-faroopt (buying & selling) karne walon ko ikhtiyar hai jab tak wo juda na hon, agar unhone sach bola toh unke saude mein barkat hogi.\"",
-    ref: "(Sahih al-Bukhari 2079)"
+{
+text: "Hazrat Hakim bin Hizam (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Khareed-o-faroopt (buying & selling) karne walon ko ikhtiyar hai jab tak wo juda na hon, agar unhone sach bola toh unke saude mein barkat hogi.\"",
+ref: "(Sahih al-Bukhari 2079)"
 },
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki api namaz mein is cheez se panaah maangte the: \"Allahumma inni audhu bika minal ma'thami wal maghram (Gunah aur karz ke bojh se).\"",
-    ref: "(Sahih al-Bukhari 832)"
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki api namaz mein is cheez se panaah maangte the: \"Allahumma inni audhu bika minal ma'thami wal maghram (Gunah aur karz ke bojh se).\"",
+ref: "(Sahih al-Bukhari 832)"
 },
-        {
-    text: "Hazrat Abu Katada (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs yeh pasand karta hai ki Allah use Qayamat ki takleefon se bachaye, use chahiye ki karzdaar ko muhlath (time) de ya uski mushkil aasan kare.\"",
-    ref: "(Sahih Muslim 1563)"
+{
+text: "Hazrat Abu Katada (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs yeh pasand karta hai ki Allah use Qayamat ki takleefon se bachaye, use chahiye ki karzdaar ko muhlath (time) de ya uski mushkil aasan kare.\"",
+ref: "(Sahih Muslim 1563)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs logon ka maal (karz) adaa karne ki niyat se leta hai, Allah uski taraf se adaa kar deta hai, aur jo zaya karne ki niyat se leta hai, Allah use zaya kar deta hai.\"",
-    ref: "(Sahih al-Bukhari 2387)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs logon ka maal (karz) adaa karne ki niyat se leta hai, Allah uski taraf se adaa kar deta hai, aur jo zaya karne ki niyat se leta hai, Allah use zaya kar deta hai.\"",
+ref: "(Sahih al-Bukhari 2387)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin ki jaan uske karz (debt) ke sath latki rehti hai jab tak ki uski taraf se karz ada na kar diya jaye.\"",
-    ref: "(Sunan At-Tirmidhi 1078)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin ki jaan uske karz (debt) ke sath latki rehti hai jab tak ki uski taraf se karz ada na kar diya jaye.\"",
+ref: "(Sunan At-Tirmidhi 1078)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mehmaan-nawazi teen din tak hai, aur jo iske baad ho wo sadqa hai.\"",
-    ref: "(Sahih al-Bukhari 6135)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mehmaan-nawazi teen din tak hai, aur jo iske baad ho wo sadqa hai.\"",
+ref: "(Sahih al-Bukhari 6135)"
 },
-        {
-    text: "Hazrat Hudhaifah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Sone aur chandi ke bartano mein mat piyo aur na hi unki rabi (plates) mein khao.\"",
-    ref: "(Sahih al-Bukhari 5426)"
+{
+text: "Hazrat Hudhaifah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Sone aur chandi ke bartano mein mat piyo aur na hi unki rabi (plates) mein khao.\"",
+ref: "(Sahih al-Bukhari 5426)"
 },
-        {
-    text: "Hazrat Abu Umamah (R.Z) se riwayat hai ki jab khane ka dastarkhwan uthaya jata toh Nabi ﷺ yeh dua padhte: \"Alhamdulillah hamdan katheeran tayyiban mubarakan feehi...\"",
-    ref: "(Sahih al-Bukhari 5458)"
+{
+text: "Hazrat Abu Umamah (R.Z) se riwayat hai ki jab khane ka dastarkhwan uthaya jata toh Nabi ﷺ yeh dua padhte: \"Alhamdulillah hamdan katheeran tayyiban mubarakan feehi...\"",
+ref: "(Sahih al-Bukhari 5458)"
 },
-        {
-    text: "Hazrat Salman Farsi (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Khane ki barkat khane se pehle aur khane ke baad haath dhone mein hai.\"",
-    ref: "(Sunan At-Tirmidhi 1846)"
+{
+text: "Hazrat Salman Farsi (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Khane ki barkat khane se pehle aur khane ke baad haath dhone mein hai.\"",
+ref: "(Sunan At-Tirmidhi 1846)"
 },
-        {
-    text: "Hazrat Ka'b bin Malik (R.Z) se riwayat hai ki unhone dekha: \"Nabi ﷺ teen ungliyon se khate the aur khane ke baad unhe chaat lete the.\"",
-    ref: "(Sahih Muslim 2032)"
+{
+text: "Hazrat Ka'b bin Malik (R.Z) se riwayat hai ki unhone dekha: \"Nabi ﷺ teen ungliyon se khate the aur khane ke baad unhe chaat lete the.\"",
+ref: "(Sahih Muslim 2032)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Paani peete waqt bartan mein saans mat liya karo.\"",
-    ref: "(Sahih al-Bukhari 5630)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Paani peete waqt bartan mein saans mat liya karo.\"",
+ref: "(Sahih al-Bukhari 5630)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo Allah aur aakhirat par imaan rakhta hai, use chahiye ki apne mehmaan (guest) ki izzat kare.\"",
-    ref: "(Sahih al-Bukhari 6018)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo Allah aur aakhirat par imaan rakhta hai, use chahiye ki apne mehmaan (guest) ki izzat kare.\"",
+ref: "(Sahih al-Bukhari 6018)"
 },
-        {
-    text: "Hazrat Wahshi bin Harb (R.Z) se riwayat hai ki Sahaba ne pucha: 'Hum khate hain par pet nahi bharta?' Nabi ﷺ ne farmaya: \"Shayad tum alag-alag khate ho? Ek sath mil kar khao aur Bismillah padho, usme barkat daal di jayegi.\"",
-    ref: "(Sunan Abi Dawud 3764)"
+{
+text: "Hazrat Wahshi bin Harb (R.Z) se riwayat hai ki Sahaba ne pucha: 'Hum khate hain par pet nahi bharta?' Nabi ﷺ ne farmaya: \"Shayad tum alag-alag khate ho? Ek sath mil kar khao aur Bismillah padho, usme barkat daal di jayegi.\"",
+ref: "(Sunan Abi Dawud 3764)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone suna: \"Nabi ﷺ ne kabhi kisi khane mein aib (fault) nahi nikala, agar pasand hota toh kha lete aur agar na-pasand hota toh chodh dete.\"",
-    ref: "(Sahih al-Bukhari 5409)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone suna: \"Nabi ﷺ ne kabhi kisi khane mein aib (fault) nahi nikala, agar pasand hota toh kha lete aur agar na-pasand hota toh chodh dete.\"",
+ref: "(Sahih al-Bukhari 5409)"
 },
-        {
-    text: "Hazrat Umar bin Al-Khattab (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ghar mein dakhil hote waqt Salam karo, yeh tumhare aur tumhare ghar walon ke liye barkat ka zariya hoga.\"",
-    ref: "(Sunan At-Tirmidhi 2698)"
+{
+text: "Hazrat Umar bin Al-Khattab (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ghar mein dakhil hote waqt Salam karo, yeh tumhare aur tumhare ghar walon ke liye barkat ka zariya hoga.\"",
+ref: "(Sunan At-Tirmidhi 2698)"
 },
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Miswak (tooth-stick) mu ko saaf rakhne ka aur Rab ki raza haasil karne ka zariya hai.\"",
-    ref: "(Sunan an-Nasa'i 5)"
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Miswak (tooth-stick) mu ko saaf rakhne ka aur Rab ki raza haasil karne ka zariya hai.\"",
+ref: "(Sunan an-Nasa'i 5)"
 },
-        {
-    text: "Hazrat Jabir bin Samurah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi shakhs ka apne bacche ko acchi taleem aur adab sikhana, ek saa (measure) anaaj sadqa karne se behtar hai.\"",
-    ref: "(Sunan At-Tirmidhi 1951)"
+{
+text: "Hazrat Jabir bin Samurah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi shakhs ka apne bacche ko acchi taleem aur adab sikhana, ek saa (measure) anaaj sadqa karne se behtar hai.\"",
+ref: "(Sunan At-Tirmidhi 1951)"
 },
-        {
-    text: "Hazrat Muadh bin Jabal (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne bacchon ko namaz ka hukm do jab wo saat (7) saal ke hon.\"",
-    ref: "(Sunan Abi Dawud 495)"
+{
+text: "Hazrat Muadh bin Jabal (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne bacchon ko namaz ka hukm do jab wo saat (7) saal ke hon.\"",
+ref: "(Sunan Abi Dawud 495)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jab insaan mar jata hai toh uske aamaal ka silsila khatam ho jata hai siwaye teen cheezon ke: Sadqa-e-Jariyah, beneficial ilm, aur saleh (pious) aulaad jo uske liye dua kare.\"",
-    ref: "(Sahih Muslim 1631)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jab insaan mar jata hai toh uske aamaal ka silsila khatam ho jata hai siwaye teen cheezon ke: Sadqa-e-Jariyah, beneficial ilm, aur saleh (pious) aulaad jo uske liye dua kare.\"",
+ref: "(Sahih Muslim 1631)"
 },
-        {
-    text: "Hazrat Sa'id bin al-Aas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi baap ne apni aulaad ko acche akhlaq aur taleem se behtar koi tohfa nahi diya.\"",
-    ref: "(Sunan At-Tirmidhi 1952)"
+{
+text: "Hazrat Sa'id bin al-Aas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi baap ne apni aulaad ko acche akhlaq aur taleem se behtar koi tohfa nahi diya.\"",
+ref: "(Sunan At-Tirmidhi 1952)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jisne do betiyon ki parwarish ki jab tak wo baaligh na ho jayein, Qayamat ke din wo aur main is tarah aayenge (Aap ﷺ ne apni do ungliyon ko milaya).\"",
-    ref: "(Sahih Muslim 2631)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jisne do betiyon ki parwarish ki jab tak wo baaligh na ho jayein, Qayamat ke din wo aur main is tarah aayenge (Aap ﷺ ne apni do ungliyon ko milaya).\"",
+ref: "(Sahih Muslim 2631)"
 },
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ghar walon ke sath accha sulook karo, aur main tum sab mein apne ghar walon ke sath sabse accha hoon.\"",
-    ref: "(Sunan At-Tirmidhi 3895)"
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ghar walon ke sath accha sulook karo, aur main tum sab mein apne ghar walon ke sath sabse accha hoon.\"",
+ref: "(Sunan At-Tirmidhi 3895)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki ek shakhs ne pucha: 'Mera sabse zyada accha sulook kis ke sath hona chahiye?' Nabi ﷺ ne farmaya: \"Tumhari maa ke sath.\" Usne pucha fir kis ke sath? Aap ﷺ ne farmaya: \"Tumhari maa ke sath.\" Usne fir pucha, Aap ﷺ ne farmaya: \"Tumhari maa ke sath.\" Chothi baar pucha toh farmaya: \"Tumhare baap ke sath.\"",
-    ref: "(Sahih al-Bukhari 5971)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki ek shakhs ne pucha: 'Mera sabse zyada accha sulook kis ke sath hona chahiye?' Nabi ﷺ ne farmaya: \"Tumhari maa ke sath.\" Usne pucha fir kis ke sath? Aap ﷺ ne farmaya: \"Tumhari maa ke sath.\" Usne fir pucha, Aap ﷺ ne farmaya: \"Tumhari maa ke sath.\" Chothi baar pucha toh farmaya: \"Tumhare baap ke sath.\"",
+ref: "(Sahih al-Bukhari 5971)"
 },
-        {
-    text: "Hazrat Ubayy bin Ka'b (R.Z) se riwayat hai ki unhone pucha: 'Ya Rasoolallah! Main aap par zyada Durood padhna chahta hoon.' Aap ﷺ ne farmaya: \"Agar tum aisa karoge toh tumhare tamaam gham door ho jayenge aur tumhare gunah maaf kar diye jayenge.\"",
-    ref: "(Sunan At-Tirmidhi 2457)"
+{
+text: "Hazrat Ubayy bin Ka'b (R.Z) se riwayat hai ki unhone pucha: 'Ya Rasoolallah! Main aap par zyada Durood padhna chahta hoon.' Aap ﷺ ne farmaya: \"Agar tum aisa karoge toh tumhare tamaam gham door ho jayenge aur tumhare gunah maaf kar diye jayenge.\"",
+ref: "(Sunan At-Tirmidhi 2457)"
 },
-        {
-    text: "Hazrat Abu Musa (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kya main tumhein Jannat ke khazano mein se ek khazana na bataoon? Wo hai 'La hawla wala quwwata illa billah'.\"",
-    ref: "(Sahih al-Bukhari 6384)"
+{
+text: "Hazrat Abu Musa (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kya main tumhein Jannat ke khazano mein se ek khazana na bataoon? Wo hai 'La hawla wala quwwata illa billah'.\"",
+ref: "(Sahih al-Bukhari 6384)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs din mein 100 baar 'Subhanallahi wa bihamdihi' kehta hai, uske gunah mita diye jaate hain chahe wo samundar ke jhaag ke barabar hon.\"",
-    ref: "(Sahih al-Bukhari 6405)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs din mein 100 baar 'Subhanallahi wa bihamdihi' kehta hai, uske gunah mita diye jaate hain chahe wo samundar ke jhaag ke barabar hon.\"",
+ref: "(Sahih al-Bukhari 6405)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mera 'Subhanallah, Alhamdulillah, La ilaha illallah, Wallahu Akbar' kehna, un tamaam cheezon se behtar hai jin par suraj nikalta hai.\"",
-    ref: "(Sahih Muslim 2695)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mera 'Subhanallah, Alhamdulillah, La ilaha illallah, Wallahu Akbar' kehna, un tamaam cheezon se behtar hai jin par suraj nikalta hai.\"",
+ref: "(Sahih Muslim 2695)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Do kalime aise hain jo zubaan par halke hain, tarazu mein bhari hain aur Rahman (Allah) ko bohot pasand hain: 'Subhanallahi wa bihamdihi, Subhanallahil Azeem'.\"",
-    ref: "(Sahih al-Bukhari 6682)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Do kalime aise hain jo zubaan par halke hain, tarazu mein bhari hain aur Rahman (Allah) ko bohot pasand hain: 'Subhanallahi wa bihamdihi, Subhanallahil Azeem'.\"",
+ref: "(Sahih al-Bukhari 6682)"
 },
-        {
-    text: "Hazrat Juwairiyah (R.Z) se riwayat hai ki Nabi ﷺ ne subah ke waqt unhe zikr karte dekha aur farmaya: \"Maine tumhare baad char kalimat teen baar padhe hain, agar unka wazan un tamaam kalimat se kiya jaye jo tumne padhe, toh unka wazan zyada hoga (Subhanallahi wa bihamdihi...).\"",
-    ref: "(Sahih Muslim 2726)"
+{
+text: "Hazrat Juwairiyah (R.Z) se riwayat hai ki Nabi ﷺ ne subah ke waqt unhe zikr karte dekha aur farmaya: \"Maine tumhare baad char kalimat teen baar padhe hain, agar unka wazan un tamaam kalimat se kiya jaye jo tumne padhe, toh unka wazan zyada hoga (Subhanallahi wa bihamdihi...).\"",
+ref: "(Sahih Muslim 2726)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs museebat ke waqt Dua ki qubooliyat chahta hai, use chahiye ki aasaish (khush-haali) ke waqt zyada Dua kiya kare.\"",
-    ref: "(Sunan At-Tirmidhi 3382)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs museebat ke waqt Dua ki qubooliyat chahta hai, use chahiye ki aasaish (khush-haali) ke waqt zyada Dua kiya kare.\"",
+ref: "(Sunan At-Tirmidhi 3382)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah ke nazdeek Dua se zyada koi cheez muqaddas (honorable) nahi hai.\"",
-    ref: "(Sunan At-Tirmidhi 3370)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah ke nazdeek Dua se zyada koi cheez muqaddas (honorable) nahi hai.\"",
+ref: "(Sunan At-Tirmidhi 3370)"
 },
-        {
-    text: "Hazrat Nu'man bin Bashir (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Dua hi asal ibadat hai.\"",
-    ref: "(Sunan At-Tirmidhi 2969)"
+{
+text: "Hazrat Nu'man bin Bashir (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Dua hi asal ibadat hai.\"",
+ref: "(Sunan At-Tirmidhi 2969)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Qayamat ke din Allah ke nazdeek sabse bura wo do-rukhsana (two-faced) shakhs hoga jo ek ke paas ek chehre se jaye aur doosre ke paas doosre chehre se.\"",
-    ref: "(Sahih al-Bukhari 7179)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Qayamat ke din Allah ke nazdeek sabse bura wo do-rukhsana (two-faced) shakhs hoga jo ek ke paas ek chehre se jaye aur doosre ke paas doosre chehre se.\"",
+ref: "(Sahih al-Bukhari 7179)"
 },
-        {
-    text: "Hazrat Nawas bin Sam'an (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Neki acche akhlaq ka naam hai aur gunah wo hai jo tumhare dil mein khatke aur tumhein pasand na ho ki log usey jaanein.\"",
-    ref: "(Sahih Muslim 2553)"
+{
+text: "Hazrat Nawas bin Sam'an (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Neki acche akhlaq ka naam hai aur gunah wo hai jo tumhare dil mein khatke aur tumhein pasand na ho ki log usey jaanein.\"",
+ref: "(Sahih Muslim 2553)"
 },
-        {
-    text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo khamosh raha, usne najaat paayi.\"",
-    ref: "(Sunan At-Tirmidhi 2501)"
+{
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo khamosh raha, usne najaat paayi.\"",
+ref: "(Sunan At-Tirmidhi 2501)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Behtareen guftagu wo hai jo mukhtasar ho aur samajh mein aa jaye.\"",
-    ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Behtareen guftagu wo hai jo mukhtasar ho aur samajh mein aa jaye.\"",
+ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
 },
-        {
-    text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne apni zubaan pakdi aur farmaya: \"Iska.\"",
-    ref: "(Sunan At-Tirmidhi 2410)"
+{
+text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne apni zubaan pakdi aur farmaya: \"Iska.\"",
+ref: "(Sunan At-Tirmidhi 2410)"
 },
-        {
-    text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jhoot se bacho, kyunki jhoot gunah ki taraf le jata hai aur gunah Jahannam ki taraf le jata hai.\"",
-    ref: "(Sahih Muslim 2607)"
+{
+text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jhoot se bacho, kyunki jhoot gunah ki taraf le jata hai aur gunah Jahannam ki taraf le jata hai.\"",
+ref: "(Sahih Muslim 2607)"
 },
-        {
-    text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Hamesha sachai ko apnao, kyunki sach bhalai ki taraf le jata hai aur bhalai Jannat ka raasta dikhati hai.\"",
-    ref: "(Sahih Muslim 2607)"
+{
+text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Hamesha sachai ko apnao, kyunki sach bhalai ki taraf le jata hai aur bhalai Jannat ka raasta dikhati hai.\"",
+ref: "(Sahih Muslim 2607)"
 },
-        {
-    text: "Hazrat Bilal bin Al-Harith (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Insaan kabhi Allah ki pasandida baat kehta hai aur use andaza bhi nahi hota ki iski wajah se Allah usse apni raza-mandi likh deta hai.\"",
-    ref: "(Sunan At-Tirmidhi 2319)"
+{
+text: "Hazrat Bilal bin Al-Harith (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Insaan kabhi Allah ki pasandida baat kehta hai aur use andaza bhi nahi hota ki iski wajah se Allah usse apni raza-mandi likh deta hai.\"",
+ref: "(Sunan At-Tirmidhi 2319)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kya tum jaante ho ghibat (peeth peeche burai) kya hai? Apne bhai ka zikr is tarah karna jo use na-pasand ho.\"",
-    ref: "(Sahih Muslim 2589)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kya tum jaante ho ghibat (peeth peeche burai) kya hai? Apne bhai ka zikr is tarah karna jo use na-pasand ho.\"",
+ref: "(Sahih Muslim 2589)"
 },
-        {
-    text: "Hazrat Hudhaifah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Chugli karne wala (backbiter) Jannat mein dakhil nahi hoga.\"",
-    ref: "(Sahih al-Bukhari 6056)"
+{
+text: "Hazrat Hudhaifah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Chugli karne wala (backbiter) Jannat mein dakhil nahi hoga.\"",
+ref: "(Sahih al-Bukhari 6056)"
 },
-        {
-    text: "Hazrat Abu Shuraih (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Khuda ki qasam wo momin nahi ho sakta jiska padosi uski shararaton aur takleefon se mehfooz na ho.\"",
-    ref: "(Sahih al-Bukhari 6016)"
+{
+text: "Hazrat Abu Shuraih (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Khuda ki qasam wo momin nahi ho sakta jiska padosi uski shararaton aur takleefon se mehfooz na ho.\"",
+ref: "(Sahih al-Bukhari 6016)"
 },
-        {
-    text: "Hazrat Jarir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs narm-mizaji se mehroom kar diya gaya, wo har tarah ki bhalai se mehroom kar diya gaya.\"",
-    ref: "(Sahih Muslim 2592)"
+{
+text: "Hazrat Jarir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs narm-mizaji se mehroom kar diya gaya, wo har tarah ki bhalai se mehroom kar diya gaya.\"",
+ref: "(Sahih Muslim 2592)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Jo shakhs yeh pasand karta hai ki uske rizq mein barkat ho aur uski umar lambi ho, usey chahiye ki wo rishtedaaron ke sath accha sulook (Sila-e-Rahmi) kare.\"",
-    ref: "(Sahih al-Bukhari 2067)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Jo shakhs yeh pasand karta hai ki uske rizq mein barkat ho aur uski umar lambi ho, usey chahiye ki wo rishtedaaron ke sath accha sulook (Sila-e-Rahmi) kare.\"",
+ref: "(Sahih al-Bukhari 2067)"
 },
-        {
-    text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin na toh taana dene wala hota hai, na laanat karne wala, na bad-zubaan aur na hi behuda bakne wala.\"",
-    ref: "(Sunan At-Tirmidhi 1977)"
+{
+text: "Hazrat Abdullah bin Mas'ud (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin na toh taana dene wala hota hai, na laanat karne wala, na bad-zubaan aur na hi behuda bakne wala.\"",
+ref: "(Sunan At-Tirmidhi 1977)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mazaq mein bhi jhoot bolna chodh dene wale ke liye main Jannat ke darmiyan ek ghar ki guarantee deta hoon.\"",
-    ref: "(Sunan Abi Dawud 4800)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mazaq mein bhi jhoot bolna chodh dene wale ke liye main Jannat ke darmiyan ek ghar ki guarantee deta hoon.\"",
+ref: "(Sunan Abi Dawud 4800)"
 },
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Momin apne acche akhlaq ki wajah se din ko roza rakhne wale aur raat ko ibadat karne wale ka darja paa leta hai.\"",
-    ref: "(Sunan Abi Dawud 4798)"
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Momin apne acche akhlaq ki wajah se din ko roza rakhne wale aur raat ko ibadat karne wale ka darja paa leta hai.\"",
+ref: "(Sunan Abi Dawud 4798)"
 },
-        {
-    text: "Hazrat Abu Darda (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Meezan (Qayamat ke tarazu) mein acche akhlaq se bhari koi cheez nahi hogi.\"",
-    ref: "(Sunan At-Tirmidhi 2002)"
+{
+text: "Hazrat Abu Darda (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Meezan (Qayamat ke tarazu) mein acche akhlaq se bhari koi cheez nahi hogi.\"",
+ref: "(Sunan At-Tirmidhi 2002)"
 },
-        {
-    text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Qayamat ke din tum mein se mere sabse qareeb wo baithne wala hoga jiske akhlaq sabse acche honge.\"",
-    ref: "(Sunan At-Tirmidhi 2018)"
+{
+text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Qayamat ke din tum mein se mere sabse qareeb wo baithne wala hoga jiske akhlaq sabse acche honge.\"",
+ref: "(Sunan At-Tirmidhi 2018)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin narm-mizaj aur Shareef hota hai, jabki fajiq (gunehgar) dhoke-baaz aur kamina hota hai.\"",
-    ref: "(Sunan At-Tirmidhi 1964)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Momin narm-mizaj aur Shareef hota hai, jabki fajiq (gunehgar) dhoke-baaz aur kamina hota hai.\"",
+ref: "(Sunan At-Tirmidhi 1964)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Bura gumaan karne se bacho, kyunki bura gumaan sabse jhooti baat hai.\"",
-    ref: "(Sahih al-Bukhari 6064)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Bura gumaan karne se bacho, kyunki bura gumaan sabse jhooti baat hai.\"",
+ref: "(Sahih al-Bukhari 6064)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Hikmat ki baat momin ki gumshuda cheez hai, wo jahan bhi usey paaye, uski qadar kare.\"",
-    ref: "(Sunan At-Tirmidhi 2687)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Hikmat ki baat momin ki gumshuda cheez hai, wo jahan bhi usey paaye, uski qadar kare.\"",
+ref: "(Sunan At-Tirmidhi 2687)"
 },
-        {
-    text: "Hazrat Safwan bin Assal (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Farishte talib-e-ilm (student) ke liye uske kaam se khush hokar apne par bicha dete hain.\"",
-    ref: "(Sunan Ibn Majah 226)"
+{
+text: "Hazrat Safwan bin Assal (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Farishte talib-e-ilm (student) ke liye uske kaam se khush hokar apne par bicha dete hain.\"",
+ref: "(Sunan Ibn Majah 226)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ilm ka uth jana aur jahalat ka phel jana Qayamat ki nishaniyon mein se hai.\"",
-    ref: "(Sahih al-Bukhari 80)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ilm ka uth jana aur jahalat ka phel jana Qayamat ki nishaniyon mein se hai.\"",
+ref: "(Sahih al-Bukhari 80)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Haya (sharm-o-haya) imaan ki ek ahem shaakh hai.\"",
-    ref: "(Sahih al-Bukhari 9)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Haya (sharm-o-haya) imaan ki ek ahem shaakh hai.\"",
+ref: "(Sahih al-Bukhari 9)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi us waqt tak kamil imaan wala nahi ho sakta jab tak main use uske baap, uski aulaad aur tamaam logon se zyada mehboob na ho jaoon.\"",
-    ref: "(Sahih al-Bukhari 15)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi us waqt tak kamil imaan wala nahi ho sakta jab tak main use uske baap, uski aulaad aur tamaam logon se zyada mehboob na ho jaoon.\"",
+ref: "(Sahih al-Bukhari 15)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs ilm hasil karne ke raaste par chalta hai, Allah uske liye Jannat ka raasta aasan kar deta hai.\"",
-    ref: "(Sahih Muslim 2699)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo shakhs ilm hasil karne ke raaste par chalta hai, Allah uske liye Jannat ka raasta aasan kar deta hai.\"",
+ref: "(Sahih Muslim 2699)"
 },
-        {
-    text: "Hazrat Muawiyah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah jiske sath bhalai ka irada karta hai, use deen ki samajh (fahm) ata farmata hai.\"",
-    ref: "(Sahih al-Bukhari 71)"
+{
+text: "Hazrat Muawiyah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah jiske sath bhalai ka irada karta hai, use deen ki samajh (fahm) ata farmata hai.\"",
+ref: "(Sahih al-Bukhari 71)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Imaan ki sattar (70) se kuch upar shaakhein (branches) hain, un mein sabse afzal 'La ilaha illallah' kehna hai aur sabse choti raaste se takleef-deh cheez ko hata dena hai.\"",
-    ref: "(Sahih Muslim 35)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Imaan ki sattar (70) se kuch upar shaakhein (branches) hain, un mein sabse afzal 'La ilaha illallah' kehna hai aur sabse choti raaste se takleef-deh cheez ko hata dena hai.\"",
+ref: "(Sahih Muslim 35)"
 },
-        {
-    text: "Hazrat Abu Musa al-Ash'ari (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo apne Rab ko yaad karta hai aur jo yaad nahi karta, unki misal Zinda aur Murde jaisi hai.\"",
-    ref: "(Sahih al-Bukhari 6407)"
+{
+text: "Hazrat Abu Musa al-Ash'ari (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo apne Rab ko yaad karta hai aur jo yaad nahi karta, unki misal Zinda aur Murde jaisi hai.\"",
+ref: "(Sahih al-Bukhari 6407)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Na kisi ko khud nuqsaan pahunchao aur na hi nuqsaan ka badla nuqsaan se do.\"",
-    ref: "(Sunan Ibn Majah 2341)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Na kisi ko khud nuqsaan pahunchao aur na hi nuqsaan ka badla nuqsaan se do.\"",
+ref: "(Sunan Ibn Majah 2341)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek doosre se hasad mat karo, nafrat mat karo, aur ek doosre ki peeth peeche burai mat dhundo... balki Allah ke bande aur aapas mein bhai-bhai ban kar raho.\"",
-    ref: "(Sahih Muslim 2563)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek doosre se hasad mat karo, nafrat mat karo, aur ek doosre ki peeth peeche burai mat dhundo... balki Allah ke bande aur aapas mein bhai-bhai ban kar raho.\"",
+ref: "(Sahih Muslim 2563)"
 },
-        {
-    text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Do nematein aisi hain jinki aksar log qadar nahi karte: Sehat (Health) aur Farsat (Free time).\"",
-    ref: "(Sahih al-Bukhari 6412)"
+{
+text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Do nematein aisi hain jinki aksar log qadar nahi karte: Sehat (Health) aur Farsat (Free time).\"",
+ref: "(Sahih al-Bukhari 6412)"
 },
-        {
-    text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Paanch cheezon ko paanch se pehle ganeemat jano: Jawani ko budhape se pehle, Sehat ko bimari se pehle, Ameeri ko gareebi se pehle, Farsat (free time) ko masroofiyat se pehle, aur Zindagi ko maut se pehle.\"",
-    ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
+{
+text: "Hazrat Ibn Abbas (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Paanch cheezon ko paanch se pehle ganeemat jano: Jawani ko budhape se pehle, Sehat ko bimari se pehle, Ameeri ko gareebi se pehle, Farsat (free time) ko masroofiyat se pehle, aur Zindagi ko maut se pehle.\"",
+ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
 },
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah ke nazdeek sabse pasandida aamal wo hain jo hamesha kiye jayein, chahe wo thode hi kyun na hon.\"",
-    ref: "(Sahih al-Bukhari 6464)"
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah ke nazdeek sabse pasandida aamal wo hain jo hamesha kiye jayein, chahe wo thode hi kyun na hon.\"",
+ref: "(Sahih al-Bukhari 6464)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Insaan ke Islam ki khoobsurti yeh hai ki wo un cheezon ko chodh de jo fuzool hain (jis se uska koi matlab nahi).\"",
-    ref: "(Sunan At-Tirmidhi 2317)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Insaan ke Islam ki khoobsurti yeh hai ki wo un cheezon ko chodh de jo fuzool hain (jis se uska koi matlab nahi).\"",
+ref: "(Sunan At-Tirmidhi 2317)"
 },
-        {
-    text: "Hazrat Usman bin Affan (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Tum mein se sabse behtar wo hai jo Quran seekhe aur doosron ko sikhaye.\"",
-    ref: "(Sahih al-Bukhari 5027)"
+{
+text: "Hazrat Usman bin Affan (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Tum mein se sabse behtar wo hai jo Quran seekhe aur doosron ko sikhaye.\"",
+ref: "(Sahih al-Bukhari 5027)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ilm ka hasil karna har Musalman par farz hai.\"",
-    ref: "(Sunan Ibn Majah 224)"
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ilm ka hasil karna har Musalman par farz hai.\"",
+ref: "(Sunan Ibn Majah 224)"
 },
-        {
-    text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah us shakhs par reham kare jo bechte waqt, khareedte waqt aur apna haq maangte waqt narm-mizaj ho.\"",
-    ref: "(Sahih al-Bukhari 2076)"
+{
+text: "Hazrat Jabir bin Abdullah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah us shakhs par reham kare jo bechte waqt, khareedte waqt aur apna haq maangte waqt narm-mizaj ho.\"",
+ref: "(Sahih al-Bukhari 2076)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo dhoka de, wo hum mein se nahi hai.\"",
-    ref: "(Sahih Muslim 101)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo dhoka de, wo hum mein se nahi hai.\"",
+ref: "(Sahih Muslim 101)"
 },
-        {
-    text: "Hazrat Al-Miqdam (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi ne us khane se behtar khana nahi khaya jo usne apne haathon se kama kar khaya ho.\"",
-    ref: "(Sahih al-Bukhari 2072)"
+{
+text: "Hazrat Al-Miqdam (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi ne us khane se behtar khana nahi khaya jo usne apne haathon se kama kar khaya ho.\"",
+ref: "(Sahih al-Bukhari 2072)"
 },
-        {
-    text: "Hazrat Abdullah bin Umar (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mazdoor ko uski majdoori uske paseena Sookhne se pehle de do.\"",
-    ref: "(Sunan Ibn Majah 2443)"
+{
+text: "Hazrat Abdullah bin Umar (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mazdoor ko uski majdoori uske paseena Sookhne se pehle de do.\"",
+ref: "(Sunan Ibn Majah 2443)"
 },
-        {
-    text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sacha aur imandari se karobaar karne wala tajir Qayamat ke din Ambiya, Siddiqeen aur Shuhada ke sath hoga.\"",
-    ref: "(Sunan At-Tirmidhi 1209)"
+{
+text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sacha aur imandari se karobaar karne wala tajir Qayamat ke din Ambiya, Siddiqeen aur Shuhada ke sath hoga.\"",
+ref: "(Sunan At-Tirmidhi 1209)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek doosre ko tohfe (gifts) diya karo, isse aapas mein mohabbat badhegi.\"",
-    ref: "(Al-Adab Al-Mufrad 594)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Ek doosre ko tohfe (gifts) diya karo, isse aapas mein mohabbat badhegi.\"",
+ref: "(Al-Adab Al-Mufrad 594)"
 },
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah us waqt tak bande ki madad mein rehta hai jab tak banda apne bhai ki madad mein laga rehta hai.\"",
-    ref: "(Sahih Muslim 2699)"
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah us waqt tak bande ki madad mein rehta hai jab tak banda apne bhai ki madad mein laga rehta hai.\"",
+ref: "(Sahih Muslim 2699)"
 },
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi us waqt tak (kamil) momin nahi ho sakta jab tak wo apne bhai ke liye bhi wahi pasand na kare jo apne liye karta hai.\"",
-    ref: "(Sahih al-Bukhari 13)"
-},
-        {
-    text: "Hazrat Jubayr bin Mut'im (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Rishtedaari todne wala jannat mein dakhil nahi hoga.\"",
-    ref: "(Sahih al-Bukhari 5984)"
-},
-        {
-    text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Rab ki khushi walid ki khushi mein hai, aur Rab ki narazgi walid ki narazgi mein hai.\"",
-    ref: "(Sunan At-Tirmidhi 1899)"
-},
-        {
-    text: "Hazrat Aisha (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se sabse behtar wo hai jo apni biwi ke sath sabse accha ho.\"",
-    ref: "(Sunan At-Tirmidhi 3895)"
-},
-        {
-    text: "Hazrat Umar bin Abi Salamah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah ka naam lo (Bismillah padho), apne daayein (right) haath se khao, aur bartan mein us jagah se khao jo tumhare qareeb ho.\"",
-    ref: "(Sahih al-Bukhari 5376)"
-},
-        {
-    text: "Hazrat Abu Malik al-Ash'ari (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Pakeezgi aur safai imaan ka aadha hissa hai.\"",
-    ref: "(Sahih Muslim 223)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne se neeche (kamzor/gareeb) walon ko dekho aur unhe mat dekho jo tumse upar hain, is tarah tum Allah ki nematon ko haqeer (chota) nahi samjhoge.\"",
-    ref: "(Sahih Muslim 2963)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ameeri maal ki kasrat se nahi hoti, balke asli ameeri dil ka ameer hona hai.\"",
-    ref: "(Sahih al-Bukhari 6446)"
-},
-        {
-    text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sabr to wahi (sacha) hai jo takleef ke shuru mein kiya jaye.\"",
-    ref: "(Sahih al-Bukhari 1283)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se naseehat maangi, toh Aap ﷺ ne farmaya: \"Gussa mat karo.\" Usne baar-baar pucha aur Aap ﷺ ne har baar yahi farmaya: \"Gussa mat karo.\"",
-    ref: "(Sahih al-Bukhari 6116)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Takatwar wo nahi jo kushti mein doosron ko pachaad de, balke takatwar wo hai jo gusse ke waqt khud par kaabu rakhe.\"",
-    ref: "(Sahih al-Bukhari 6114)"
-},
-        {
-    text: "Hazrat Abu Umamah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Main us shakhs ke liye Jannat ke kinaare ek ghar ki guarantee deta hoon jo jhagda/behas chodh de, chahe wo haq par hi kyun na ho.\"",
-    ref: "(Sunan Abi Dawud 4800)"
-},
-        {
-    text: "Hazrat Sahl bin Sa'd (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo mujhe apne do jabdon ke darmiyan (zubaan) aur do taangon ke darmiyan (sharmgah) ki hifazat ki guarantee de, main use Jannat ki guarantee deta hoon.\"",
-    ref: "(Sahih al-Bukhari 6474)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi shakhs ke jhoota hone ke liye itna hi kaafi hai ki wo har suni-sunai baat (bina tahqeeq ke) aage bayaan kar de.\"",
-    ref: "(Sahih Muslim 5)"
-},
-        {
-    text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Muslim wo hai jiski zubaan aur haath se dusre Musalman mehfooz rahein.\"",
-    ref: "(Sahih al-Bukhari 10)"
-},
-        {
-    text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
-    ref: "(Sahih al-Bukhari 12)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Aapas mein Salam ko aam karo (phelao).\"",
-    ref: "(Sahih Muslim 54)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo Allah aur Qayamat ke din par imaan rakhta ho, usey chahiye ki acchi baat kahe ya khamosh rahe.\"",
-    ref: "(Sahih al-Bukhari 6018)"
-},
-        {
-    text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: Jo logon par reham nahi karta, Allah us par reham nahi karta.",
-    ref: "(Sahih al-Bukhari 5974)"
-},
-        {
-    text: "Apne bhai ke samne tumhara muskurana bhi tumhare liye sadqa hai.",
-    ref: "(Sunan At-Tirmidhi 1956)"
-},
-        {
-    text: "Narmi jis cheez mein bhi hoti hai usko khoobsurat bana deti hai, aur jis cheez se nikal li jaye usko aib-daar kar deti hai.",
-    ref: "(Sahih Muslim 2594)"
-},
-        {
-    text: "Allah taala narm-mizaj hai aur narm-mizaji ko pasand karta hai.",
-    ref: "(Sahih Muslim 2593)"
-},
-        {
-    text: "Tum mein se sabse behtar wo hai jiske akhlaq sabse acche ho.",
-    ref: "Sahih al-Bukhari 6035"
-},
-        {
-    text: "Aamaal ka daromadar niyat par hai, aur har insaan ko wahi milega jiski usne niyat ki.",
-    ref: "(Sahih al-Bukhari 1)"
-},
-        {
-            text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
-            ref: "[Behtar Kaun?, Safha No. 93]"
-        },
-        {
-            text: "*Lambi Umeedo'n Se Door Raha Karo, Kyun Ki Wo Tumhare Pas Maujood Ne'mato'n Ko Haqeer Bana Deti Hai*",
-            ref: "Al-Hadees"
-        },
-        {
-            text: "*Jab Tak Tumhein Tauba Karne Ka Waqt Hasil Hai, Ise Allah Ta'ala ki Ek Ne'mat Samjho Aur Tauba Karte Raho*",
-            ref: "(📖Al-Fath-ul-Rabbani, pp. 29)"
-        }
-    ];
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se koi us waqt tak (kamil) momin nahi ho sakta jab tak wo apne bhai ke liye bhi wahi pasand na kare jo apne liye karta hai.\"",
+ref: "(Sahih al-Bukhari 13)"
+},
+{
+text: "Hazrat Jubayr bin Mut'im (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Rishtedaari todne wala jannat mein dakhil nahi hoga.\"",
+ref: "(Sahih al-Bukhari 5984)"
+},
+{
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Rab ki khushi walid ki khushi mein hai, aur Rab ki narazgi walid ki narazgi mein hai.\"",
+ref: "(Sunan At-Tirmidhi 1899)"
+},
+{
+text: "Hazrat Aisha (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Tum mein se sabse behtar wo hai jo apni biwi ke sath sabse accha ho.\"",
+ref: "(Sunan At-Tirmidhi 3895)"
+},
+{
+text: "Hazrat Umar bin Abi Salamah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Allah ka naam lo (Bismillah padho), apne daayein (right) haath se khao, aur bartan mein us jagah se khao jo tumhare qareeb ho.\"",
+ref: "(Sahih al-Bukhari 5376)"
+},
+{
+text: "Hazrat Abu Malik al-Ash'ari (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Pakeezgi aur safai imaan ka aadha hissa hai.\"",
+ref: "(Sahih Muslim 223)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne se neeche (kamzor/gareeb) walon ko dekho aur unhe mat dekho jo tumse upar hain, is tarah tum Allah ki nematon ko haqeer (chota) nahi samjhoge.\"",
+ref: "(Sahih Muslim 2963)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ameeri maal ki kasrat se nahi hoti, balke asli ameeri dil ka ameer hona hai.\"",
+ref: "(Sahih al-Bukhari 6446)"
+},
+{
+text: "Hazrat Anas bin Malik (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Sabr to wahi (sacha) hai jo takleef ke shuru mein kiya jaye.\"",
+ref: "(Sahih al-Bukhari 1283)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se naseehat maangi, toh Aap ﷺ ne farmaya: \"Gussa mat karo.\" Usne baar-baar pucha aur Aap ﷺ ne har baar yahi farmaya: \"Gussa mat karo.\"",
+ref: "(Sahih al-Bukhari 6116)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Takatwar wo nahi jo kushti mein doosron ko pachaad de, balke takatwar wo hai jo gusse ke waqt khud par kaabu rakhe.\"",
+ref: "(Sahih al-Bukhari 6114)"
+},
+{
+text: "Hazrat Abu Umamah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Main us shakhs ke liye Jannat ke kinaare ek ghar ki guarantee deta hoon jo jhagda/behas chodh de, chahe wo haq par hi kyun na ho.\"",
+ref: "(Sunan Abi Dawud 4800)"
+},
+{
+text: "Hazrat Sahl bin Sa'd (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo mujhe apne do jabdon ke darmiyan (zubaan) aur do taangon ke darmiyan (sharmgah) ki hifazat ki guarantee de, main use Jannat ki guarantee deta hoon.\"",
+ref: "(Sahih al-Bukhari 6474)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Kisi shakhs ke jhoota hone ke liye itna hi kaafi hai ki wo har suni-sunai baat (bina tahqeeq ke) aage bayaan kar de.\"",
+ref: "(Sahih Muslim 5)"
+},
+{
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Muslim wo hai jiski zubaan aur haath se dusre Musalman mehfooz rahein.\"",
+ref: "(Sahih al-Bukhari 10)"
+},
+{
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
+ref: "(Sahih al-Bukhari 12)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Aapas mein Salam ko aam karo (phelao).\"",
+ref: "(Sahih Muslim 54)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Jo Allah aur Qayamat ke din par imaan rakhta ho, usey chahiye ki acchi baat kahe ya khamosh rahe.\"",
+ref: "(Sahih al-Bukhari 6018)"
+},
+{
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: Jo logon par reham nahi karta, Allah us par reham nahi karta.",
+ref: "(Sahih al-Bukhari 5974)"
+},
+{
+text: "Apne bhai ke samne tumhara muskurana bhi tumhare liye sadqa hai.",
+ref: "(Sunan At-Tirmidhi 1956)"
+},
+{
+text: "Narmi jis cheez mein bhi hoti hai usko khoobsurat bana deti hai, aur jis cheez se nikal li jaye usko aib-daar kar deti hai.",
+ref: "(Sahih Muslim 2594)"
+},
+{
+text: "Allah taala narm-mizaj hai aur narm-mizaji ko pasand karta hai.",
+ref: "(Sahih Muslim 2593)"
+},
+{
+text: "Tum mein se sabse behtar wo hai jiske akhlaq sabse acche ho.",
+ref: "Sahih al-Bukhari 6035"
+},
+{
+text: "Aamaal ka daromadar niyat par hai, aur har insaan ko wahi milega jiski usne niyat ki.",
+ref: "(Sahih al-Bukhari 1)"
+},
+{
+text: "*Aye Naujawano ! Jawani ki Qadr karo, Kyunki Yeh Palat Kar Aane Wali Nahin, Aur Ibadat Jawani Hi Ki Hoti hai. Kisi Ne Kaha Hai:*\n*\"Jawani mein Allah Ta'ala ki Bargah Mein Ruju' Karna, Paighambaro'n Ka Tareeqa Hai, Aur Budhape Ke Waqt To Zalim Bhediya bhi Parhezgar Ban Jata Hai.\"*\n\nLihaza Jawani Mein Khoob-khoob Ibadat Karke Rab Ko Razi Karein.",
+ref: "[Behtar Kaun?, Safha No. 93]"
+},
+{
+text: "*Lambi Umeedo'n Se Door Raha Karo, Kyun Ki Wo Tumhare Pas Maujood Ne'mato'n Ko Haqeer Bana Deti Hai*",
+ref: "Al-Hadees"
+},
+{
+text: "*Jab Tak Tumhein Tauba Karne Ka Waqt Hasil Hai, Ise Allah Ta'ala ki Ek Ne'mat Samjho Aur Tauba Karte Raho*",
+ref: "(📖Al-Fath-ul-Rabbani, pp. 29)"
+}
+];
 
-    window.addEventListener('DOMContentLoaded', function() {
-        // Initialize Tasbeeh Counter Value from long-term memory
-        if(localStorage.getItem('saved_tasbeeh_total')) {
-            currentTasbeehCount = parseInt(localStorage.getItem('saved_tasbeeh_total'), 10) || 0;
-        }
-        updateTasbeehCounterDisplay();
-        renderBookmarkHistoryLog();
+window.addEventListener('DOMContentLoaded', function() {
+// Initialize Tasbeeh Counter Value from long-term memory
+if(localStorage.getItem('saved_tasbeeh_total')) {
+currentTasbeehCount = parseInt(localStorage.getItem('saved_tasbeeh_total'), 10) || 0;
+}
+updateTasbeehCounterDisplay();
+renderBookmarkHistoryLog();
 
-        setTimeout(function() {
-            const splash = document.getElementById('splash-screen');
-            splash.style.opacity = '0';
-            setTimeout(function() {
-                splash.style.visibility = 'hidden';
-                // Always force open Home Screen upon active landing
-                switchTab('home', document.querySelector(".nav-item"));
-            }, 500);
-        }, 3000);
-    });
+setTimeout(function() {
+const splash = document.getElementById('splash-screen');
+splash.style.opacity = '0';
+setTimeout(function() {
+splash.style.visibility = 'hidden';
+// Always force open Home Screen upon active landing
+switchTab('home', document.querySelector(".nav-item"));
+}, 500);
+}, 3000);
+});
 
-    // Persistent Tasbeeh Functional Engines
-    function updateTasbeehCounterDisplay() {
-        let padString = String(currentTasbeehCount).padStart(4, '0');
-        document.getElementById('tasbeeh-val-box').innerText = padString;
-    }
+// Persistent Tasbeeh Functional Engines
+function updateTasbeehCounterDisplay() {
+let padString = String(currentTasbeehCount).padStart(4, '0');
+document.getElementById('tasbeeh-val-box').innerText = padString;
+}
 
-    function incrementTasbeehCount() {
-        currentTasbeehCount++;
-        localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
-        updateTasbeehCounterDisplay();
-    }
+function incrementTasbeehCount() {
+currentTasbeehCount++;
+localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
+updateTasbeehCounterDisplay();
+}
 
-    function stopAndFreezeTasbeeh() {
-        localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
-        alert("Count tracking suspended and safely saved at: " + currentTasbeehCount);
-    }
+function stopAndFreezeTasbeeh() {
+localStorage.setItem('saved_tasbeeh_total', currentTasbeehCount);
+alert("Count tracking suspended and safely saved at: " + currentTasbeehCount);
+}
 
-    function resetTasbeehCountWithPrompt() {
-        let verify = confirm("Are you sure you want to completely clear your current Zikr count value?");
-        if(verify) {
-            currentTasbeehCount = 0;
-            localStorage.setItem('saved_tasbeeh_total', 0);
-            updateTasbeehCounterDisplay();
-        }
-    }
+function resetTasbeehCountWithPrompt() {
+let verify = confirm("Are you sure you want to completely clear your current Zikr count value?");
+if(verify) {
+currentTasbeehCount = 0;
+localStorage.setItem('saved_tasbeeh_total', 0);
+updateTasbeehCounterDisplay();
+}
+}
 
-    // Dynamic History Tracker Engine
-    function logStudyProgressMarker(moduleType, entryId, legibleTitle) {
-        localStorage.setItem('last_viewed_module', moduleType);
-        localStorage.setItem('last_viewed_id', entryId);
-        localStorage.setItem('last_viewed_title', legibleTitle);
-        renderBookmarkHistoryLog();
-    }
+// Dynamic History Tracker Engine
+function logStudyProgressMarker(moduleType, entryId, legibleTitle) {
+localStorage.setItem('last_viewed_module', moduleType);
+localStorage.setItem('last_viewed_id', entryId);
+localStorage.setItem('last_viewed_title', legibleTitle);
+renderBookmarkHistoryLog();
+}
 
-    function renderBookmarkHistoryLog() {
-        const historyContainer = document.getElementById('history-render-box');
-        let savedMod = localStorage.getItem('last_viewed_module');
-        let savedTitle = localStorage.getItem('last_viewed_title');
-        let savedId = localStorage.getItem('last_viewed_id');
+function renderBookmarkHistoryLog() {
+const historyContainer = document.getElementById('history-render-box');
+let savedMod = localStorage.getItem('last_viewed_module');
+let savedTitle = localStorage.getItem('last_viewed_title');
+let savedId = localStorage.getItem('last_viewed_id');
 
-        if(savedMod && savedTitle && savedId) {
-            let iconElement = savedMod === 'quran_surah' || savedMod === 'quran_para' ? '📖' : '📜';
-            historyContainer.innerHTML = `
-                <div class="history-item-row" onclick="resumeSavedHistoryJump('${savedMod}', ${savedId}, '${savedTitle}')">
-                    <div>
-                        <span>${iconElement} Read Progress:</span>
-                        <span class="history-title-tag">${savedTitle}</span>
-                    </div>
-                    <span style="color:var(--accent); font-weight:bold;">Tap to Resume ➔</span>
-                </div>
-            `;
-        }
-    }
+if(savedMod && savedTitle && savedId) {
+let iconElement = savedMod === 'quran_surah' || savedMod === 'quran_para' ? '📖' : '📜';
+historyContainer.innerHTML = `
+<div class="history-item-row" onclick="resumeSavedHistoryJump('${savedMod}', ${savedId}, '${savedTitle}')">
+<div>
+<span>${iconElement} Read Progress:</span>
+<span class="history-title-tag">${savedTitle}</span>
+</div>
+<span style="color:var(--accent); font-weight:bold;">Tap to Resume ➔</span>
+</div>
+`;
+}
+}
 
-    function resumeSavedHistoryJump(module, id, title) {
-        if(module === 'quran_surah') {
-            switchTab('quran', document.querySelectorAll(".nav-item")[1]);
-            toggleQuranMode('surah');
-            loadQuranContent('surah', id, title);
-        } else if(module === 'quran_para') {
-            switchTab('quran', document.querySelectorAll(".nav-item")[1]);
-            toggleQuranMode('para');
-            loadQuranContent('para', id, title);
-        } else if(module === 'hadees_view') {
-            switchTab('hadees', document.querySelectorAll(".nav-item")[2]);
-            document.getElementById('hadees-search-input').value = id;
-            renderHadeesList();
-        }
-    }
+function resumeSavedHistoryJump(module, id, title) {
+if(module === 'quran_surah') {
+switchTab('quran', document.querySelectorAll(".nav-item")[1]);
+toggleQuranMode('surah');
+loadQuranContent('surah', id, title);
+} else if(module === 'quran_para') {
+switchTab('quran', document.querySelectorAll(".nav-item")[1]);
+toggleQuranMode('para');
+loadQuranContent('para', id, title);
+} else if(module === 'hadees_view') {
+switchTab('hadees', document.querySelectorAll(".nav-item")[2]);
+document.getElementById('hadees-search-input').value = id;
+renderHadeesList();
+}
+}
 
-    function switchTab(tabId, element) {
-        var tabs = document.getElementsByClassName('tab-content');
-        for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
-        var items = document.getElementsByClassName('nav-item');
-        for (var j = 0; j < items.length; j++) { items[j].classList.remove('active'); }
-        
-        document.getElementById('tab-' + tabId).classList.add('active');
-        if(element) element.classList.add('active');
-        if(tabId === 'hadees') { renderHadeesList(); }
-    }
+function switchTab(tabId, element) {
+var tabs = document.getElementsByClassName('tab-content');
+for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
+var items = document.getElementsByClassName('nav-item');
+for (var j = 0; j < items.length; j++) { items[j].classList.remove('active'); }
 
-    function handleAdminSecretTap() {
-        adminTapCount++;
-        clearTimeout(adminTapTimer);
-        adminTapTimer = setTimeout(function() { adminTapCount = 0; }, 3000);
+document.getElementById('tab-' + tabId).classList.add('active');
+if(element) element.classList.add('active');
+if(tabId === 'hadees') { renderHadeesList(); }
+}
 
-        if(adminTapCount === 5) {
-            adminTapCount = 0;
-            let secretAttempt = prompt("Enter Master Security PIN:");
-            if(secretAttempt === "3786") {
-                document.getElementById('secret-admin-gate').style.display = "block";
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-                alert("Owner Dashboard Unlocked successfully.");
-            } else {
-                alert("Unauthorized Entry Attempt.");
-            }
-        }
-    }
+function handleAdminSecretTap() {
+adminTapCount++;
+clearTimeout(adminTapTimer);
+adminTapTimer = setTimeout(function() { adminTapCount = 0; }, 3000);
 
-    function copySearchPhraseShortcut() {
-        navigator.clipboard.writeText("const baseHadeesData").then(() => {
-            alert('Phrase "const baseHadeesData" copied!');
-        }).catch(() => {
-            let dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = "const baseHadeesData";
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert('Phrase copied to clipboard.');
-        });
-    }
+if(adminTapCount === 5) {
+adminTapCount = 0;
+let secretAttempt = prompt("Enter Master Security PIN:");
+if(secretAttempt === "3786") {
+document.getElementById('secret-admin-gate').style.display = "block";
+window.scrollTo({ top: 0, behavior: 'smooth' });
+alert("Owner Dashboard Unlocked successfully.");
+} else {
+alert("Unauthorized Entry Attempt.");
+}
+}
+}
 
-    function lockAdminTerminal() {
-        document.getElementById('secret-admin-gate').style.display = "none";
-        document.getElementById('adm-hadees-text').value = '';
-        document.getElementById('adm-hadees-ref').value = '';
-        document.getElementById('adm-output-code').value = '';
-    }
+function copySearchPhraseShortcut() {
+navigator.clipboard.writeText("const baseHadeesData").then(() => {
+alert('Phrase "const baseHadeesData" copied!');
+}).catch(() => {
+let dummy = document.createElement("textarea");
+document.body.appendChild(dummy);
+dummy.value = "const baseHadeesData";
+dummy.select();
+document.execCommand("copy");
+document.body.removeChild(dummy);
+alert('Phrase copied to clipboard.');
+});
+}
 
-    function generateHadeesRepositoryCode() {
-        let txt = document.getElementById('adm-hadees-text').value.trim();
-        let rf = document.getElementById('adm-hadees-ref').value.trim() || "Al-Hadees";
-        if(!txt) { alert("Please input content text first."); return; }
-        let formattedText = txt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
-        let formattedRef = rf.replace(/"/g, '\\"');
-        let outputCode = `{\n    text: "${formattedText}",\n    ref: "${formattedRef}"\n},`;
-        document.getElementById('adm-output-code').value = outputCode;
-    }
+function lockAdminTerminal() {
+document.getElementById('secret-admin-gate').style.display = "none";
+document.getElementById('adm-hadees-text').value = '';
+document.getElementById('adm-hadees-ref').value = '';
+document.getElementById('adm-output-code').value = '';
+}
 
-    function renderHadeesList() {
-        const renderBox = document.getElementById('hadees-render-space');
-        const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
-        renderBox.innerHTML = '';
-        let filteredCount = 0;
+function generateHadeesRepositoryCode() {
+let txt = document.getElementById('adm-hadees-text').value.trim();
+let rf = document.getElementById('adm-hadees-ref').value.trim() || "Al-Hadees";
+if(!txt) { alert("Please input content text first."); return; }
+let formattedText = txt.replace(/"/g, '\\"').replace(/\n/g, '\\n');
+let formattedRef = rf.replace(/"/g, '\\"');
+let outputCode = `{\n text: "${formattedText}",\n ref: "${formattedRef}"\n},`;
+document.getElementById('adm-output-code').value = outputCode;
+}
 
-        baseHadeesData.forEach((item, index) => {
-            let serialNum = index + 1;
-            if(searchVal === '' || item.text.toLowerCase().includes(searchVal) || item.ref.toLowerCase().includes(searchVal) || String(serialNum) === searchVal) {
-                filteredCount++;
-                let card = document.createElement('div');
-                card.className = 'hadees-card';
-                card.innerHTML = `
-                    <div class="hadees-header">
-                        <span>S.No: ${serialNum}</span>
-                        <span>Aashiq e Rasool App</span>
-                    </div>
-                    <div class="hadees-body-text">${item.text}</div>
-                    <div class="hadees-reference">Hawala: ${item.ref}</div>
-                    <div class="action-btn-row">
-                        <button class="action-card-btn" onclick="copyHadeesOnly(${index})">📋 Copy Text</button>
-                        <button class="action-card-btn" style="color:#15803d; border-color:#bbf7d0;" onclick="shareHadeesWhatsApp(${index})">🟢 WhatsApp Share</button>
-                    </div>
-                `;
-                renderBox.appendChild(card);
-            }
-        });
-        if(filteredCount === 0) {
-            renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found.</p>';
-        }
-    }
+function renderHadeesList() {
+const renderBox = document.getElementById('hadees-render-space');
+const searchVal = document.getElementById('hadees-search-input').value.toLowerCase().trim();
+renderBox.innerHTML = '';
+let filteredCount = 0;
 
-    function copyHadeesOnly(index) {
-        let entry = baseHadeesData[index];
-        if(!entry) return;
-        logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
-        let plainText = entry.text + "\n\nHawala: " + entry.ref;
-        navigator.clipboard.writeText(plainText).then(() => { alert('Hadees content copied cleanly!'); });
-    }
+baseHadeesData.forEach((item, index) => {
+let serialNum = index + 1;
+if(searchVal === '' || item.text.toLowerCase().includes(searchVal) || item.ref.toLowerCase().includes(searchVal) || String(serialNum) === searchVal) {
+filteredCount++;
+let card = document.createElement('div');
+card.className = 'hadees-card';
+card.innerHTML = `
+<div class="hadees-header">
+<span>S.No: ${serialNum}</span>
+<span>Aashiq e Rasool App</span>
+</div>
+<div class="hadees-body-text">${item.text}</div>
+<div class="hadees-reference">Hawala: ${item.ref}</div>
+<div class="action-btn-row">
+<button class="action-card-btn" onclick="copyHadeesOnly(${index})">📋 Copy Text</button>
+<button class="action-card-btn" style="color:#15803d; border-color:#bbf7d0;" onclick="shareHadeesWhatsApp(${index})">🟢 WhatsApp Share</button>
+</div>
+`;
+renderBox.appendChild(card);
+}
+});
+if(filteredCount === 0) {
+renderBox.innerHTML = '<p style="text-align:center; color:#ef4444; font-size:13px; font-weight:bold; margin-top:15px;">No matches found.</p>';
+}
+}
 
-    function shareHadeesWhatsApp(index) {
-        let entry = baseHadeesData[index];
-        if(!entry) return;
-        logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
-        let cleanAppUrl = window.location.href.split('?')[0];
-        let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n👉 ${cleanAppUrl}`;
-        window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
-    }
+function copyHadeesOnly(index) {
+let entry = baseHadeesData[index];
+if(!entry) return;
+logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
+let plainText = entry.text + "\n\nHawala: " + entry.ref;
+navigator.clipboard.writeText(plainText).then(() => { alert('Hadees content copied cleanly!'); });
+}
 
-    function toggleQuranMode(mode) {
-        document.getElementById('btn-mode-surah').classList.remove('active');
-        document.getElementById('btn-mode-para').classList.remove('active');
-        if(mode === 'surah') {
-            document.getElementById('btn-mode-surah').classList.add('active');
-            document.getElementById('surah-directory-view').style.display = 'flex';
-            document.getElementById('para-directory-view').style.display = 'none';
-        } else {
-            document.getElementById('btn-mode-para').classList.add('active');
-            document.getElementById('surah-directory-view').style.display = 'none';
-            document.getElementById('para-directory-view').style.display = 'flex';
-        }
-    }
+function shareHadeesWhatsApp(index) {
+let entry = baseHadeesData[index];
+if(!entry) return;
+logStudyProgressMarker('hadees_view', (index + 1), "Hadees S.No " + (index + 1));
+let cleanAppUrl = window.location.href.split('?')[0];
+let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK TO Join the Aashiq e Rasool App today for daily Islamic updates.\n👉 ${cleanAppUrl}`;
+window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
+}
 
-    const surahList = [
-        { id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
-        { id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
-        { id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
-        { id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
-        { id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "یونس" },
-        { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
-        { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
-        { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
-        { id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
-        { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
-        { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
-        { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
-        { id: 25, start: 1, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعرآء" },
-        { id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
-        { id: 29, en: "Al-'Ankabut", ar: "العنكبوت" }, { id: 30, en: "Ar-Rum", ar: "الروم" },
-        { id: 31, en: "Luqman", ar: "لقمان" }, { id: 32, en: "As-Sajdah", ar: "السجدة" },
-        { id: 33, en: "Al-Ahzab", ar: "الأحزاب" }, { id: 34, en: "Saba", ar: "سبأ" },
-        { id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
-        { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
-        { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
-        { id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
-        { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
-        { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
-        { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
-        { id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
-        { id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
-        { id: 53, en: "An-Nazm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القرmer" },
-        { id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
-        { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
-        { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
-        { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
-        { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, open: 1, en: "At-Taghabun", ar: "التغابن" }, 
-        { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" }, 
-        { id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القلم" }, 
-        { id: 70, en: "Al-Ma'arij", ar: "المعارج" }, { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, 
-        { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" }, 
-        { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" }, 
-        { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" }, 
-        { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" }, 
-        { id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" }, 
-        { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" }, 
-        { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" }, 
-        { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" }, 
-        { id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" }, 
-        { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" }, 
-        { id: 91, en: "Ash-Shu'ams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" }, 
-        { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" }, 
-        { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" }, 
-        { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" }, 
-        { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" }, 
-        { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" }, 
-        { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" }, 
-        { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" }, 
-        { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" }, 
-        { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" }, 
-        { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" }, 
-        { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
-    ];
+function toggleQuranMode(mode) {
+document.getElementById('btn-mode-surah').classList.remove('active');
+document.getElementById('btn-mode-para').classList.remove('active');
+if(mode === 'surah') {
+document.getElementById('btn-mode-surah').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'flex';
+document.getElementById('para-directory-view').style.display = 'none';
+} else {
+document.getElementById('btn-mode-para').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'none';
+document.getElementById('para-directory-view').style.display = 'flex';
+}
+}
 
-    const surahContainer = document.getElementById('surah-directory-view');
-    surahList.forEach(function(surah) {
-        surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
-                                    '<span>' + surah.id + '. ' + surah.en + '</span>' +
-                                    '<span class="arabic-title">' + surah.ar + '</span>' +
-                                    '</div>';
-    });
+const surahList = [
+{ id: 1, en: "Al-Fatiha", ar: "الفاتحة" }, { id: 2, en: "Al-Baqarah", ar: "البقرة" },
+{ id: 3, en: "Ali 'Imran", ar: "آل عمران" }, { id: 4, en: "An-Nisa", ar: "النساء" },
+{ id: 5, en: "Al-Ma'idah", ar: "المائدة" }, { id: 6, en: "Al-An'am", ar: "الأنعام" },
+{ id: 7, en: "Al-A'raf", ar: "الأعراف" }, { id: 8, en: "Al-Anfal", ar: "الأنفال" },
+{ id: 9, en: "At-Tawbah", ar: "التوبة" }, { id: 10, en: "Yunus", ar: "یونس" },
+{ id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
+{ id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
+{ id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
+{ id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
+{ id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
+{ id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
+{ id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
+{ id: 25, start: 1, en: "Al-Furqan", ar: "الفرقان" }, { id: 26, en: "Ash-Shu'ara", ar: "الشعرآء" },
+{ id: 27, en: "An-Naml", ar: "النمل" }, { id: 28, en: "Al-Qasas", ar: "القصص" },
+{ id: 29, en: "Al-'Ankabut", ar: "العنكبوت" }, { id: 30, en: "Ar-Rum", ar: "الروم" },
+{ id: 31, en: "Luqman", ar: "لقمان" }, { id: 32, en: "As-Sajdah", ar: "السجدة" },
+{ id: 33, en: "Al-Ahzab", ar: "الأحزاب" }, { id: 34, en: "Saba", ar: "سبأ" },
+{ id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
+{ id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
+{ id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
+{ id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
+{ id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
+{ id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
+{ id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
+{ id: 49, en: "Al-Hujurat", ar: "الحجرات" }, { id: 50, en: "Qaf", ar: "ق" },
+{ id: 51, en: "Adh-Dhariyat", ar: "الذاريات" }, { id: 52, en: "At-Tur", ar: "الطور" },
+{ id: 53, en: "An-Nazm", ar: "النجم" }, { id: 54, en: "Al-Qamar", ar: "القرmer" },
+{ id: 55, en: "Ar-Rahman", ar: "الرحمن" }, { id: 56, en: "Al-Waqi'ah", ar: "الواقعة" },
+{ id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
+{ id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
+{ id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
+{ id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, open: 1, en: "At-Taghabun", ar: "التغابن" },
+{ id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
+{ id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
+{ id: 70, en: "Al-Ma'arij", ar: "المعارج" }, { id: 69, en: "Al-Haqqah", ar: "الحاقة" },
+{ id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
+{ id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
+{ id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
+{ id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
+{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
+{ id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
+{ id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
+{ id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
+{ id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
+{ id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
+{ id: 91, en: "Ash-Shu'ams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
+{ id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
+{ id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
+{ id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
+{ id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" },
+{ id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" },
+{ id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
+{ id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
+{ id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" },
+{ id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
+{ id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
+{ id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
+];
 
-    const paraContainer = document.getElementById('para-directory-view');
-    for (let p = 1; p <= 30; p++) {
-        paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'para\', ' + p + ', \'Para ' + p + '\')">' +
-                                   '<span>Para ' + p + '</span>' +
-                                   '<span style="font-size:13px; font-weight:normal; color:#6b7280;">Juz ' + p + ' ➔</span>' +
-                                   '</div>';
-    }
+const surahContainer = document.getElementById('surah-directory-view');
+surahList.forEach(function(surah) {
+surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
+'<span>' + surah.id + '. ' + surah.en + '</span>' +
+'<span class="arabic-title">' + surah.ar + '</span>' +
+'</div>';
+});
 
-    function loadQuranContent(type, numericId, displayName) {
-        // Track the user reading step instantly
-        logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
+const paraContainer = document.getElementById('para-directory-view');
+for (let p = 1; p <= 30; p++) {
+paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'para\', ' + p + ', \'Para ' + p + '\')">' +
+'<span>Para ' + p + '</span>' +
+'<span style="font-size:13px; font-weight:normal; color:#6b7280;">Juz ' + p + ' ➔</span>' +
+'</div>';
+}
 
-        document.getElementById('quran-menu-panel').style.display = 'none';
-        document.getElementById('quran-reader-panel').style.display = 'block';
-        document.getElementById('reader-display-title').innerText = displayName;
-        
-        let countKey = type + '_' + numericId;
-        clickCounters[countKey] = (clickCounters[countKey] || 0) + 1;
+function loadQuranContent(type, numericId, displayName) {
+// Track the user reading step instantly
+logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
 
-        const infoBox = document.getElementById('quran-info-header');
-        const displayBox = document.getElementById('verses-container');
-        displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
+document.getElementById('quran-menu-panel').style.display = 'none';
+document.getElementById('quran-reader-panel').style.display = 'block';
+document.getElementById('reader-display-title').innerText = displayName;
 
-        let apiUrl = type === 'surah' ? 'https://api.alquran.cloud/v1/surah/' + numericId : 'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
+let countKey = type + '_' + numericId;
+clickCounters[countKey] = (clickCounters[countKey] || 0) + 1;
 
-        fetch(apiUrl).then(res => res.json()).then(dataset => {
-            let arabicAyahs = dataset.data.ayahs;
-            infoBox.innerHTML = '📋 <b>Total Ayats:</b> ' + arabicAyahs.length + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
-            displayBox.innerHTML = '';
-            let paragraphHTML = '<div class="quran-continuous-block">';
-            let lastSurahName = "";
+const infoBox = document.getElementById('quran-info-header');
+const displayBox = document.getElementById('verses-container');
+displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
 
-            arabicAyahs.forEach((ayah) => {
-                let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
-                let cleanText = ayah.text.trim();
-                if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
-                if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
-                if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-                    cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
-                    paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
-                }
-                paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
-                if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
-            });
-            displayBox.innerHTML = paragraphHTML + '</div>';
-            displayBox.scrollTop = 0;
-        });
-    }
+let apiUrl = type === 'surah' ? 'https://api.alquran.cloud/v1/surah/' + numericId : 'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
 
-    function closeQuranReader() {
-        document.getElementById('quran-reader-panel').style.display = 'none';
-        document.getElementById('quran-menu-panel').style.display = 'block';
-    }
+fetch(apiUrl).then(res => res.json()).then(dataset => {
+let arabicAyahs = dataset.data.ayahs;
+infoBox.innerHTML = '📋 <b>Total Ayats:</b> ' + arabicAyahs.length + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
+displayBox.innerHTML = '';
+let paragraphHTML = '<div class="quran-continuous-block">';
+let lastSurahName = "";
 
-    // DIRECTLY FIXED ASK WHATSAPP ROUTING ENGINE
-    function sendWhatsAppDirectly() {
-        var userFormName = document.getElementById('ask-name').value.trim();
-        var userFormQuery = document.getElementById('ask-query').value.trim();
-        
-        if(!userFormName || !userFormQuery) {
-            alert("Please fill out both Name and Question fields.");
-            return;
-        }
-        
-        var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
-        var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
-        window.open(cleanURL, '_blank');
-    }
+arabicAyahs.forEach((ayah) => {
+let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
+let cleanText = ayah.text.trim();
+if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
+if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
+if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
+}
+paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
+if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
+});
+displayBox.innerHTML = paragraphHTML + '</div>';
+displayBox.scrollTop = 0;
+});
+}
 
-    if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', function(e) {
-            let heading = e.webkitCompassHeading || e.alpha;
-            if(heading !== undefined) document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
-        }, true);
-    }
+function closeQuranReader() {
+document.getElementById('quran-reader-panel').style.display = 'none';
+document.getElementById('quran-menu-panel').style.display = 'block';
+}
 
-    /* ------------------------------------------------------------
-       PLACEHOLDER FOR NEW PROMPT INSTRUCTIONS / MASTER FUNCTIONS
-       You can paste any additional rules, keys, or dynamic engine scripts right here.
-       ------------------------------------------------------------ */
+// DIRECTLY FIXED ASK WHATSAPP ROUTING ENGINE
+function sendWhatsAppDirectly() {
+var userFormName = document.getElementById('ask-name').value.trim();
+var userFormQuery = document.getElementById('ask-query').value.trim();
+
+if(!userFormName || !userFormQuery) {
+alert("Please fill out both Name and Question fields.");
+return;
+}
+
+var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
+var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
+window.open(cleanURL, '_blank');
+}
+
+if (window.DeviceOrientationEvent) {
+window.addEventListener('deviceorientation', function(e) {
+let heading = e.webkitCompassHeading || e.alpha;
+if(heading !== undefined) document.getElementById('needle').style.transform = 'rotate(' + (292 - heading) + 'deg)';
+}, true);
+}
+
+/* ------------------------------------------------------------
+PLACEHOLDER FOR NEW PROMPT INSTRUCTIONS / MASTER FUNCTIONS
+You can paste any additional rules, keys, or dynamic engine scripts right here.
+------------------------------------------------------------ */
 </script>
 </body>
 </html>
