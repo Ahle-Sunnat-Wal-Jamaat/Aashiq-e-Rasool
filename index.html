@@ -345,17 +345,90 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 
 <div id="tab-ilme-farz" class="tab-content" style="padding-bottom: 80px; box-sizing: border-box; overflow-y: auto; max-height: calc(100vh - 80px); margin-top: 15px;">
-<div class="card" style="padding: 10px;" id="farz-menu-panel">
-<h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
-<p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
-<div id="farz-topics-directory" class="list-container"></div>
-</div>
+    
+    <div class="card" style="padding: 10px;" id="farz-menu-panel">
+        <h2 class="card-title" style="text-align: center; margin-bottom: 12px;">📚 Ilm-e-Farz bayaan</h2>
+        <p style="font-size: 12px; color: #6b7280; text-align: center; margin-bottom: 15px;">Zaroori Islamic uloom seekhne ke liye niche kisi bhi topic par click karein.</p>
+        
+        <div class="list-container">
+            <div class="grid-row" onclick="showStaticFarz('farz-taharat')"><span>✨ Taharath (Pakeezgi)</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-wazu')"><span>💧 Wazu ke Ahkaam</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-ghusl')"><span>🚿 Ghusl ke Faraiz</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-namaz')"><span>🧎 Namaz (Salah)</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-roza')"><span>🌙 Roza (Sawm)</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-zakat')"><span>💰 Zakat ke Ahkaam</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+            <div class="grid-row" onclick="showStaticFarz('farz-haj')"><span>🕋 Haj-e-Baytullah</span><span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span></div>
+        </div>
+    </div>
 
-<div class="card" style="padding: 12px; display: none;" id="farz-reader-panel">
-<button class="back-btn" onclick="closeFarzReader()">⬅ Back to Topics</button>
-<h3 id="farz-reader-title" style="color: var(--primary); margin: 5px 0 10px 0; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 5px;"></h3>
-<div id="farz-content-container" style="font-size: 14px; line-height: 1.6; color: #2d3748; white-space: pre-line; min-height: 30vh;"></div>
-</div>
+    <div id="farz-taharat" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">✨ Taharath (Pakeezgi)</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Taharath imaan ka aadha hissa hai.
+
+• Roohani aur jismani pakizgi har ibadat ke liye shart hai.
+• Libas, badan aur jagah ka pak hona namaz ke liye zaroori hai.
+• Hadath-e-Asghar (wazu tootna) aur Hadath-e-Akbar (ghusl farz hona) se pak hona isme shamil hai.</p>
+    </div>
+
+    <div id="farz-wazu" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">💧 Wazu ke Ahkaam</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Wazu mein 4 Farz hain, jinke bina wazu nahi hota:
+
+1. Chahra dhona (peshani ke baal se thodi ke niche tak aur ek kaan ki lau se doosre tak).
+2. Dono haath kohniyon samet dhona.
+3. Chauthai (1/4) sar ka masah karna.
+4. Dono paaon takhno samet dhona.</p>
+    </div>
+
+    <div id="farz-ghusl" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">🚿 Ghusl ke Faraiz</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Ghusl (Nhaane) mein 3 Farz hain:
+
+1. Kulli karna (is tarah ki gale ke gharghara tak paani pahunche, agar roza na ho).
+2. Naak mein narm haddi tak paani daalna.
+3. Poore badan par is tarah paani bahana ki ek baal barabar jagah bhi khushk na rahe.</p>
+    </div>
+
+    <div id="farz-namaz" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">🧎 Namaz (Salah)</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Namaz deen ka sutoon (pillar) hai.
+
+• Din mein 5 waqt ki namaz har aqil aur baligh musalman par farz hai.
+• Namaz ke andar aur bahar ke faraiz (sharaait o arkaan) ko sahi tareeqe se ada karna zaroori hai.
+• Namaz qiyamat ke din sabse pehla hisab-kitab ka zariya hogi.</p>
+    </div>
+
+    <div id="farz-roza" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">🌙 Roza (Sawm)</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Ramadan ke roze har baligh par farz hain.
+
+• Subah sadiq se lekar maghrib tak khane, peene aur na-farmaani se ruke rehne ka naam roza hai.
+• Roza sirff pet ka nahi, balki aankh, zubaan aur kaan ka bhi hota hai taaki taqwa haasil ho.</p>
+    </div>
+
+    <div id="farz-zakat" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">💰 Zakat ke Ahkaam</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Zakat islam ka chautha rukun hai.
+
+• Har saal sahib-e-nisab (wo shakhs jiske paas 7.5 tola sona ya 52.5 tola chandi ya uske barabar maal ho) par 2.5% zakat nikalna farz hai.
+• Yeh maal ko pak karti hai aur gareebon ki madad ka zariya banti hai.</p>
+    </div>
+
+    <div id="farz-haj" class="card farz-inner-page" style="display:none; padding:12px;">
+        <button class="back-btn" onclick="hideStaticFarz()">⬅ Back to Topics</button>
+        <h3 style="color:var(--primary); font-size:18px; border-bottom:2px solid var(--primary); padding-bottom:5px;">🕋 Haj-e-Baytullah</h3>
+        <p style="font-size:14px; line-height:1.6; color:#2d3748; white-space:pre-line;">Haj zindagi mein ek martaba farz hai.
+
+• Yeh sirf un logon par farz hai jo makka mukarrama tak jaane aur wahan rehne ka kharcha uthane ki jismani aur maali taqat rakhte hon.
+• Haj-e-Mabroor ka badla sirf jannat hai.</p>
+    </div>
+
 </div>
 
 </div> <div class="nav-bar">
@@ -999,7 +1072,7 @@ const surahList = [
 { id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
 { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
 { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
-{ id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
+{ id: 41, en: "Fussilat", ar: "فصلt" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
 { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
 { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
 { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
@@ -1012,7 +1085,7 @@ const surahList = [
 { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
 { id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغabun" },
 { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
-{ id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
+{ id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القlem" },
 { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
 { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
 { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
@@ -1022,7 +1095,7 @@ const surahList = [
 { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
 { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
 { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
-{ id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
+{ id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغashiyah" },
 { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
 { id: 91, en: "Ash-Shu'ams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
 { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
@@ -1146,35 +1219,22 @@ renderHadeesList();
 }
 }
 
-function initFarzTopicsMenu() {
-const container = document.getElementById('farz-topics-directory');
-if(!container) return;
-container.innerHTML = '';
-farzTopicsData.forEach((topic) => {
-container.innerHTML += `
-<div class="grid-row" onclick="loadFarzContent('${topic.id}')">
-<span>${topic.title}</span>
-<span style="font-size:13px; font-weight:normal; color:#6b7280;">Padhein ➔</span>
-</div>
-`;
-});
+/* NO-CRASH DIRECT PANEL SWITCH LOGIC */
+function showStaticFarz(divId) {
+    document.getElementById('farz-menu-panel').style.display = 'none';
+    
+    var panels = document.getElementsByClassName('farz-inner-page');
+    for(var i=0; i<panels.length; i++) { panels[i].style.display = 'none'; }
+    
+    document.getElementById(divId).style.display = 'block';
 }
 
-function loadFarzContent(topicId) {
-const topic = farzTopicsData.find(t => t.id === topicId);
-if(!topic) return;
-document.getElementById('farz-menu-panel').style.display = 'none';
-document.getElementById('farz-reader-panel').style.display = 'block';
-document.getElementById('farz-reader-title').innerText = topic.title;
-document.getElementById('farz-content-container').innerText = topic.content;
+function hideStaticFarz() {
+    var panels = document.getElementsByClassName('farz-inner-page');
+    for(var i=0; i<panels.length; i++) { panels[i].style.display = 'none'; }
+    document.getElementById('farz-menu-panel').style.display = 'block';
 }
 
-function closeFarzReader() {
-document.getElementById('farz-reader-panel').style.display = 'none';
-document.getElementById('farz-menu-panel').style.display = 'block';
-}
-
-// Fixed core central tab router switcher block
 function switchTab(tabId, element) {
 var tabs = document.getElementsByClassName('tab-content');
 for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active'); }
@@ -1186,7 +1246,7 @@ if(targetedTab) targetedTab.classList.add('active');
 if(element) element.classList.add('active');
 
 if(tabId === 'hadees') { renderHadeesList(); }
-if(tabId === 'ilme-farz') { initFarzTopicsMenu(); closeFarzReader(); }
+if(tabId === 'ilme-farz') { hideStaticFarz(); }
 }
 
 function handleAdminSecretTap() {
@@ -1222,10 +1282,6 @@ let formattedRef = rf.replace(/"/g, '\\"');
 let outputCode = `{\n text: "${formattedText}",\n ref: "${formattedRef}"\n},`;
 document.getElementById('adm-output-code').value = outputCode;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Dynamic fallback handler systems check
-});
 
 function lockAdminTerminal() {
 document.getElementById('secret-admin-gate').style.display = "none";
@@ -1284,59 +1340,18 @@ let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK 
 window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
 }
 
-function loadQuranContent(type, numericId, displayName) {
-logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
-document.getElementById('quran-menu-panel').style.display = 'none';
-document.getElementById('quran-reader-panel').style.display = 'block';
-document.getElementById('reader-display-title').innerText = displayName;
-
-let countKey = type + '_' + numericId;
-clickCounters[countKey] = (clickCounters[countKey] || 0) + 1;
-
-const infoBox = document.getElementById('quran-info-header');
-const displayBox = document.getElementById('verses-container');
-if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
-
-let apiUrl = type === 'surah' ? 'https://api.alquran.cloud/v1/surah/' + numericId : 'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
-
-fetch(apiUrl).then(res => res.json()).then(dataset => {
-let arabicAyahs = dataset.data.ayahs;
-if(infoBox) infoBox.innerHTML = '📋 <b>Total Ayats:</b> ' + arabicAyahs.length + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
-if(displayBox) {
-displayBox.innerHTML = '';
-let paragraphHTML = '<div class="quran-continuous-block">';
-let lastSurahName = "";
-
-arabicAyahs.forEach((ayah) => {
-let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
-let cleanText = ayah.text.trim();
-if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
-if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
-if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
-paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
+function toggleQuranMode(mode) {
+document.getElementById('btn-mode-surah').classList.remove('active');
+document.getElementById('btn-mode-para').classList.remove('active');
+if(mode === 'surah') {
+document.getElementById('btn-mode-surah').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'flex';
+document.getElementById('para-directory-view').style.display = 'none';
+} else {
+document.getElementById('btn-mode-para').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'none';
+document.getElementById('para-directory-view').style.display = 'flex';
 }
-paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
-if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
-});
-displayBox.innerHTML = paragraphHTML + '</div>';
-displayBox.scrollTop = 0;
-}
-});
-}
-
-function closeQuranReader() {
-document.getElementById('quran-reader-panel').style.display = 'none';
-document.getElementById('quran-menu-panel').style.display = 'block';
-}
-
-function sendWhatsAppDirectly() {
-var userFormName = document.getElementById('ask-name').value.trim();
-var userFormQuery = document.getElementById('ask-query').value.trim();
-if(!userFormName || !userFormQuery) { alert("Please fill out both Name and Question fields."); return; }
-var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
-var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
-window.open(cleanURL, '_blank');
 }
 </script>
 </body>
