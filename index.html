@@ -594,7 +594,7 @@ text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah 
 ref: "(Sahih al-Bukhari 5645)"
 },
 {
-text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, bimari, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
+text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
 ref: "(Sahih al-Bukhari 5641)"
 },
 {
@@ -794,7 +794,7 @@ text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Behtar
 ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
 },
 {
-text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne omnipresent zubaan pakdi aur farmaya: \"Iska.\"",
+text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne apni zubaan pakdi aur farmaya: \"Iska.\"",
 ref: "(Sunan At-Tirmidhi 2410)"
 },
 {
@@ -1014,7 +1014,7 @@ text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mu
 ref: "(Sahih al-Bukhari 10)"
 },
 {
-text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
 ref: "(Sahih al-Bukhari 12)"
 },
 {
@@ -1091,7 +1091,7 @@ const surahList = [
 { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
 { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
 { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
-{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
+{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبs" },
 { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
 { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
 { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
@@ -1104,7 +1104,7 @@ const surahList = [
 { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العadiyat" },
 { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" },
 { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
-{ id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
+{ id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریsh" },
 { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" },
 { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
 { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
@@ -1339,6 +1339,21 @@ let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK 
 window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
 }
 
+function toggleQuranMode(mode) {
+document.getElementById('btn-mode-surah').classList.remove('active');
+document.getElementById('btn-mode-para').classList.remove('active');
+if(mode === 'surah') {
+document.getElementById('btn-mode-surah').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'flex';
+document.getElementById('para-directory-view').style.display = 'none';
+} else {
+document.getElementById('btn-mode-para').classList.add('active');
+document.getElementById('surah-directory-view').style.display = 'none';
+document.getElementById('para-directory-view').style.display = 'flex';
+}
+}
+
+/* FULLY REDESIGNED DATA PARSER ENGINE FOR PARA & SURAH MAPPING */
 function loadQuranContent(type, numericId, displayName) {
 logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
 document.getElementById('quran-menu-panel').style.display = 'none';
@@ -1365,10 +1380,17 @@ let lastSurahName = "";
 arabicAyahs.forEach((ayah) => {
 let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
 let cleanText = ayah.text.trim();
+
 if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
-if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
+if (type === 'para') {
+    let currentAyahSurahName = (ayah.surah && ayah.surah.englishName) ? ayah.surah.englishName : "Holy Quran";
+    if (currentAyahSurahName !== lastSurahName) { 
+        lastSurahName = currentAyahSurahName; 
+        paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; 
+    }
+}
 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّhِيمِ", "").trim();
+cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
 paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
 }
 paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
@@ -1385,15 +1407,6 @@ if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:red;">
 function closeQuranReader() {
 document.getElementById('quran-reader-panel').style.display = 'none';
 document.getElementById('quran-menu-panel').style.display = 'block';
-}
-
-function sendWhatsAppDirectly() {
-var userFormName = document.getElementById('ask-name').value.trim();
-var userFormQuery = document.getElementById('ask-query').value.trim();
-if(!userFormName || !userFormQuery) { alert("Please fill out both Name and Question fields."); return; }
-var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
-var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
-window.open(cleanURL, '_blank');
 }
 </script>
 </body>
