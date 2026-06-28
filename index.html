@@ -246,7 +246,7 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 
 <div class="card" style="margin-bottom: 5px;">
-<h2 class="card-title" style="📢 Connect With Us">📢 Connect With Us</h2>
+<h2 class="card-title">📢 Connect With Us</h2>
 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
 
 <a href="https://chat.whatsapp.com/LxrBMsjKTn87CySGG9hg0z?s=cl&p=a&ilr=0" target="_blank" class="social-link-btn btn-whatsapp">
@@ -1019,7 +1019,7 @@ text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mu
 ref: "(Sahih al-Bukhari 10)"
 },
 {
-text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
 ref: "(Sahih al-Bukhari 12)"
 },
 {
@@ -1051,7 +1051,7 @@ text: "Tum mein se sabse behtar wo hai jiske akhlaq sabse acche ho.",
 ref: "Sahih al-Bukhari 6035"
 },
 {
-text: "Har ek aamal ka daromadar niyat par hai.",
+text: "Aamaal ka daromadar niyat par hai, aur har insaan ko wahi milega jiski usne niyat ki.",
 ref: "(Sahih al-Bukhari 1)"
 }
 ];
@@ -1065,7 +1065,7 @@ const surahList = [
 { id: 11, en: "Hud", ar: "هود" }, { id: 12, en: "Yusuf", ar: "یوسف" },
 { id: 13, en: "Ar-Ra'd", ar: "الرعد" }, { id: 14, en: "Ibrahim", ar: "إبراهيم" },
 { id: 15, en: "Al-Hijr", ar: "الحجر" }, { id: 16, en: "An-Nahl", ar: "النحل" },
-{ id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهف" },
+{ id: 17, en: "Al-Isra", ar: "الإسراء" }, { id: 18, en: "Al-Kahf", ar: "الكهf" },
 { id: 19, en: "Maryam", ar: "مريم" }, { id: 20, en: "Ta-Ha", ar: "طه" },
 { id: 21, en: "Al-Anbiya", ar: "الأنبياء" }, { id: 22, en: "Al-Hajj", ar: "الحج" },
 { id: 23, en: "Al-Mu'minun", ar: "المؤمنون" }, { id: 24, en: "An-Nur", ar: "النور" },
@@ -1127,7 +1127,7 @@ const surahContainer = document.getElementById('surah-directory-view');
 if(surahContainer) {
 surahContainer.innerHTML = '';
 surahList.forEach(function(surah) {
-surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + sur学 + surah.id + ', \'' + surah.en + '\')">' +
+surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
 '<span>' + surah.id + '. ' + surah.en + '</span>' +
 '<span class="arabic-title">' + surah.ar + '</span>' +
 '</div>';
@@ -1287,10 +1287,6 @@ let outputCode = `{\n text: "${formattedText}",\n ref: "${formattedRef}"\n},`;
 document.getElementById('adm-output-code').value = outputCode;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Structural trace backup framework check
-});
-
 function lockAdminTerminal() {
 document.getElementById('secret-admin-gate').style.display = "none";
 document.getElementById('adm-hadees-text').value = '';
@@ -1411,6 +1407,8 @@ if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
 displayBox.innerHTML = paragraphHTML + '</div>';
 displayBox.scrollTop = 0;
 }
+}).catch(err => {
+if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:red;">Data load failed. Please check internet connection.</p>';
 });
 }
 
