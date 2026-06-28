@@ -93,7 +93,6 @@ text-decoration: none; box-sizing: border-box; transition: transform 0.1s ease;
 .tasbeeh-tap-zone:active { background: #d1fae5; }
 .tasbeeh-actions { display: flex; gap: 10px; }
 .tasbeeh-btn { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-weight: bold; cursor: pointer; background: #f9fafb; color: #4b5563; }
-.nav-bar .nav-item { width: 20%; }
 .tasbeeh-btn-stop { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
 
 /* Reading History Box Elements */
@@ -795,7 +794,7 @@ text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Behtar
 ref: "(Shu'ab al-Iman, Al-Bayhaqi)"
 },
 {
-text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne apni zubaan pakdi aur farmaya: \"Iska.\"",
+text: "Hazrat Sufyan bin Abdullah (R.Z) ne pucha: 'Ya Rasoolallah! Mujhse sabse zyada kis cheez ka khauf hai?' Aap ﷺ ne omnipresent zubaan pakdi aur farmaya: \"Iska.\"",
 ref: "(Sunan At-Tirmidhi 2410)"
 },
 {
@@ -1102,12 +1101,12 @@ const surahList = [
 { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
 { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
 { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
-{ id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" },
+{ id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العadiyat" },
 { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" },
 { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
 { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
 { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" },
-{ id: 109, en: "Al-Kafirun", ar: "الكافرon" }, { id: 110, en: "An-Nasr", ar: "النصر" },
+{ id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
 { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
 { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
 ];
@@ -1119,7 +1118,6 @@ currentTasbeehCount = parseInt(localStorage.getItem('saved_tasbeeh_total'), 10) 
 updateTasbeehCounterDisplay();
 renderBookmarkHistoryLog();
 
-// RE-LOAD QURAN RENDER ENGINE CORES HERE
 const surahContainer = document.getElementById('surah-directory-view');
 if(surahContainer) {
 surahContainer.innerHTML = '';
@@ -1370,7 +1368,7 @@ let cleanText = ayah.text.trim();
 if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
 if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
 if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
-cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّhِيمِ", "").trim();
 paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
 }
 paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
@@ -1379,6 +1377,8 @@ if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
 displayBox.innerHTML = paragraphHTML + '</div>';
 displayBox.scrollTop = 0;
 }
+}).catch(err => {
+if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:red;">Data load failed. Please check internet connection.</p>';
 });
 }
 
