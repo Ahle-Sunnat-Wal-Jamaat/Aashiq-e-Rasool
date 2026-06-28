@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@700&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -113,21 +113,21 @@ border-radius: 8px; font-weight: 600; color: var(--primary);
 text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
 }
 .grid-row:hover { background: #e6fbf0; }
-.arabic-title { font-size: 22px; font-weight: bold; color: #0f766e; font-family: 'Amiri', serif; }
+.arabic-title { font-size: 24px; font-weight: bold; color: #0f766e; font-family: 'Noto Naskh Arabic', serif; }
 
 /* Reader Panel */
 .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
 .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 18px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
 
-/* Beautiful Bold Indo-Pak Style Text Blocks */
+/* Beautiful Bold 15-Line Style Authentic Font Layout */
 .quran-continuous-block {
 text-align: justify;
 font-size: 28px;
-line-height: 2.6;
+line-height: 2.5;
 color: #000000;
 direction: rtl;
-font-family: 'Amiri', serif;
+font-family: 'Noto Naskh Arabic', serif;
 font-weight: 700;
 word-spacing: 4px;
 }
@@ -146,6 +146,11 @@ background: #ffe4e6; padding: 2px 6px; border-radius: 4px;
 .ayat-marker {
 color: #064e3b; font-size: 22px; margin: 0 4px; font-weight: bold;
 font-family: 'Segoe UI', sans-serif; background: #e6f4ea; padding: 0 5px; border-radius: 50%;
+}
+.open-juz-tag {
+color: #1e40af; font-size: 22px; font-weight: bold; display: block;
+text-align: center; background: #e0f2fe; padding: 4px; border-radius: 6px; margin-bottom: 10px;
+font-family: 'Noto Naskh Arabic', serif;
 }
 .info-header-box {
 background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af;
@@ -594,7 +599,7 @@ text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Allah 
 ref: "(Sahih al-Bukhari 5645)"
 },
 {
-text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
+text: "Hazrat Abu Sa'id al-Khudri (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Musalman ko jo bhi thakan, bimari, fikr, gham ya koi takleef pahunchti hai, yahan tak ki ek kaanta bhi chubhta hai, toh Allah uske badle uske gunah maaf kar deta hai.\"",
 ref: "(Sahih al-Bukhari 5641)"
 },
 {
@@ -1014,7 +1019,7 @@ text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mu
 ref: "(Sahih al-Bukhari 10)"
 },
 {
-text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
 ref: "(Sahih al-Bukhari 12)"
 },
 {
@@ -1072,7 +1077,7 @@ const surahList = [
 { id: 35, en: "Fatir", ar: "فاطر" }, { id: 36, en: "Ya-Sin", ar: "يس" },
 { id: 37, en: "As-Saffat", ar: "الصافات" }, { id: 38, en: "Sad", ar: "ص" },
 { id: 39, en: "Az-Zumar", ar: "الزمر" }, { id: 40, en: "Ghafir", ar: "غافر" },
-{ id: 41, en: "Fussilat", ar: "فصلt" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
+{ id: 41, en: "Fussilat", ar: "فصلت" }, { id: 42, en: "Ash-Shura", ar: "الشورى" },
 { id: 43, en: "Az-Zukhruf", ar: "الزخرف" }, { id: 44, en: "Ad-Dukhan", ar: "الدخان" },
 { id: 45, en: "Al-Jathiyah", ar: "الجاثية" }, { id: 46, en: "Al-Ahqaf", ar: "الأحقاف" },
 { id: 47, en: "Muhammad", ar: "محمد" }, { id: 48, en: "Al-Fath", ar: "الفتح" },
@@ -1083,7 +1088,7 @@ const surahList = [
 { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
 { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
 { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
-{ id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, open: 1, en: "At-Taghabun", ar: "التغابن" },
+{ id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغابن" },
 { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
 { id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
 { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
@@ -1091,7 +1096,7 @@ const surahList = [
 { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
 { id: 75, en: "Al-Qiyamah", ar: "القيامة" }, { id: 76, en: "Al-Insan", ar: "الإنسان" },
 { id: 77, en: "Al-Mursalat", ar: "المرسلات" }, { id: 78, en: "An-Naba", ar: "النبأ" },
-{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبs" },
+{ id: 79, en: "An-Nazi'at", ar: "النازعات" }, { id: 80, en: "'Abasa", ar: "عبس" },
 { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
 { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
 { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
@@ -1104,7 +1109,7 @@ const surahList = [
 { id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العadiyat" },
 { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" },
 { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
-{ id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریsh" },
+{ id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
 { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" },
 { id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
 { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
@@ -1353,7 +1358,6 @@ document.getElementById('para-directory-view').style.display = 'flex';
 }
 }
 
-/* FULLY REDESIGNED DATA PARSER ENGINE FOR PARA & SURAH MAPPING */
 function loadQuranContent(type, numericId, displayName) {
 logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
 document.getElementById('quran-menu-panel').style.display = 'none';
@@ -1376,6 +1380,10 @@ if(displayBox) {
 displayBox.innerHTML = '';
 let paragraphHTML = '<div class="quran-continuous-block">';
 let lastSurahName = "";
+
+if(type === 'para') {
+    paragraphHTML += '<span class="open-juz-tag">الْجُزْءُ ' + numericId + '</span>';
+}
 
 arabicAyahs.forEach((ayah) => {
 let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
