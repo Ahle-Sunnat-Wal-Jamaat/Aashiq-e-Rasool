@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gulzar&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 
 <style>
 :root {
@@ -113,23 +113,23 @@ border-radius: 8px; font-weight: 600; color: var(--primary);
 text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
 }
 .grid-row:hover { background: #e6fbf0; }
-.arabic-title { font-size: 24px; font-weight: bold; color: #0f766e; font-family: 'Gulzar', serif; }
+.arabic-title { font-size: 22px; font-weight: bold; color: #0f766e; font-family: 'Amiri', serif; }
 
 /* Reader Panel */
 .quran-reader-panel { display: none; background: #fafafa; border-radius: 8px; padding: 12px; }
 .back-btn { background: var(--primary); color: white; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; margin-bottom: 12px; font-weight: bold; }
 .verses-scroll { max-height: 55vh; overflow-y: auto; padding: 18px; background: #fff; border-radius: 6px; border: 1px solid #e5e7eb; }
 
-/* Beautiful Bold 15-Line Style Authentic Font Layout */
+/* Beautiful Bold Indo-Pak Style Text Blocks */
 .quran-continuous-block {
 text-align: justify;
-font-size: 34px;
+font-size: 28px;
 line-height: 2.6;
 color: #000000;
 direction: rtl;
-font-family: 'Gulzar', serif;
-font-weight: bold;
-word-spacing: 6px;
+font-family: 'Amiri', serif;
+font-weight: 700;
+word-spacing: 4px;
 }
 
 /* Marker Styles */
@@ -148,9 +148,9 @@ color: #064e3b; font-size: 22px; margin: 0 4px; font-weight: bold;
 font-family: 'Segoe UI', sans-serif; background: #e6f4ea; padding: 0 5px; border-radius: 50%;
 }
 .open-juz-tag {
-color: #1e40af; font-size: 24px; font-weight: bold; display: block;
+color: #1e40af; font-size: 22px; font-weight: bold; display: block;
 text-align: center; background: #e0f2fe; padding: 4px; border-radius: 6px; margin-bottom: 10px;
-font-family: 'Gulzar', serif;
+font-family: 'Amiri', serif;
 }
 .info-header-box {
 background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af;
@@ -246,7 +246,7 @@ border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; pad
 </div>
 
 <div class="card" style="margin-bottom: 5px;">
-<h2 class="card-title">📢 Connect With Us</h2>
+<h2 class="card-title" style="📢 Connect With Us">📢 Connect With Us</h2>
 <p style="font-size: 12px; color: #6b7280; margin-top: 0; margin-bottom: 12px;">Hamare deeni platforms se judein aur daily Islamic updates haasil karein.</p>
 
 <a href="https://chat.whatsapp.com/LxrBMsjKTn87CySGG9hg0z?s=cl&p=a&ilr=0" target="_blank" class="social-link-btn btn-whatsapp">
@@ -987,7 +987,7 @@ text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Apne s
 ref: "(Sahih Muslim 2963)"
 },
 {
-text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki Nabi ﷺ ne farmate hue suna: \"Ameeri maal ki kasrat se nahi hoti, balke asli ameeri dil ka ameer hona hai.\"",
+text: "Hazrat Abu Hurairah (R.Z) se riwayat hai ki unhone Nabi ﷺ ko farmate hue suna: \"Ameeri maal ki kasrat se nahi hoti, balke asli ameeri dil ka ameer hona hai.\"",
 ref: "(Sahih al-Bukhari 6446)"
 },
 {
@@ -1106,7 +1106,7 @@ const surahList = [
 { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
 { id: 95, en: "At-Tin", ar: "التين" }, { id: 96, en: "Al-'Alaq", ar: "العلق" },
 { id: 97, en: "Al-Qadr", ar: "القدر" }, { id: 98, en: "Al-Bayyinah", ar: "البينة" },
-{ id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العadiyat" },
+{ id: 99, en: "Az-Zalzalah", ar: "الزلزلة" }, { id: 100, en: "Al-'Adiyat", ar: "العاديات" },
 { id: 101, en: "Al-Qari'ah", ar: "القارعة" }, { id: 102, en: "At-Takathur", ar: "التکاثر" },
 { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
 { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
@@ -1127,7 +1127,7 @@ const surahContainer = document.getElementById('surah-directory-view');
 if(surahContainer) {
 surahContainer.innerHTML = '';
 surahList.forEach(function(surah) {
-surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
+surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + sur学 + surah.id + ', \'' + surah.en + '\')">' +
 '<span>' + surah.id + '. ' + surah.en + '</span>' +
 '<span class="arabic-title">' + surah.ar + '</span>' +
 '</div>';
@@ -1287,6 +1287,10 @@ let outputCode = `{\n text: "${formattedText}",\n ref: "${formattedRef}"\n},`;
 document.getElementById('adm-output-code').value = outputCode;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Structural trace backup framework check
+});
+
 function lockAdminTerminal() {
 document.getElementById('secret-admin-gate').style.display = "none";
 document.getElementById('adm-hadees-text').value = '';
@@ -1407,8 +1411,6 @@ if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
 displayBox.innerHTML = paragraphHTML + '</div>';
 displayBox.scrollTop = 0;
 }
-}).catch(err => {
-if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:red;">Data load failed. Please check internet connection.</p>';
 });
 }
 
