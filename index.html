@@ -93,6 +93,7 @@ text-decoration: none; box-sizing: border-box; transition: transform 0.1s ease;
 .tasbeeh-tap-zone:active { background: #d1fae5; }
 .tasbeeh-actions { display: flex; gap: 10px; }
 .tasbeeh-btn { flex: 1; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-weight: bold; cursor: pointer; background: #f9fafb; color: #4b5563; }
+.nav-bar .nav-item { width: 20%; }
 .tasbeeh-btn-stop { background: #fef2f2; border-color: #fca5a5; color: #dc2626; }
 
 /* Reading History Box Elements */
@@ -1014,7 +1015,7 @@ text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki Nabi ﷺ ne farmaya: \"Mu
 ref: "(Sahih al-Bukhari 10)"
 },
 {
-text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne Nabi ﷺ se pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
+text: "Hazrat Abdullah bin Amr (R.Z) se riwayat hai ki ek shakhs ne pucha sabse behtar Islam kya hai? Toh Aap ﷺ ne farmaya: \"Khaana khilana aur har kisi ko Salam karna, chahe tum usey jaante ho ya na jaante ho.\"",
 ref: "(Sahih al-Bukhari 12)"
 },
 {
@@ -1083,9 +1084,9 @@ const surahList = [
 { id: 57, en: "Al-Hadid", ar: "الحديد" }, { id: 58, en: "Al-Mujadilah", ar: "المجادلة" },
 { id: 59, en: "Al-Hashr", ar: "الحشر" }, { id: 60, en: "Al-Mumtahanah", ar: "الممتحنة" },
 { id: 61, en: "As-Saff", ar: "الصف" }, { id: 62, en: "Al-Jumu'ah", ar: "الجمعة" },
-{ id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, en: "At-Taghabun", ar: "التغabun" },
+{ id: 63, en: "Al-Munafiqun", ar: "المنافقون" }, { id: 64, open: 1, en: "At-Taghabun", ar: "التغابن" },
 { id: 65, en: "At-Talaq", ar: "الطلاق" }, { id: 66, en: "At-Tahrim", ar: "التحريم" },
-{ id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القlem" },
+{ id: 67, en: "Al-Mulk", ar: "الملک" }, { id: 68, en: "Al-Qalam", ar: "القلم" },
 { id: 69, en: "Al-Haqqah", ar: "الحاقة" }, { id: 70, en: "Al-Ma'arij", ar: "المعارج" },
 { id: 71, en: "Nuh", ar: "نوح" }, { id: 72, en: "Al-Jinn", ar: "الجن" },
 { id: 73, en: "Al-Muzzammil", ar: "المزمل" }, { id: 74, en: "Al-Muddaththir", ar: "المدثر" },
@@ -1095,7 +1096,7 @@ const surahList = [
 { id: 81, en: "At-Takwir", ar: "التکوير" }, { id: 82, en: "Al-Infitar", ar: "الانفطار" },
 { id: 83, en: "Al-Mutaffifin", ar: "المطفقين" }, { id: 84, en: "Al-Inshiqaq", ar: "الانشقاق" },
 { id: 85, en: "Al-Buruj", ar: "البروج" }, { id: 86, en: "At-Tariq", ar: "الطارق" },
-{ id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغashiyah" },
+{ id: 87, en: "Al-A'la", ar: "الأعلى" }, { id: 88, en: "Al-Ghashiyah", ar: "الغاشية" },
 { id: 89, en: "Al-Fajr", ar: "الفجر" }, { id: 90, en: "Al-Balad", ar: "البلد" },
 { id: 91, en: "Ash-Shu'ams", ar: "الشمس" }, { id: 92, en: "Al-Layl", ar: "الليل" },
 { id: 93, en: "Ad-Duha", ar: "الضحى" }, { id: 94, en: "Ash-Sharh", ar: "الشرح" },
@@ -1106,7 +1107,7 @@ const surahList = [
 { id: 103, en: "Al-'Asr", ar: "العصر" }, { id: 104, en: "Al-Humazah", ar: "الهمزة" },
 { id: 105, en: "Al-Fil", ar: "الفيل" }, { id: 106, en: "Quraysh", ar: "قریش" },
 { id: 107, en: "Al-Ma'un", ar: "الماعون" }, { id: 108, en: "Al-Kawthar", ar: "الکوثر" },
-{ id: 109, en: "Al-Kafirun", ar: "الكافرون" }, { id: 110, en: "An-Nasr", ar: "النصر" },
+{ id: 109, en: "Al-Kafirun", ar: "الكافرon" }, { id: 110, en: "An-Nasr", ar: "النصر" },
 { id: 111, en: "Al-Masad", ar: "المسد" }, { id: 112, en: "Al-Ikhlas", ar: "الإخلاص" },
 { id: 113, en: "Al-Falaq", ar: "الفلق" }, { id: 114, en: "An-Nas", ar: "الناس" }
 ];
@@ -1118,8 +1119,10 @@ currentTasbeehCount = parseInt(localStorage.getItem('saved_tasbeeh_total'), 10) 
 updateTasbeehCounterDisplay();
 renderBookmarkHistoryLog();
 
+// RE-LOAD QURAN RENDER ENGINE CORES HERE
 const surahContainer = document.getElementById('surah-directory-view');
 if(surahContainer) {
+surahContainer.innerHTML = '';
 surahList.forEach(function(surah) {
 surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'surah\', ' + surah.id + ', \'' + surah.en + '\')">' +
 '<span>' + surah.id + '. ' + surah.en + '</span>' +
@@ -1130,6 +1133,7 @@ surahContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'s
 
 const paraContainer = document.getElementById('para-directory-view');
 if(paraContainer) {
+paraContainer.innerHTML = '';
 for (let p = 1; p <= 30; p++) {
 paraContainer.innerHTML += '<div class="grid-row" onclick="loadQuranContent(\'para\', ' + p + ', \'Para ' + p + '\')">' +
 '<span>Para ' + p + '</span>' +
@@ -1219,13 +1223,10 @@ renderHadeesList();
 }
 }
 
-/* NO-CRASH DIRECT PANEL SWITCH LOGIC */
 function showStaticFarz(divId) {
     document.getElementById('farz-menu-panel').style.display = 'none';
-    
     var panels = document.getElementsByClassName('farz-inner-page');
     for(var i=0; i<panels.length; i++) { panels[i].style.display = 'none'; }
-    
     document.getElementById(divId).style.display = 'block';
 }
 
@@ -1340,18 +1341,59 @@ let shareTemplate = `${entry.text}\n\nHawala: ${entry.ref}\n\nCLICK ON THE LINK 
 window.open('https://wa.me/?text=' + encodeURIComponent(shareTemplate), '_blank');
 }
 
-function toggleQuranMode(mode) {
-document.getElementById('btn-mode-surah').classList.remove('active');
-document.getElementById('btn-mode-para').classList.remove('active');
-if(mode === 'surah') {
-document.getElementById('btn-mode-surah').classList.add('active');
-document.getElementById('surah-directory-view').style.display = 'flex';
-document.getElementById('para-directory-view').style.display = 'none';
-} else {
-document.getElementById('btn-mode-para').classList.add('active');
-document.getElementById('surah-directory-view').style.display = 'none';
-document.getElementById('para-directory-view').style.display = 'flex';
+function loadQuranContent(type, numericId, displayName) {
+logStudyProgressMarker((type === 'surah' ? 'quran_surah' : 'quran_para'), numericId, displayName);
+document.getElementById('quran-menu-panel').style.display = 'none';
+document.getElementById('quran-reader-panel').style.display = 'block';
+document.getElementById('reader-display-title').innerText = displayName;
+
+let countKey = type + '_' + numericId;
+clickCounters[countKey] = (clickCounters[countKey] || 0) + 1;
+
+const infoBox = document.getElementById('quran-info-header');
+const displayBox = document.getElementById('verses-container');
+if(displayBox) displayBox.innerHTML = '<p style="text-align:center; color:#6b7280;">Loading Indo-Pak Script Lines...</p>';
+
+let apiUrl = type === 'surah' ? 'https://api.alquran.cloud/v1/surah/' + numericId : 'https://api.alquran.cloud/v1/juz/' + numericId + '/quran-simple';
+
+fetch(apiUrl).then(res => res.json()).then(dataset => {
+let arabicAyahs = dataset.data.ayahs;
+if(infoBox) infoBox.innerHTML = '📋 <b>Total Ayats:</b> ' + arabicAyahs.length + ' | 🔄 <b>Viewed Count:</b> ' + clickCounters[countKey] + ' times';
+if(displayBox) {
+displayBox.innerHTML = '';
+let paragraphHTML = '<div class="quran-continuous-block">';
+let lastSurahName = "";
+
+arabicAyahs.forEach((ayah) => {
+let verseIdentifier = ayah.numberInSurah ? ayah.numberInSurah : ayah.number;
+let cleanText = ayah.text.trim();
+if (type === 'surah' && ayah.juz && verseIdentifier === 1) paragraphHTML += '<span class="section-break-line">✨ Para / Juz ' + ayah.juz + ' Starts Here ✨</span>';
+if (type === 'para' && ayah.surah && ayah.surah.englishName !== lastSurahName) { lastSurahName = ayah.surah.englishName; paragraphHTML += '<span class="section-break-line">📖 Surah ' + lastSurahName + '</span>'; }
+if (type === 'surah' && numericId !== 1 && verseIdentifier === 1 && cleanText.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ")) {
+cleanText = cleanText.replace("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ", "").trim();
+paragraphHTML += '<div style="text-align:center; color:#064e3b; margin:10px 0; font-size:24px;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>';
 }
+paragraphHTML += cleanText + ' <span class="ayat-marker">۝' + verseIdentifier + '</span> ';
+if (ayah.ruku) paragraphHTML += '<span class="ruku-marker">ع</span>';
+});
+displayBox.innerHTML = paragraphHTML + '</div>';
+displayBox.scrollTop = 0;
+}
+});
+}
+
+function closeQuranReader() {
+document.getElementById('quran-reader-panel').style.display = 'none';
+document.getElementById('quran-menu-panel').style.display = 'block';
+}
+
+function sendWhatsAppDirectly() {
+var userFormName = document.getElementById('ask-name').value.trim();
+var userFormQuery = document.getElementById('ask-query').value.trim();
+if(!userFormName || !userFormQuery) { alert("Please fill out both Name and Question fields."); return; }
+var messageString = "📩 *New Deeni Sawal*\n\n👤 *From:* " + userFormName + "\n📝 *Sawal:* " + userFormQuery;
+var cleanURL = "https://wa.me/919398696996?text=" + encodeURIComponent(messageString);
+window.open(cleanURL, '_blank');
 }
 </script>
 </body>
